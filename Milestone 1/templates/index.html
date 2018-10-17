@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/index.css">
+{% endblock %}
+{% block title %}
+    e-Mensa
+{% endblock %}
+{% block active1 %}
+    active
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col" id="image_banner"></div>
+    </div>
+    <div class="row">
+        <div class="col-2" id="disclaimer_beta">
+            Der Dienst e-Mensa ist noch in der beta.
+            Sie koennen bereits Mahlzeiten durchstoebern, aber noch nicht bestellen.
+        </div>
+        <div class="col-7 m-auto" id="catchphrase">
+            <h2 class="text-center">Leckere Gerichte vorbestellen</h2>
+            <p class="text-center">... und gemeinsam mit Freunden und Kommilitonen essen</p>
+        </div>
+        <div class="col-3 my-auto" id="user_area">
+            <div class="row">
+                <button class="btn" id="registration">
+                    <i class="far fa-hand-point-right"></i>
+                    Registrieren
+                </button>
+            </div>
+            <div class="row">
+                <button class="btn" id="login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Anmelden
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-2" id="registration_disclaimer">
+            Registrieren sie sich hier,
+            um ueber die Veroeffentlichung des Dienstes per Mail informiert zu werden.
+        </div>
+        <div class="col-10" id="image_bottom"></div>
+    </div>
+{% endblock %}

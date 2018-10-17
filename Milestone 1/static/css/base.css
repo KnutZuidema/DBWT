@@ -1,0 +1,44 @@
+body {
+    background: lightgray;
+}
+
+.row {
+    padding: 3px 0;
+}
+
+.navbar {
+    background-color: teal;
+    font-size: large;
+}
+
+#navbar-links {
+    font-size: 1.3em;
+}
+
+.input-group-text {
+    background: white;
+    border-right: unset;
+    border-top-left-radius: 2em;
+    border-bottom-left-radius: 2em;
+}
+
+input.form-control {
+    border-left: unset;
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+}
+
+#links :not(:last-child) {
+    border-right: 1px solid black;
+    padding-right: 4px;
+}
+
+#links li {
+    display: inline-block;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}

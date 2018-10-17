@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/products.css">
+{% endblock %}
+{% block title %}
+    Products
+{% endblock %}
+{% block active2 %}
+    active
+{% endblock %}
+{% block content %}
+    <div class="row" id="title">
+        <div class="col">
+            <h1 class="text-center">Verfuegbare Speisen (Bestseller)</h1>
+        </div>
+    </div>
+    <div class="row" id="content">
+        <div class="col-2" id="filter">
+            <p class="text-center">Speisenliste filtern</p>
+            <form>
+                <div class="form-group">
+                    <select class="custom-select" title="Kategorie">
+                        <option>Kategorie</option>
+                        <option>Kategorie</option>
+                        <option>Kategorie</option>
+                    </select>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="available">
+                    <label class="custom-control-label" for="available">nur verfuegbare</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="vegetarian">
+                    <label class="custom-control-label" for="vegetarian">nur vegetarisch</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="vegan">
+                    <label class="custom-control-label" for="vegan">nur vegan</label>
+                </div>
+                <button type="submit" class="form-control btn">Speisen filtern</button>
+            </form>
+        </div>
+        <div class="col-10 text-center" id="items">
+            <div class="row">
+                <div class="col">
+                    <div class="card-deck">
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/curry_wok.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Curry Wok</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/schnitzel.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Schnitzel</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/bratrolle.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Bratrolle</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/krautsalat.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Krautsalat</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card-deck">
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/falafel.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Falafel</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/currywurst.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Currywurst</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/kaesestulle.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Kaesestulle</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <img class="card-img-top"
+                                 src="../static/assets/spiegelei.jpg">
+                            <div class="card-body">
+                                <p class="card-text">Spiegelei</p>
+                                <a class="card-link" href="#">Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

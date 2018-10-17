@@ -1,0 +1,35 @@
+#user_area button {
+    width: 10em;
+}
+
+#image_banner {
+    height: 25vh;
+    width: 100%;
+    background: teal url(../assets/top_banner.jpg);
+    background-size: cover;
+}
+
+#image_bottom {
+    height: 20vh;
+    width: 100%;
+    background: teal url(../assets/bottom_banner.jpg);
+    background-size: cover;
+}
+
+#login, #registration {
+    color: white;
+    margin-left: auto;
+    transition: background-color 200ms;
+}
+
+#login:hover, #registration:hover {
+    background-color: grey;
+}
+
+#registration {
+    background: teal;
+}
+
+#login {
+    background: black;
+}

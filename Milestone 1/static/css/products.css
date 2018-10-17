@@ -1,0 +1,21 @@
+.card-img-top {
+    background: teal;
+}
+
+.card-body {
+    background-color: darkslategrey;
+}
+
+.card-text {
+    color: white;
+}
+
+#filter {
+    border: 1px solid black;
+    background: darkgrey;
+}
+
+#filter button {
+    background-color: teal;
+    color: white;
+}
