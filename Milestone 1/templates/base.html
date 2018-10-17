@@ -64,26 +64,22 @@
 <div class="container">
     {% block content %}
     {% endblock %}
-</div>
-{% block footer %}
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-2" id="copyright">
-                    <i class="far fa-copyright"></i>
-                    2018 Knut Zuidema
-                </div>
-                <div class="col-10" id="links">
-                    <ul>
-                        <li><a href="#">Anmelden</a></li>
-                        <li><a href="#">Registrieren</a></li>
-                        <li><a href="#">Zutatenliste</a></li>
-                        <li><a href="#">Impressum</a></li>
-                    </ul>
-                </div>
+    {% block footer %}
+        <div class="row">
+            <div class="col-2" id="copyright">
+                <i class="far fa-copyright"></i>
+                2018 Knut Zuidema
+            </div>
+            <div class="col-10" id="links">
+                <ul>
+                    <li><a href="#">Anmelden</a></li>
+                    <li><a href="#">Registrieren</a></li>
+                    <li><a href="#">Zutatenliste</a></li>
+                    <li><a href="#">Impressum</a></li>
+                </ul>
             </div>
         </div>
-    </footer>
-{% endblock %}
+    {% endblock %}
+</div>
 </body>
 </html>

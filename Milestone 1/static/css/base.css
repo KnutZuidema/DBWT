@@ -36,9 +36,3 @@ body {
 #links li {
     display: inline-block;
 }
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
