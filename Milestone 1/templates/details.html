@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/css/details.css">
+{% endblock %}
+{% block title %}
+    {{ name }}
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-7 offset-3" id="title">
+            <h1>Details fuer "{{ name }}"</h1>
+        </div>
+        <div class="col-2 price">
+            Gast-Preis
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            <div class="col" id="login">
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Benutzername">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" placeholder="Passwort">
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Anmelden
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-7" id="banner"></div>
+        <div class="col-2">
+            <div class="row">
+                <div class="col price">
+                    5,95€
+                </div>
+            </div>
+            <div class="row my-auto" id="order_row">
+                <div class="col">
+                    <button class="btn" id="order_button">
+                        <i class="fas fa-utensils"></i>
+                        Vorbestellen
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3">
+            Melden Sie sich jetzt an,
+            um die wirklich viel günstigeren Preise für Mitarbeiter oder Studenten zu sehen.
+        </div>
+        <div class="col-7" id="description"></div>
+    </div>
+{% endblock %}

@@ -22,7 +22,7 @@ body {
     border-bottom-left-radius: 2em;
 }
 
-input.form-control {
+.navbar .form-control {
     border-left: unset;
     border-top-right-radius: 2em;
     border-bottom-right-radius: 2em;
