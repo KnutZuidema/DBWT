@@ -23,5 +23,10 @@ def details(id: int):
     return render_template('details.html', product=products[id])
 
 
+@app.route('/impressum')
+def impressum():
+    return render_template('impressum.html')
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=7890, debug=True)
