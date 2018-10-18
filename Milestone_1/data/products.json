@@ -1,0 +1,52 @@
+{
+  "products": [
+    {
+      "name": "Bratrolle",
+      "description": "Eine tolle Bratrolle, nennt man auch Frikandel",
+      "image": "bratrolle.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Curry Wok",
+      "description": "Eine asiatische Reispfanne, gebraten auf einem Wok.",
+      "image": "curry_wok.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Currywurst",
+      "description": "Eine typische deutsche Currywurst. Dazu gibt es Pommes Frites.",
+      "image": "currywurst.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Falafel",
+      "description": "Eine Spezialitaet aus dem mittleren Osten. Wird aus Saubohnen und Kichererbsen gemacht",
+      "image": "falafel.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Kaesestulle",
+      "description": "Ein einfaches Brot mit Kaese und Salat. Gut zum mitnehmen.",
+      "image": "kaesestulle.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Krautsalat",
+      "description": "Eine leckere Beilage oder Zwischenmahlzeit, auch fuer Vegetarier.",
+      "image": "krautsalat.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Schnitzel",
+      "description": "Ein Wiener Schnitzel kommt immer gut and und schmeckt.",
+      "image": "schnitzel.jpg",
+      "price": 5.95
+    },
+    {
+      "name": "Spiegel-Ei",
+      "description": "Das typische Fruehstueck, hier mit Bacon-Streifen.",
+      "image": "spiegelei.jpg",
+      "price": 5.95
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+import json
 
 app = Flask(__name__)
 
@@ -10,12 +11,16 @@ def index():
 
 @app.route('/products')
 def products():
-    return render_template('products.html')
+    with open('data/products.json') as file:
+        products = json.load(file)['products']
+    return render_template('products.html', products=products)
 
 
-@app.route('/products/<name>')
-def details(name: str):
-    return render_template('details.html', name=name)
+@app.route('/products/<int:id>')
+def details(id: int):
+    with open('data/products.json') as file:
+        products = json.load(file)['products']
+    return render_template('details.html', product=products[id])
 
 
 if __name__ == '__main__':

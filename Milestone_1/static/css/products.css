@@ -1,9 +1,16 @@
+.card {
+    display: inline-block;
+    max-width: 20%;
+    margin: 1%;
+}
+
 .card-img-top {
     background: teal;
 }
 
 .card-body {
     background-color: darkslategrey;
+    white-space: nowrap;
 }
 
 .card-text {
@@ -13,6 +20,11 @@
 #filter {
     border: 1px solid black;
     background: darkgrey;
+    border-radius: 0.2em;
+}
+
+#filter form * {
+    margin-bottom: 3%;
 }
 
 #filter button {

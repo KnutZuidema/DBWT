@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row" id="content">
-        <div class="col-2" id="filter">
+        <div class="col-md-2 col-sm-12" id="filter">
             <p class="text-center">Speisenliste filtern</p>
             <form>
                 <div class="form-group">
@@ -41,83 +41,17 @@
                 <button type="submit" class="form-control btn">Speisen filtern</button>
             </form>
         </div>
-        <div class="col-10 text-center" id="items">
-            <div class="row">
-                <div class="col">
-                    <div class="card-deck">
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/curry_wok.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Curry Wok</p>
-                                <a class="card-link" href="/products/curry_wok">Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/schnitzel.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Schnitzel</p>
-                                <a class="card-link" href="/products/schnitzel">Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/bratrolle.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Bratrolle</p>
-                                <a class="card-link" href="/products/bratrolle">Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/krautsalat.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Krautsalat</p>
-                                <a class="card-link" href="/products/krautsalat">Details</a>
-                            </div>
-                        </div>
+        <div class="col-md-10 col-sm-12 text-center" id="items">
+            {% for product in products %}
+                <div class="card">
+                    <a class="card-link" href="/products/{{ loop.index0 }}">
+                        <img class="card-img-top" src="/static/assets/{{ product.image }}">
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">{{ product.name }}</p>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <div class="card-deck">
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/falafel.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Falafel</p>
-                                <a class="card-link" href="/products/falafel">Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/currywurst.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Currywurst</p>
-                                <a class="card-link" href="/products/currywurst">Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/kaesestulle.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Kaesestulle</p>
-                                <a class="card-link" href="/products/kaesestulle">Details</a>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top"
-                                 src="../static/assets/spiegelei.jpg">
-                            <div class="card-body">
-                                <p class="card-text">Spiegelei</p>
-                                <a class="card-link" href="/products/spiegelei">Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}
