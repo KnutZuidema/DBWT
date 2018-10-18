@@ -5,9 +5,10 @@
 }
 
 #login > p {
-    margin-top: -12%;
+    margin: -12% auto 2%;
     background: lightgray;
-    width: fit-content;
+    width: 30%;
+    text-align: center;
 }
 
 #banner {
