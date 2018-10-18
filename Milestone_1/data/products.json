@@ -32,7 +32,7 @@
     },
     {
       "name": "Falafel",
-      "description": "Eine Spezialitaet aus dem mittleren Osten. Wird aus Saubohnen und Kichererbsen gemacht",
+      "description": "Eine Spezialität aus dem mittleren Osten. Wird aus Saubohnen und Kichererbsen gemacht",
       "image": "falafel.jpg",
       "price": 5.95,
       "ingredients": {
@@ -41,8 +41,8 @@
       }
     },
     {
-      "name": "Kaesestulle",
-      "description": "Ein einfaches Brot mit Kaese und Salat. Gut zum mitnehmen.",
+      "name": "Käsestulle",
+      "description": "Ein einfaches Brot mit Käse und Salat. Gut zum mitnehmen.",
       "image": "kaesestulle.jpg",
       "price": 5.95,
       "ingredients": {
@@ -52,7 +52,7 @@
     },
     {
       "name": "Krautsalat",
-      "description": "Eine leckere Beilage oder Zwischenmahlzeit, auch fuer Vegetarier.",
+      "description": "Eine leckere Beilage oder Zwischenmahlzeit, auch für Vegetarier.",
       "image": "krautsalat.jpg",
       "price": 5.95,
       "ingredients": {
@@ -72,7 +72,7 @@
     },
     {
       "name": "Spiegel-Ei",
-      "description": "Das typische Fruehstueck, hier mit Bacon-Streifen.",
+      "description": "Das typische Frühstück, hier mit Bacon-Streifen.",
       "image": "spiegelei.jpg",
       "price": 5.95,
       "ingredients": {
