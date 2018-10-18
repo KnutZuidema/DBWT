@@ -8,7 +8,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     },
     {
       "name": "Curry Wok",
@@ -18,7 +19,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     },
     {
       "name": "Currywurst",
@@ -28,7 +30,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": false
     },
     {
       "name": "Falafel",
@@ -38,7 +41,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     },
     {
       "name": "Käsestulle",
@@ -48,7 +52,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     },
     {
       "name": "Krautsalat",
@@ -58,7 +63,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     },
     {
       "name": "Schnitzel",
@@ -68,7 +74,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     },
     {
       "name": "Spiegel-Ei",
@@ -78,7 +85,8 @@
       "ingredients": {
         "Zucker": "100g",
         "Mehl": "400g"
-      }
+      },
+      "available": true
     }
   ]
 }
