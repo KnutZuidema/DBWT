@@ -33,3 +33,16 @@
     justify-content: flex-end;
     font-size: 1.5em;
 }
+
+#bewertung {
+    background-color: lightgray;
+}
+
+#review button {
+    background-color: teal;
+    color: white;
+}
+
+#description, #review {
+    margin-top: 2%;
+}
