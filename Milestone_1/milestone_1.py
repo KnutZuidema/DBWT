@@ -11,14 +11,14 @@ def index():
 
 @app.route('/products')
 def products():
-    with open('data/products.json') as file:
+    with open('data/products.json', encoding='utf-8') as file:
         products = json.load(file)['products']
     return render_template('products.html', products=products)
 
 
 @app.route('/products/<int:id>')
 def details(id: int):
-    with open('data/products.json') as file:
+    with open('data/products.json', encoding='utf-8') as file:
         products = json.load(file)['products']
     return render_template('details.html', product=products[id])
 
