@@ -1,14 +1,18 @@
 #login {
-    background: darkgray;
     padding: 1em;
+    border: 1px solid black;
+    border-radius: 0.3em;
+}
+
+#login > p {
+    margin-top: -12%;
+    background: lightgray;
+    width: fit-content;
 }
 
 #banner {
-    background: teal;
-}
-
-#description {
-    background: teal;
+    background: teal center;
+    background-size: cover;
 }
 
 #order_button {

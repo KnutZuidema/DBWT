@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="/static/css/details.css">
 {% endblock %}
 {% block title %}
-    {{ name }}
+    {{ product.name }}
 {% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-7 offset-3" id="title">
-            <h1>Details fuer "{{ name }}"</h1>
+            <h1>Details fuer "{{ product.name }}"</h1>
         </div>
         <div class="col-2 price">
             Gast-Preis
@@ -18,6 +18,7 @@
     <div class="row">
         <div class="col-3">
             <div class="col" id="login">
+                <p>Login</p>
                 <form>
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Benutzername">
@@ -32,11 +33,12 @@
                 </form>
             </div>
         </div>
-        <div class="col-7" id="banner"></div>
+        <div class="col-7" id="banner"
+             style="background-image: url(/static/assets/{{ product.image }});"></div>
         <div class="col-2">
             <div class="row">
                 <div class="col price">
-                    5,95€
+                    {{ product.price }}€
                 </div>
             </div>
             <div class="row my-auto" id="order_row">
@@ -54,6 +56,32 @@
             Melden Sie sich jetzt an,
             um die wirklich viel günstigeren Preise für Mitarbeiter oder Studenten zu sehen.
         </div>
-        <div class="col-7" id="description"></div>
+        <div class="col-7" id="description">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home"
+                       role="tab" aria-controls="home">Beschreibung</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile"
+                       role="tab" aria-controls="profile">Zutaten</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact"
+                       role="tab" aria-controls="contact">Bewertungen</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="home" role="tabpanel">
+                    {{ product.description }}
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel">
+
+                </div>
+                <div class="tab-pane fade" id="contact" role="tabpanel">
+
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
