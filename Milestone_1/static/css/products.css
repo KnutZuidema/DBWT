@@ -19,8 +19,12 @@
 
 #filter {
     border: 1px solid black;
-    background: darkgrey;
     border-radius: 0.2em;
+}
+
+#filter p {
+    margin-top: -8%;
+    background-color: lightgray;
 }
 
 #filter form * {
@@ -31,3 +35,4 @@
     background-color: teal;
     color: white;
 }
+
