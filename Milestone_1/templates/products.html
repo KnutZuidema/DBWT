@@ -43,6 +43,7 @@
         </div>
         <div class="col-md-10 col-sm-12 text-center" id="items">
             {% for product in products %}
+                {% if product.available %}
                 <div class="card">
                     <a class="card-link" href="/products/{{ loop.index0 }}">
                         <img class="card-img-top" src="/static/assets/{{ product.image }}">
@@ -51,6 +52,14 @@
                         <p class="card-text">{{ product.name }}</p>
                     </div>
                 </div>
+                {% else %}
+                <div class="card disabled">
+                    <img class="card-img-top" src="/static/assets/{{ product.image }}">
+                    <div class="card-body">
+                        <p class="card-text">{{ product.name }}</p>
+                    </div>
+                </div>
+                {% endif %}
             {% endfor %}
         </div>
     </div>

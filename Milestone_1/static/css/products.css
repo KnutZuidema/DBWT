@@ -4,6 +4,10 @@
     margin: 1%;
 }
 
+.card.disabled {
+    filter: grayscale(100%);
+}
+
 .card-img-top {
     background: teal;
 }
