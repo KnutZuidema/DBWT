@@ -68,3 +68,11 @@ Attribut|Wert|Anwendung
 `multiple`|none|Mehr als eine Option koennen ausgewaehlt werden
 `required`|none|Gibt an, dass ein Wert gewaehlt werden muss um das `<form>` Element abzuschicken.
 `size`|number|Wie viele Options angezeigt werden
+
+Das `<option>` Element hat ebenfalls zusaetzliche moegliche Attribute:
+
+Attribut|Wert|Anwendung
+:---:|---|---
+`label`|text|Ein kurzes Label fuer eine Option
+`selected`|none|Option wird beim Laden der Seite ausgewaehlt
+`value`|text|Wert der uebermittelt werden soll
