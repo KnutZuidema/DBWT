@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="../static/css/login.css">
+{% endblock %}
+{% block title %}
+    Login
+{% endblock %}
+{% block content %}
+    <form method="post" action="/login" class="mx-auto" id="login">
+        <p>Login</p>
+        <div class="form-group">
+            <input class="form-control" id="username" type="text" name="username"
+                   placeholder="Benutzername">
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="password" type="password" name="password"
+                   placeholder="Passwort">
+        </div>
+        <input type="hidden" name="route" value="/">
+        <button type="submit" class="btn form-control">Anmelden</button>
+    </form>
+{% endblock %}
