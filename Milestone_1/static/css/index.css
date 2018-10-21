@@ -1,7 +1,3 @@
-#user_area button {
-    width: 10em;
-}
-
 #image_banner {
     height: 25vh;
     width: 100%;
@@ -20,6 +16,7 @@
     color: white;
     margin-left: auto;
     transition: background-color 200ms;
+    width: 10em;
 }
 
 #login:hover, #registration:hover {
