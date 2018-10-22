@@ -54,7 +54,7 @@ def init_app():
         response.set_cookie('hash', argon2.hash(user.password))
         return response
 
-    @app.route('/logout', methods=['GET'])
+    @app.route('/logout')
     def logout():
         route = request.args.get('route')
         response = make_response(redirect(route))
