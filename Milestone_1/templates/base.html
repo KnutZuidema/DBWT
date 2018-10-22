@@ -50,9 +50,6 @@
                 </li>
             </ul>
             <div class="navbar-nav ml-auto">
-                {% if current_user.authenticated %}
-                <p>du bist eingeloggt</p>
-                {% endif %}
                 <form class="form-inline" method="get" action="https://www.google.de/search"
                       target="_blank">
                     <div class="input-group py-1">
@@ -65,6 +62,19 @@
                     </div>
                     <input type="hidden" name="as_sitesearch" value="https://www.fh-aachen.de">
                 </form>
+                {% if current_user.authenticated %}
+                    <a href="#" class="btn" data-toggle="popover" data-trigger="hover"
+                       data-placement="bottom" data-content="{{ current_user.name }}">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <a class="btn" href="/logout?route={{ request.path }}">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </a>
+                {% else %}
+                    <a class="btn" href="/login">
+                        <i class="fas fa-sign-in-alt"></i>
+                    </a>
+                {% endif %}
             </div>
         </div>
     </nav>
