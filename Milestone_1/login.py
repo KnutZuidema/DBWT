@@ -7,8 +7,9 @@ from database import SQLSession
 
 
 class User:
-    def __init__(self, authenticated: bool):
+    def __init__(self, authenticated: bool, name: str):
         self.authenticated = authenticated
+        self.name = name
 
 
 def init_login(app: Flask, config: dict):
@@ -23,7 +24,7 @@ def init_login(app: Flask, config: dict):
             print('login:', user.password, hash)
             authenticated = argon2.verify(user.password, hash)
         print('login:', authenticated)
-        current_user = User(authenticated)
+        current_user = User(authenticated, username)
         return {'current_user': current_user}
 
 
