@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, render_template, request, redirect, session, make_response
+from flask import Flask, render_template, request, redirect, make_response
 from passlib.hash import argon2
 
 from database import SQLSession
@@ -52,6 +52,14 @@ def init_app():
         response = make_response(redirect(route))
         response.set_cookie('username', username)
         response.set_cookie('hash', argon2.hash(user.password))
+        return response
+
+    @app.route('/logout', methods=['GET'])
+    def logout():
+        route = request.args.get('route')
+        response = make_response(redirect(route))
+        response.set_cookie('username', '', expires=0)
+        response.set_cookie('hash', '', expires=0)
         return response
 
     return app
