@@ -19,19 +19,17 @@ $(function () {
                     checked.push(checkbox.attr('id'));
                 }
             });
+            cards.show();
             if(!checked.length){
-                cards.show();
                 return
             }
             cards.each(function () {
                 let card = $(this);
-                card.hide();
                 let class_list = card.attr('class').split(/\s+/);
                 for(let check of checked){
-                    for(let clazz of class_list){
-                        if(check === clazz) {
-                            card.show();
-                        }
+                    if(!class_list.includes(check)){
+                        card.hide();
+                        break
                     }
                 }
             })
