@@ -46,7 +46,6 @@ def init_app():
         user = sql_session.get_user(username)
         if not user:
             return render_template('bad_login.html')
-        print('routes:', password, user.password)
         if not argon2.verify(password, user.password):
             return render_template('bad_login.html')
         response = make_response(redirect(route))
