@@ -86,20 +86,18 @@
     {% block footer %}
         <hr>
         <footer class="row">
-            <div class="col-2" id="copyright">
+            <div class="col-md-2 col-12" id="copyright">
                 <i class="far fa-copyright"></i>
                 2018 <a href="https://github.com/KnutZuidema">Knut Zuidema</a>
             </div>
-            <div class="col-10" id="links">
-                <ul>
-                    {% if not current_user.authenticated %}
-                        <li><a href="/login">Anmelden</a></li>
-                        <li><a href="/register">Registrieren</a></li>
-                    {% endif %}
-                    <li><a href="#">Zutatenliste</a></li>
-                    <li><a href="/impressum">Impressum</a></li>
-                </ul>
-            </div>
+            <ul class="col-md-10 col-12" id="links">
+                {% if not current_user.authenticated %}
+                    <li><a href="/login">Anmelden</a></li>
+                    <li><a href="/register">Registrieren</a></li>
+                {% endif %}
+                <li><a href="#">Zutatenliste</a></li>
+                <li><a href="/impressum">Impressum</a></li>
+            </ul>
         </footer>
     {% endblock %}
 </div>
