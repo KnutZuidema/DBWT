@@ -3,6 +3,7 @@
     padding: 1em;
     border: 1px solid black;
     border-radius: 0.2em;
+    width: 100%;
 }
 
 #login :not(:last-child) {
