@@ -42,25 +42,27 @@
             </form>
         </div>
         <div class="col-md-10 col-sm-12 text-center" id="items">
-            {% for product in products %}
-                {% if product.available %}
-                <div class="card">
-                    <a class="card-link" href="/products/{{ loop.index0 }}">
-                        <img class="card-img-top" src="/static/assets/{{ product.image }}">
-                    </a>
-                    <div class="card-body">
-                        <p class="card-text">{{ product.name }}</p>
-                    </div>
-                </div>
-                {% else %}
-                <div class="card disabled">
-                    <img class="card-img-top" src="/static/assets/{{ product.image }}">
-                    <div class="card-body">
-                        <p class="card-text">{{ product.name }}</p>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
+            <div class="row">
+                {% for product in products %}
+                    {% if product.available %}
+                        <div class="card col-md-3 col-12 py-2">
+                            <a class="card-link" href="/products/{{ loop.index0 }}">
+                                <img class="card-img-top" src="/static/assets/{{ product.image }}">
+                            </a>
+                            <div class="card-body">
+                                <p class="card-text">{{ product.name }}</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card disabled col-md-3 col-12 py-2">
+                            <img class="card-img-top" src="/static/assets/{{ product.image }}">
+                            <div class="card-body">
+                                <p class="card-text">{{ product.name }}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}

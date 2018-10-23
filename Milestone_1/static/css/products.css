@@ -1,7 +1,6 @@
 .card {
-    display: inline-block;
-    max-width: 20%;
-    margin: 1%;
+    background: lightgray;
+    border: none;
 }
 
 .card.disabled {
@@ -14,11 +13,11 @@
 
 .card-body {
     background-color: darkslategrey;
-    white-space: nowrap;
 }
 
 .card-text {
     color: white;
+    white-space: nowrap;
 }
 
 #filter {
