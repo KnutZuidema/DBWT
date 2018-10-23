@@ -1,0 +1,4 @@
+flask
+sqlalchemy
+passlib
+argon2-cffi
