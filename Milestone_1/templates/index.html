@@ -23,18 +23,22 @@
             <p class="text-center">... und gemeinsam mit Freunden und Kommilitonen essen</p>
         </div>
         <div class="col-3 my-auto" id="user_area">
-            <div class="row">
-                <button class="btn" id="registration">
-                    <i class="far fa-hand-point-right"></i>
-                    Registrieren
-                </button>
-            </div>
-            <div class="row">
-                <a href="/login" class="btn" id="login">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Anmelden
-                </a>
-            </div>
+            {% if not current_user.authenticated %}
+                <div class="row">
+                    <a href="/register" class="btn" id="registration">
+                        <i class="far fa-hand-point-right"></i>
+                        Registrieren
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/login" class="btn" id="login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Anmelden
+                    </a>
+                </div>
+            {% else %}
+                <h2>Herzlich Willkommen, {{ current_user.name }}!</h2>
+            {% endif %}
         </div>
     </div>
     <div class="row">
