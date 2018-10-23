@@ -1,7 +1,7 @@
 $(function () {
     let checkboxes = $(':checkbox');
     let cards = $('.card');
-    $(':checkbox :checked').each(function () {
+    $('[type="checkbox"]:checked').each(function () {
         hide_without_class(cards, $(this).attr('id'));
     });
     checkboxes.click(function () {
