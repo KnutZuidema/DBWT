@@ -45,3 +45,6 @@
     color: white;
 }
 
+#title {
+    white-space: pre-wrap;
+}
