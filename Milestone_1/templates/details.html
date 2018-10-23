@@ -48,7 +48,11 @@
         <div class="col-2">
             <div class="row">
                 <div class="col price">
-                    {{ product.price }}€
+                    {% if current_user.authenticated %}
+                        {{ product.price - 2 }}€
+                    {% else %}
+                        {{ product.price }}€
+                    {% endif %}
                 </div>
             </div>
             <div class="row my-auto" id="order_row">
