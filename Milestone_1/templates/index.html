@@ -43,8 +43,10 @@
     </div>
     <div class="row">
         <div class="col-md-2 col-12" id="registration_disclaimer">
-            Registrieren sie sich hier,
-            um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+            {% if not current_user.authenticated %}
+                Registrieren sie sich hier,
+                um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+            {% endif %}
         </div>
         <div class="col-md-10 col-12" id="image_bottom"></div>
     </div>
