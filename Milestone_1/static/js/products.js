@@ -1,32 +1,26 @@
 $(function () {
     let checkboxes = $(':checkbox');
     let cards = $('.card');
-    checkboxes.each(function () {
-        let checkbox = $(this);
-        let selected = checkbox.attr('id');
-        if (checkbox.is(':checked')) {
-            hide_without_class(cards, selected);
-        }
+    $(':checkbox :checked').each(function () {
+        hide_without_class(cards, $(this).attr('id'));
     });
     checkboxes.click(function () {
         cards.show();
         let checkbox = $(this);
         let selected = checkbox.attr('id');
+        let checked = get_other_checked(checkboxes, selected);
         if (checkbox.is(':checked')) {
-            hide_without_class(cards, selected);
-        }else{
-            let checked = get_other_checked(checkboxes, selected);
-            if(!checked.length){
+            checked.push(selected);
+        } else {
+            if (!checked.length) {
                 return
             }
-            checked.forEach(function (check) {
-                hide_without_class(cards, check)
-            })
         }
+        checked.forEach(check => hide_without_class(cards, check))
     })
 });
 
-function hide_without_class(elements, clazz){
+function hide_without_class(elements, clazz) {
     elements.each(function () {
         let element = $(this);
         if (!element.hasClass(clazz)) {
@@ -35,7 +29,7 @@ function hide_without_class(elements, clazz){
     })
 }
 
-function get_other_checked(checkboxes, this_value){
+function get_other_checked(checkboxes, this_value) {
     let checked = [];
     checkboxes.each(function () {
         let checkbox = $(this);
