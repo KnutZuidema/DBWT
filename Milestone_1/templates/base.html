@@ -50,6 +50,9 @@
                 </li>
             </ul>
             <div class="navbar-nav ml-auto">
+                {% if current_user.authenticated %}
+                <p>du bist eingeloggt</p>
+                {% endif %}
                 <form class="form-inline" method="get" action="https://www.google.de/search"
                       target="_blank">
                     <div class="input-group py-1">

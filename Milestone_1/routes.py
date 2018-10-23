@@ -1,10 +1,10 @@
 import json
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session, make_response
 from passlib.hash import argon2
 
 from database import SQLSession
-from login import init_login, LoginUser
+from login import init_login
 
 
 def init_app():
@@ -13,7 +13,7 @@ def init_app():
     sql_config = {
         "sqlalchemy.url": "sqlite:///eMensa.db"
     }
-    login_manager = init_login(app, sql_config)
+    init_login(app, sql_config)
 
     @app.route('/')
     def index():
@@ -37,20 +37,21 @@ def init_app():
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
-        session = SQLSession(sql_config)
+        sql_session = SQLSession(sql_config)
         if request.method == 'GET':
             return render_template('login.html')
         username = request.form.get('username')
         password = request.form.get('password')
         route = request.form.get('route')
-        user = session.get_user(username)
+        user = sql_session.get_user(username)
         if not user:
             return render_template('bad_login.html')
+        print('routes:', password, user.password)
         if not argon2.verify(password, user.password):
             return render_template('bad_login.html')
-        user = LoginUser()
-        user.id = username
-        login_manager.login_user(user, remember=True)
-        return redirect(route)
+        response = make_response(redirect(route))
+        response.set_cookie('username', username)
+        response.set_cookie('hash', argon2.hash(user.password))
+        return response
 
     return app
