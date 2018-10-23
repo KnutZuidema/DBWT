@@ -9,7 +9,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": false,
+      "vegan": false
     },
     {
       "name": "Curry Wok",
@@ -20,7 +22,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": true,
+      "vegan": false
     },
     {
       "name": "Currywurst",
@@ -31,7 +35,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": false
+      "available": false,
+      "vegetarian": false,
+      "vegan": false
     },
     {
       "name": "Falafel",
@@ -42,7 +48,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": true,
+      "vegan": true
     },
     {
       "name": "Käsestulle",
@@ -53,7 +61,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": true,
+      "vegan": false
     },
     {
       "name": "Krautsalat",
@@ -64,7 +74,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": true,
+      "vegan": true
     },
     {
       "name": "Schnitzel",
@@ -75,7 +87,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": false,
+      "vegan": false
     },
     {
       "name": "Spiegel-Ei",
@@ -86,7 +100,9 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true
+      "available": true,
+      "vegetarian": false,
+      "vegan": false
     }
   ]
 }
