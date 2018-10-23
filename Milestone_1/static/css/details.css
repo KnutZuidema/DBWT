@@ -4,11 +4,14 @@
     border-radius: 0.3em;
 }
 
-#login > p {
-    margin: -13% auto 3%;
-    background: lightgray;
-    width: 30%;
+#login p {
+    margin: -1.8em auto 1em;
     text-align: center;
+}
+
+#login p span {
+    background: lightgray;
+    padding: 0.5em;
 }
 
 #banner {

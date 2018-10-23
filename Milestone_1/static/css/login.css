@@ -11,8 +11,11 @@
 }
 
 #login p {
-    margin: -1.8em auto 0;
-    background: lightgray;
-    width: 25%;
+    margin: -1.8em auto 1em;
     text-align: center;
+}
+
+#login p span {
+    background: lightgray;
+    padding: 0.5em;
 }

@@ -28,7 +28,13 @@
 
 #filter p {
     margin-top: -8%;
-    background-color: lightgray;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#filter p span {
+    background: lightgray;
+    padding: 0.5em;
 }
 
 #filter form * {
