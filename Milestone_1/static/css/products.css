@@ -20,24 +20,25 @@
     white-space: nowrap;
 }
 
-#filter {
+#filter form {
     border: 1px solid black;
     border-radius: 0.2em;
+    padding: 5%;
+    margin-top: -11%;
 }
 
 #filter p {
-    margin-top: -8%;
     text-align: center;
     white-space: nowrap;
 }
 
-#filter p span {
+#content p span {
     background: lightgray;
-    padding: 0.5em;
+    padding: 0 0.5em;
 }
 
 #filter form * {
-    margin-bottom: 3%;
+    margin: 5% 0;
 }
 
 #filter button {
