@@ -44,23 +44,17 @@
         <div class="col-lg-9 col-12 text-center" id="items">
             <div class="row">
                 {% for product in products %}
-                    {% if product.available %}
-                        <div class="card col-md-3 col-12 py-2">
-                            <a class="card-link" href="/products/{{ loop.index0 }}">
-                                <img class="card-img-top" src="/static/assets/{{ product.image }}">
-                            </a>
-                            <div class="card-body">
-                                <p class="card-text">{{ product.name }}</p>
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="card disabled col-md-3 col-12 py-2">
+                    <div class="card col-md-3 col-12 py-2
+                                {% if product.available %}available{% endif %}
+                                {% if product.vegetarian %}vegetarian{% endif %}
+                                {% if product.vegan %}vegan{% endif %}">
+                        <a class="card-link" href="/products/{{ loop.index0 }}">
                             <img class="card-img-top" src="/static/assets/{{ product.image }}">
-                            <div class="card-body">
-                                <p class="card-text">{{ product.name }}</p>
-                            </div>
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">{{ product.name }}</p>
                         </div>
-                    {% endif %}
+                    </div>
                 {% endfor %}
             </div>
         </div>
