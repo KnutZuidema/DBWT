@@ -14,34 +14,40 @@
         <div class="col" id="image_banner"></div>
     </div>
     <div class="row">
-        <div class="col-2" id="disclaimer_beta">
+        <div class="col-md-2 col-12" id="disclaimer_beta">
             Der Dienst e-Mensa ist noch in der beta.
             Sie können bereits Mahlzeiten durchstöbern, aber noch nicht bestellen.
         </div>
-        <div class="col-7 m-auto" id="catchphrase">
+        <div class="col-md-7 col-12 m-auto" id="catchphrase">
             <h2 class="text-center">Leckere Gerichte vorbestellen</h2>
             <p class="text-center">... und gemeinsam mit Freunden und Kommilitonen essen</p>
         </div>
-        <div class="col-3 my-auto" id="user_area">
-            <div class="row">
-                <button class="btn" id="registration">
-                    <i class="far fa-hand-point-right"></i>
-                    Registrieren
-                </button>
-            </div>
-            <div class="row">
-                <a href="/login" class="btn" id="login">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Anmelden
-                </a>
-            </div>
+        <div class="col-md-3 col-12 my-auto" id="user_area">
+            {% if not current_user.authenticated %}
+                <div class="row">
+                    <a href="/register" class="btn ml-md-auto mx-md-0 mx-auto" id="registration">
+                        <i class="far fa-hand-point-right"></i>
+                        Registrieren
+                    </a>
+                </div>
+                <div class="row">
+                    <a href="/login" class="btn ml-md-auto mx-md-0 mx-auto" id="login">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Anmelden
+                    </a>
+                </div>
+            {% else %}
+                <h2>Herzlich Willkommen, {{ current_user.name }}!</h2>
+            {% endif %}
         </div>
     </div>
     <div class="row">
-        <div class="col-2" id="registration_disclaimer">
-            Registrieren sie sich hier,
-            um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+        <div class="col-md-2 col-12" id="registration_disclaimer">
+            {% if not current_user.authenticated %}
+                Registrieren sie sich hier,
+                um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+            {% endif %}
         </div>
-        <div class="col-10" id="image_bottom"></div>
+        <div class="col-md-10 col-12" id="image_bottom"></div>
     </div>
 {% endblock %}

@@ -4,12 +4,12 @@
     <link rel="stylesheet" href="../static/css/login.css">
 {% endblock %}
 {% block title %}
-    Login
+    Registrieren
 {% endblock %}
 {% block content %}
     <div class="col-md-4 offset-md-4 col-12">
-        <form method="post" action="/login" class="mx-auto" id="login">
-            <p><span>Login</span></p>
+        <form method="post" action="/register" class="mx-auto" id="login">
+            <p><span>Registrieren</span></p>
             <div class="form-group">
                 <input class="form-control" id="username" type="text" name="username"
                        placeholder="Benutzername">
@@ -19,7 +19,7 @@
                        placeholder="Passwort">
             </div>
             <input type="hidden" name="route" value="/">
-            <button type="submit" class="btn form-control">Anmelden</button>
+            <button type="submit" class="btn form-control">Registrieren</button>
         </form>
     </div>
 {% endblock %}

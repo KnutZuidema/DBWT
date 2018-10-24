@@ -2,12 +2,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="/static/css/details.css">
-    <script>
-        $(function () {
-            $('#route').attr('value', window.location.pathname);
-            console.log(window.location.pathname)
-        })
-    </script>
+    <script src="../static/js/details.js"></script>
 {% endblock %}
 {% block title %}
     {{ product.name }}
@@ -18,30 +13,34 @@
             <h1>Details für "{{ product.name }}"</h1>
         </div>
         <div class="col-2 price">
-            Gast-Preis
+            {% if current_user.authenticated %}
+                Mitglieds-Preis
+            {% else %}
+                Gast-Preis
+            {% endif %}
         </div>
     </div>
     <div class="row">
         <div class="col-3">
             {% if not current_user.authenticated %}
-            <div class="col" id="login">
-                <p>Login</p>
-                <form method="post" action="/login">
-                    <div class="form-group">
-                        <input type="text" name="username" class="form-control"
-                               placeholder="Benutzername">
-                    </div>
-                    <div class="form-group">
-                        <input type="password" name="password" class="form-control"
-                               placeholder="Passwort">
-                    </div>
-                    <input type="hidden" name="route" id="route">
-                    <button type="submit" class="btn">
-                        <i class="fas fa-sign-in-alt"></i>
-                        Anmelden
-                    </button>
-                </form>
-            </div>
+                <div class="col" id="login">
+                    <p><span>Login</span></p>
+                    <form method="post" action="/login">
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control"
+                                   placeholder="Benutzername">
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password" class="form-control"
+                                   placeholder="Passwort">
+                        </div>
+                        <input type="hidden" name="route" id="route">
+                        <button type="submit" class="btn">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Anmelden
+                        </button>
+                    </form>
+                </div>
             {% endif %}
         </div>
         <div class="col-7" id="banner"
@@ -49,7 +48,11 @@
         <div class="col-2">
             <div class="row">
                 <div class="col price">
-                    {{ product.price }}€
+                    {% if current_user.authenticated %}
+                        {{ product.price - 2 }}€
+                    {% else %}
+                        {{ product.price }}€
+                    {% endif %}
                 </div>
             </div>
             <div class="row my-auto" id="order_row">
@@ -64,8 +67,10 @@
     </div>
     <div class="row">
         <div class="col-3">
-            Melden Sie sich jetzt an,
-            um die wirklich viel günstigeren Preise für Mitarbeiter oder Studenten zu sehen.
+            {% if not current_user.authenticated %}
+                Melden Sie sich jetzt an,
+                um die wirklich viel günstigeren Preise für Mitarbeiter oder Studenten zu sehen.
+            {% endif %}
         </div>
         <div class="col-7">
             <ul class="nav nav-tabs" role="tablist">
@@ -107,13 +112,13 @@
                 <div class="tab-pane" id="review" role="tabpanel">
                     <form method="post" action="http://bc5.m2c-lab.fh-aachen.de/form.php">
                         <div class="form-group">
+                            <label for="benutzer">Benutzer</label>
+                            <input type="text" name="benutzer" class="form-control" id="benutzer">
+                        </div>
+                        <div class="form-group">
                             <label for="bemerkung">Bemerkung</label>
                             <textarea class="form-control" name="bemerkung" id="bemerkung">
                             </textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="benutzer">Benutzer</label>
-                            <input type="text" name="benutzer" class="form-control" id="benutzer">
                         </div>
                         <div class="form-group">
                             <label for="bewertung">Bewertung</label>

@@ -1,9 +1,9 @@
 #login {
-    width: 25%;
     margin: 15% 0 15%;
     padding: 1em;
     border: 1px solid black;
     border-radius: 0.2em;
+    width: 100%;
 }
 
 #login :not(:last-child) {
@@ -11,8 +11,11 @@
 }
 
 #login p {
-    margin: -1.8em auto 0;
-    background: lightgray;
-    width: 25%;
+    margin: -1.8em auto 1em;
     text-align: center;
+}
+
+#login p span {
+    background: lightgray;
+    padding: 0.5em;
 }

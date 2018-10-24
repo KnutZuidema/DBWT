@@ -45,3 +45,8 @@ a:hover {
 #links li {
     display: inline-block;
 }
+
+nav .btn {
+    font-size: 1em;
+    margin: auto 0;
+}

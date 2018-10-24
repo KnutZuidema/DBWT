@@ -1,10 +1,9 @@
 .card {
-    display: inline-block;
-    max-width: 20%;
-    margin: 1%;
+    background: lightgray;
+    border: none;
 }
 
-.card.disabled {
+.card:not(.available) {
     filter: grayscale(100%);
 }
 
@@ -14,25 +13,32 @@
 
 .card-body {
     background-color: darkslategrey;
-    white-space: nowrap;
 }
 
 .card-text {
     color: white;
+    white-space: nowrap;
 }
 
-#filter {
+#filter form {
     border: 1px solid black;
     border-radius: 0.2em;
+    padding: 5%;
+    margin-top: -11%;
 }
 
 #filter p {
-    margin-top: -8%;
-    background-color: lightgray;
+    text-align: center;
+    white-space: nowrap;
+}
+
+#content p span {
+    background: lightgray;
+    padding: 0 0.5em;
 }
 
 #filter form * {
-    margin-bottom: 3%;
+    margin: 5% 0;
 }
 
 #filter button {
@@ -40,3 +46,6 @@
     color: white;
 }
 
+#title {
+    white-space: pre-wrap;
+}

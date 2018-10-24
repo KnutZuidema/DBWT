@@ -2,6 +2,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="/static/css/products.css">
+    <script src="../static/js/products.js"></script>
 {% endblock %}
 {% block title %}
     Products
@@ -12,12 +13,12 @@
 {% block content %}
     <div class="row" id="title">
         <div class="col">
-            <h1 class="text-center">Verfügbare Speisen (Bestseller)</h1>
+            <h1 class="text-center" id="title">Verfügbare Speisen (Bestseller)</h1>
         </div>
     </div>
     <div class="row" id="content">
-        <div class="col-md-2 col-sm-12" id="filter">
-            <p class="text-center">Speisenliste filtern</p>
+        <div class="col-lg-3 col-12" id="filter">
+            <p><span>Speisenliste filtern</span></p>
             <form>
                 <div class="form-group">
                     <select class="custom-select" title="Kategorie">
@@ -28,39 +29,35 @@
                 </div>
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="available">
-                    <label class="custom-control-label" for="available">nur verfügbare</label>
+                    <label class="custom-control-label" for="available">verfügbar</label>
                 </div>
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="vegetarian">
-                    <label class="custom-control-label" for="vegetarian">nur vegetarisch</label>
+                    <label class="custom-control-label" for="vegetarian">vegetarisch</label>
                 </div>
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="vegan">
-                    <label class="custom-control-label" for="vegan">nur vegan</label>
+                    <label class="custom-control-label" for="vegan">vegan</label>
                 </div>
                 <button type="submit" class="form-control btn">Speisen filtern</button>
             </form>
         </div>
-        <div class="col-md-10 col-sm-12 text-center" id="items">
-            {% for product in products %}
-                {% if product.available %}
-                <div class="card">
-                    <a class="card-link" href="/products/{{ loop.index0 }}">
-                        <img class="card-img-top" src="/static/assets/{{ product.image }}">
-                    </a>
-                    <div class="card-body">
-                        <p class="card-text">{{ product.name }}</p>
+        <div class="col-lg-9 col-12 text-center" id="items">
+            <div class="row">
+                {% for product in products %}
+                    <div class="card col-md-3 col-12 py-2
+                                {% if product.available %}available{% endif %}
+                                {% if product.vegetarian %}vegetarian{% endif %}
+                                {% if product.vegan %}vegan{% endif %}">
+                        <a class="card-link" href="/products/{{ loop.index0 }}">
+                            <img class="card-img-top" src="/static/assets/{{ product.image }}">
+                        </a>
+                        <div class="card-body">
+                            <p class="card-text">{{ product.name }}</p>
+                        </div>
                     </div>
-                </div>
-                {% else %}
-                <div class="card disabled">
-                    <img class="card-img-top" src="/static/assets/{{ product.image }}">
-                    <div class="card-body">
-                        <p class="card-text">{{ product.name }}</p>
-                    </div>
-                </div>
-                {% endif %}
-            {% endfor %}
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
