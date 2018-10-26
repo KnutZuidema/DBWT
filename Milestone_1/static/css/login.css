@@ -19,3 +19,8 @@
     background: lightgray;
     padding: 0.5em;
 }
+
+.error-message {
+    display: none;
+    font-size: 0.6em;
+}
