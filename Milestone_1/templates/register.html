@@ -2,6 +2,7 @@
 {% block head %}
     {{ super() }}
     <link rel="stylesheet" href="../static/css/login.css">
+    <script src="../static/js/user-entry.js"></script>
 {% endblock %}
 {% block title %}
     Registrieren
@@ -14,12 +15,18 @@
                 <input class="form-control" id="username" type="text" name="username"
                        placeholder="Benutzername">
             </div>
+            <p id="username-error" class="text-danger error-message">
+                Benutzername muss zwischen 4 und 30 Zeichen lang sein
+            </p>
             <div class="form-group">
                 <input class="form-control" id="password" type="password" name="password"
                        placeholder="Passwort">
             </div>
+            <p id="password-error" class="text-danger error-message">
+                Passwort muss wenigstens 8 Zeichen lang sein
+            </p>
             <input type="hidden" name="route" value="/">
-            <button type="submit" class="btn form-control">Registrieren</button>
+            <button type="submit" class="btn form-control" disabled>Registrieren</button>
         </form>
     </div>
 {% endblock %}
