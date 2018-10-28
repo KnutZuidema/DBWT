@@ -51,12 +51,12 @@ nav .btn {
     margin: auto 0;
 }
 
-form p {
+.form-title {
     margin: -1.8em auto 1em;
     text-align: center;
 }
 
-form p span {
+.form-title span {
     background: lightgray;
     padding: 0.5em;
 }
