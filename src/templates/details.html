@@ -24,8 +24,8 @@
         <div class="col-3">
             {% if not current_user.authenticated %}
                 <div class="col" id="login">
-                    <p class="form-title"><span>Login</span></p>
-                    <form method="post" action="/login">
+                    <form method="post" action="/login" class="form">
+                        <p class="form-title"><span>Login</span></p>
                         <div class="form-group">
                             <input type="text" name="username" class="form-control"
                                    placeholder="Benutzername">
