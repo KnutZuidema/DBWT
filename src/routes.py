@@ -67,11 +67,15 @@ def init_app():
             return render_template('register.html')
         username = request.form.get('username')
         password = request.form.get('password')
+        if not 4 < len(username) < 30:
+            return "Benutzername muss zwischen 4 und 30 Zeichen lang sein"
+        if len(password) < 8:
+            return "Passwort muss mindestens 8 Zeichen lang sein"
         route = request.form.get('route')
         sql_session = SQLSession(sql_config)
         user = sql_session.get_user(username)
         if user:
-            return 'User existiert bereits'
+            return 'Benutzername existiert bereits'
         hash = argon2.hash(password)
         sql_session.add(User(name=username, password=hash))
         sql_session.commit()

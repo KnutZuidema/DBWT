@@ -48,7 +48,7 @@
         "Zucker": "100g",
         "Mehl": "400g"
       },
-      "available": true,
+      "available": false,
       "vegetarian": true,
       "vegan": true
     },
