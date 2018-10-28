@@ -50,3 +50,13 @@ nav .btn {
     font-size: 1em;
     margin: auto 0;
 }
+
+form p {
+    margin: -1.8em auto 1em;
+    text-align: center;
+}
+
+form p span {
+    background: lightgray;
+    padding: 0.5em;
+}

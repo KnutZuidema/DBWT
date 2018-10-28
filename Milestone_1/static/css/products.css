@@ -23,21 +23,10 @@
 #filter form {
     border: 1px solid black;
     border-radius: 0.2em;
-    padding: 5%;
-    margin-top: -11%;
+    padding: 1em;
 }
 
-#filter p {
-    text-align: center;
-    white-space: nowrap;
-}
-
-#content p span {
-    background: lightgray;
-    padding: 0 0.5em;
-}
-
-#filter form * {
+#filter form :not(:first-child) {
     margin: 5% 0;
 }
 
