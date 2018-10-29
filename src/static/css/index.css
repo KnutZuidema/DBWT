@@ -1,12 +1,12 @@
 #image_banner {
-    height: 25vh;
+    height: 13em;
     width: 100%;
     background: teal url(../assets/top_banner.jpg);
     background-size: cover;
 }
 
 #image_bottom {
-    height: 20vh;
+    height: 10em;
     width: 100%;
     background: teal url(../assets/bottom_banner.jpg);
     background-size: cover;
