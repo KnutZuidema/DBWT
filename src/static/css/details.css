@@ -5,14 +5,16 @@
     border-radius: 0.3em;
 }
 
-#order_button {
-    width: 100%;
-}
+@media (min-width: 992px) {
+    #order_row {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
 
-#order_row {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+    #order_button {
+        width: 100%;
+    }
 }
 
 .price {

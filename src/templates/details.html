@@ -9,10 +9,10 @@
 {% endblock %}
 {% block content %}
     <div class="row">
-        <div class="col-7 offset-3" id="title">
+        <div class="col-md-7 offset-md-3 col-12" id="title">
             <h1>Details für "{{ product.name }}"</h1>
         </div>
-        <div class="col-2 price">
+        <div class="col-2 price d-lg-flex d-none">
             {% if current_user.authenticated %}
                 Mitglieds-Preis
             {% else %}
@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3">
+        <div class="col-lg-3 col-md-4 col-12 order-md-first order-last">
             {% if not current_user.authenticated %}
                 <div class="col" id="login">
                     <form method="post" action="/login" class="form">
@@ -43,10 +43,10 @@
                 </div>
             {% endif %}
         </div>
-        <div class="col-7" id="banner"
+        <div class="col-lg-7 col-md-8 col-12" id="banner"
              style="background-image: url(/static/assets/{{ product.image }});"></div>
-        <div class="col-2">
-            <div class="row">
+        <div class="col-lg-2 col-12 my-lg-0 my-4">
+            <div class="row d-lg-flex d-none">
                 <div class="col price">
                     {% if current_user.authenticated %}
                         {{ product.price - 2 }}€
@@ -55,8 +55,8 @@
                     {% endif %}
                 </div>
             </div>
-            <div class="row my-auto" id="order_row">
-                <div class="col">
+            <div class="row" id="order_row">
+                <div class="col text-right">
                     <button class="btn" id="order_button">
                         <i class="fas fa-utensils"></i>
                         Vorbestellen
@@ -66,13 +66,13 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3">
+        <div class="col-md-3 col-12">
             {% if not current_user.authenticated %}
                 Melden Sie sich jetzt an,
                 um die wirklich viel günstigeren Preise für Mitarbeiter oder Studenten zu sehen.
             {% endif %}
         </div>
-        <div class="col-7">
+        <div class="col-md-7 col-12">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="tab" href="#description"
