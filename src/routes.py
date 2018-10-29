@@ -42,7 +42,7 @@ def init_app():
             return render_template('login.html')
         username = request.form.get('username')
         password = request.form.get('password')
-        route = request.args.get('route', '/')
+        route = request.form.get('route', '/')
         user = sql_session.get_user(username)
         if not user:
             return render_template('bad_login.html')

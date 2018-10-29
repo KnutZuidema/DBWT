@@ -18,7 +18,7 @@
                 <input class="form-control" id="password" type="password" name="password"
                        placeholder="Passwort">
             </div>
-            <input type="hidden" name="route" value="/">
+            <input type="hidden" name="route" value="{{ request.args.get('route', '/') }}">
             <button type="submit" class="btn form-control">Anmelden</button>
         </form>
     </div>
