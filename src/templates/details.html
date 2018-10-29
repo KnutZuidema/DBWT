@@ -24,7 +24,7 @@
         <div class="col-lg-3 col-md-4 col-12 order-md-first order-last">
             {% if not current_user.authenticated %}
                 <div class="col" id="login">
-                    <form method="post" action="/login?route={{ request.path }}" class="form">
+                    <form method="post" action="/login" class="form">
                         <p class="form-title"><span>Login</span></p>
                         <div class="form-group">
                             <input type="text" name="username" class="form-control"
@@ -34,6 +34,7 @@
                             <input type="password" name="password" class="form-control"
                                    placeholder="Passwort">
                         </div>
+                        <input type="hidden" name="route" value="{{ request.path }}">
                         <button type="submit" class="btn">
                             <i class="fas fa-sign-in-alt"></i>
                             Anmelden
