@@ -46,23 +46,17 @@
         <div class="col-lg-7 col-md-8 col-12" id="banner"
              style="background-image: url(/static/assets/{{ product.image }});"></div>
         <div class="col-lg-2 col-12 my-lg-0 my-4">
-            <div class="row d-lg-flex d-none">
-                <div class="col price">
-                    {% if current_user.authenticated %}
-                        {{ product.price - 2 }}€
-                    {% else %}
-                        {{ product.price }}€
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row" id="order_row">
-                <div class="col text-right">
-                    <button class="btn" id="order_button">
-                        <i class="fas fa-utensils"></i>
-                        Vorbestellen
-                    </button>
-                </div>
-            </div>
+            <span class="price d-lg-flex d-inline-block">
+            {% if current_user.authenticated %}
+                {{ product.price - 2 }}€
+            {% else %}
+                {{ product.price }}€
+            {% endif %}
+            </span>
+            <button class="btn" id="order_button">
+                <i class="fas fa-utensils"></i>
+                Vorbestellen
+            </button>
         </div>
     </div>
     <div class="row">

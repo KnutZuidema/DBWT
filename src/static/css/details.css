@@ -6,20 +6,15 @@
 }
 
 @media (min-width: 992px) {
-    #order_row {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-    }
-
     #order_button {
         width: 100%;
+        position: absolute;
+        bottom: 0;
     }
 }
 
 .price {
     text-align: right;
-    display: flex;
     align-items: end;
     justify-content: flex-end;
     font-size: 1.5em;
