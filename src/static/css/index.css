@@ -1,14 +1,14 @@
 #image_banner {
     height: 13em;
     width: 100%;
-    background: teal url(../assets/top_banner.jpg);
+    background: teal url(../assets/top_banner.jpg) center;
     background-size: cover;
 }
 
 #image_bottom {
     height: 10em;
     width: 100%;
-    background: teal url(../assets/bottom_banner.jpg);
+    background: teal url(../assets/bottom_banner.jpg) center;
     background-size: cover;
 }
 
