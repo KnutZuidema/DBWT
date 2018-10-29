@@ -74,8 +74,8 @@
                         <i class="fas fa-sign-out-alt"></i>
                     </a>
                 {% else %}
-                    <a class="btn" href="/login" data-toggle="popover" data-trigger="hover"
-                       data-placement="bottom" data-content="Anmelden">
+                    <a class="btn" href="/login?route={{ request.path }}" data-toggle="popover"
+                       data-trigger="hover" data-placement="bottom" data-content="Anmelden">
                         <i class="fas fa-sign-in-alt"></i>
                     </a>
                 {% endif %}
@@ -95,7 +95,7 @@
             </div>
             <ul class="col-md-10 col-12" id="links">
                 {% if not current_user.authenticated %}
-                    <li><a href="/login">Anmelden</a></li>
+                    <li><a href="/login?route={{ request.path }}">Anmelden</a></li>
                     <li><a href="/register">Registrieren</a></li>
                 {% else %}
                     <li><a href="/logout?route={{ request.path }}">Abmelden</a></li>
