@@ -97,6 +97,8 @@
                 {% if not current_user.authenticated %}
                     <li><a href="/login">Anmelden</a></li>
                     <li><a href="/register">Registrieren</a></li>
+                {% else %}
+                    <li><a href="/logout?route={{ request.path }}">Abmelden</a></li>
                 {% endif %}
                 <li><a href="#">Zutatenliste</a></li>
                 <li><a href="/impressum">Impressum</a></li>
