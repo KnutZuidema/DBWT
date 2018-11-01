@@ -20,7 +20,7 @@ def init_login(app: Flask, config: dict):
         authenticated = False
         if username and is_argon2_hash(hash):
             sql_session = SQLSession(config)
-            user = sql_session.get_user(username)
+            user = sql_session.get_user_by_name(username)
             authenticated = argon2.verify(user.password, hash)
         current_user = User(authenticated, username)
         return {'current_user': current_user}

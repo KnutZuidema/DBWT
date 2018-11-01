@@ -43,7 +43,7 @@ def init_app():
         username = request.form.get('username')
         password = request.form.get('password')
         route = request.form.get('route', '/')
-        user = sql_session.get_user(username)
+        user = sql_session.get_user_by_name(username)
         if not user:
             return render_template('bad_login.html')
         if not argon2.verify(password, user.password):
@@ -73,7 +73,7 @@ def init_app():
             return "Passwort muss mindestens 8 Zeichen lang sein"
         route = request.form.get('route')
         sql_session = SQLSession(sql_config)
-        user = sql_session.get_user(username)
+        user = sql_session.get_user_by_name(username)
         if user:
             return 'Benutzername existiert bereits'
         hash = argon2.hash(password)

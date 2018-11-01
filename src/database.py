@@ -22,7 +22,7 @@ class SQLSession:
     def commit(self):
         self.session.commit()
 
-    def get_user(self, name: str):
+    def get_user_by_name(self, name: str):
         return self.session.query(User).filter(User.name == name).first()
 
 
