@@ -25,6 +25,9 @@ class SQLSession:
     def get_user_by_name(self, name: str):
         return self.session.query(User).filter(User.name == name).first()
 
+    def get_user_by_id(self, id: int):
+        return self.session.query(User).filter(User.id == id).first()
+
 
 Model = declarative_base()
 
