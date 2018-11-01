@@ -3,7 +3,7 @@ import re
 from flask import Flask, request
 from passlib.hash import argon2
 
-from database import SQLSession
+from .database import SQLSession
 
 
 class User:
