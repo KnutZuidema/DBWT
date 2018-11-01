@@ -84,4 +84,25 @@ def init_app():
         response.set_cookie('hash', argon2.hash(hash))
         return response
 
+    @app.route('/products/<int:id>/edit', methods=['GET', 'POST'])
+    def edit_product(id: int):
+        with open('data/products.json', encoding='utf-8') as file:
+            products = json.load(file)['products']
+        product = products[id]
+        if request.method == 'GET':
+            return render_template('edit_product.html', product=product)
+        description = request.form.get('description')
+        if description:
+            products[id]['description'] = description
+            response = redirect(f'/products/{id}')
+        else:
+            ingredient = request.form.get('ingredient')
+            amount = request.form.get('amount')
+            if ingredient and amount:
+                products[id]['ingredients'][ingredient] = amount
+            response = render_template('edit_product.html', product=product, ingredients=True)
+        with open('data/products.json', 'w') as file:
+            json.dump({'products': products}, file)
+        return response
+
     return app
