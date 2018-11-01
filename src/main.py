@@ -1,4 +1,4 @@
-from .routes import init_app
+from src.routes import init_app
 
 if __name__ == '__main__':
     app = init_app()

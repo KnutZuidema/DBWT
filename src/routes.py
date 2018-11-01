@@ -3,8 +3,8 @@ import json
 from flask import Flask, render_template, request, redirect, make_response
 from passlib.hash import argon2
 
-from .database import SQLSession, User
-from .login import init_login
+from src.database import SQLSession, User
+from src.login import init_login
 
 
 def init_app():
