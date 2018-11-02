@@ -1,10 +1,9 @@
 import json
 
+from database import SQLSession, User
 from flask import Flask, render_template, request, redirect, make_response
+from login import init_login
 from passlib.hash import argon2
-
-from src.database import SQLSession, User
-from src.login import init_login
 
 
 def init_app():

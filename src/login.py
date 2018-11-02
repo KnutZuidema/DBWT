@@ -1,9 +1,8 @@
 import re
 
+from database import SQLSession
 from flask import Flask, request
 from passlib.hash import argon2
-
-from src.database import SQLSession
 
 
 class User:
