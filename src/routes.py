@@ -1,9 +1,10 @@
 import json
 
-from database import SQLSession, User
 from flask import Flask, render_template, request, redirect, make_response
-from login import init_login
 from passlib.hash import argon2
+
+from database import SQLSession, User
+from login import init_login
 
 
 def init_app():
@@ -91,14 +92,13 @@ def init_app():
         if request.method == 'GET':
             return render_template('edit_product.html', product=product)
         description = request.form.get('description')
+        ingredient = request.form.get('ingredient')
+        amount = request.form.get('amount')
         if description:
             products[id]['description'] = description
-            response = redirect(f'/products/{id}')
-        else:
-            ingredient = request.form.get('ingredient')
-            amount = request.form.get('amount')
-            if ingredient and amount:
-                products[id]['ingredients'][ingredient] = amount
+            response = render_template('edit_product.html', product=product)
+        elif ingredient and amount:
+            products[id]['ingredients'][ingredient] = amount
             response = render_template('edit_product.html', product=product, ingredients=True)
         with open('data/products.json', 'w') as file:
             json.dump({'products': products}, file)
