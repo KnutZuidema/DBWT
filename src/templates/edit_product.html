@@ -16,25 +16,26 @@
         <div class="col-md-8 offset-md-2 col-12 offset-0">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <a class="nav-link {% if not ingredients %}active{% endif %}" data-toggle="tab"
-                       href="#description">
+                    <a class="nav-link{% if not ingredients and not image %} active{% endif %}"
+                       data-toggle="tab" href="#description">
                         Beschreibung
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {% if ingredients %}active{% endif %}" data-toggle="tab"
+                    <a class="nav-link{% if ingredients %} active{% endif %}" data-toggle="tab"
                        href="#ingredients">
                         Zutaten
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#image">
+                    <a class="nav-link{% if image %} active{% endif %}" data-toggle="tab"
+                       href="#image">
                         Bild
                     </a>
                 </li>
             </ul>
             <div class="tab-content">
-                <div class="tab-pane {% if not ingredients %}show active{% endif %}"
+                <div class="tab-pane{% if not ingredients and not image %} show active{% endif %}"
                      id="description">
                     <form method="post" action="{{ request.path }}">
                         <div class="form-group">
@@ -44,7 +45,7 @@
                         <button class="btn" type="submit">Speichern</button>
                     </form>
                 </div>
-                <div class="tab-pane {% if ingredients %}show active{% endif %}" id="ingredients">
+                <div class="tab-pane{% if ingredients %} show active{% endif %}" id="ingredients">
                     <form class="form-inline" method="post" action="{{ request.path }}">
                         <div class="form-group col-sm-5 col-4">
                             <input type="text" class="form-control" title="Zutat"
@@ -76,13 +77,12 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="tab-pane" id="image">
-                    <img src="{{ product.image }}">
-                    <form method="post" action="{{ request.path }}">
+                <div class="tab-pane{% if image %} show active{% endif %}" id="image">
+                    <img src="/static/assets/{{ product.image }}">
+                    <form method="post" action="{{ request.path }}" enctype="multipart/form-data">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile"
-                                   accept="image/png,image/jpg">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
+                            <label class="custom-file-label">Choose File</label>
+                            <input class="custom-file-input" type="file" name="image">
                         </div>
                         <button class="btn" type="submit">Speichern</button>
                     </form>

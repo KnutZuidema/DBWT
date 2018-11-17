@@ -49,7 +49,7 @@
                                 {% if product.available %}available{% endif %}
                                 {% if product.vegetarian %}vegetarian{% endif %}
                                 {% if product.vegan %}vegan{% endif %}">
-                        <a class="card-link" href="/products/{{ loop.index0 }}">
+                        <a class="card-link" href="/products/{{ product.index }}">
                             <img class="card-img-top" src="/static/assets/{{ product.image }}">
                         </a>
                         <div class="card-body">

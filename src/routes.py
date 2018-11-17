@@ -1,4 +1,9 @@
 import json
+import uuid
+from collections import namedtuple
+from datetime import date
+from os.path import join
+from pathlib import Path
 
 from flask import Flask, render_template, request, redirect, make_response
 from passlib.hash import argon2
@@ -11,7 +16,7 @@ def init_app():
     app = Flask('eMensa')
     app.config['SECRET_KEY'] = 'secret'
     sql_config = {
-        "sqlalchemy.url": "sqlite:///eMensa.db"
+        "sqlalchemy.url": "mysql+pymysql://root:password@localhost/emensa"
     }
     init_login(app, sql_config)
 
@@ -21,15 +26,26 @@ def init_app():
 
     @app.route('/products')
     def products():
-        with open('data/products.json', encoding='utf-8') as file:
-            products = json.load(file)['products']
+        sql_session = SQLSession(sql_config)
+        Product = namedtuple('Product', ['name', 'image', 'index', 'available'])
+        products = sql_session.execute('select m.description, i.file_path, m.id, m.available '
+                                       'from image i join meal m '
+                                       'on(m.id, i.id) in (select * from meal_image_relation)')
+        products = list(products)
+        for index, product in enumerate(products):
+            products[index] = Product(*product)
         return render_template('products.html', products=products)
 
     @app.route('/products/<int:id>')
     def details(id: int):
-        with open('data/products.json', encoding='utf-8') as file:
-            products = json.load(file)['products']
-        return render_template('details.html', product=products[id])
+        sql_session = SQLSession(sql_config)
+        Product = namedtuple('Product', ['name', 'image'])
+        product = sql_session.execute('select m.description, i.file_path '
+                                      'from image i join meal m '
+                                      'on(m.id, i.id) in (select * from meal_image_relation) '
+                                      'where m.id = %s', (id,))[0]
+        product = Product(*product)
+        return render_template('details.html', product=product)
 
     @app.route('/impressum')
     def impressum():
@@ -67,7 +83,7 @@ def init_app():
             return render_template('register.html')
         username = request.form.get('username')
         password = request.form.get('password')
-        if not 4 < len(username) < 30:
+        if not 4 <= len(username) <= 30:
             return "Benutzername muss zwischen 4 und 30 Zeichen lang sein"
         if len(password) < 8:
             return "Passwort muss mindestens 8 Zeichen lang sein"
@@ -88,20 +104,41 @@ def init_app():
     def edit_product(id: int):
         with open('data/products.json', encoding='utf-8') as file:
             products = json.load(file)['products']
-        product = products[id]
         if request.method == 'GET':
-            return render_template('edit_product.html', product=product)
+            return render_template('edit_product.html', product=products[id])
         description = request.form.get('description')
         ingredient = request.form.get('ingredient')
         amount = request.form.get('amount')
+        file = request.files.get('image')
         if description:
             products[id]['description'] = description
-            response = render_template('edit_product.html', product=product)
+            response = render_template('edit_product.html', product=products[id])
         elif ingredient and amount:
             products[id]['ingredients'][ingredient] = amount
-            response = render_template('edit_product.html', product=product, ingredients=True)
+            response = render_template('edit_product.html', product=products[id], ingredients=True)
+        elif file:
+            filename = f'{uuid.uuid4()}.image'
+            pathname = f'{date.today().year}/{date.today().month}/{date.today().day}'
+            products[id]['image'] = f'{pathname}/{filename}'
+            Path(join('static', 'assets', pathname)).mkdir(parents=True, exist_ok=True)
+            file.save(join('static', 'assets', pathname, filename))
+            response = render_template('edit_product.html', product=products[id], image=True)
+        else:
+            response = 'Bad Request'
         with open('data/products.json', 'w') as file:
             json.dump({'products': products}, file)
         return response
+
+    @app.route('/ingredients')
+    def ingredients():
+        sql_session = SQLSession(sql_config)
+        Ingredient = namedtuple('Ingriedient', ['name', 'organic', 'vegetarian', 'vegan',
+                                                'gluten_free'])
+        ingredients = sql_session.execute('select name, organic, vegetarian, vegan, gluten_free '
+                                          'from ingredient')
+        ingredients = list(ingredients)
+        for index, ingredient in enumerate(ingredients):
+            ingredients[index] = Ingredient(*ingredient)
+        return render_template('ingredients.html', ingredients=ingredients)
 
     return app

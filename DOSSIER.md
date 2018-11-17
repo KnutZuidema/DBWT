@@ -5,6 +5,9 @@
   * [Frage 1](#frage-1)
   * [Frage 2](#frage-2)
   * [Frage 3](#frage-3)
+* [Meilenstein 2](#meilenstein-2)
+  * [Frage 4](#frage-4)
+  * [Frage 5](#frage-5)
 
 ## Meilenstein 1
 
@@ -53,9 +56,8 @@ Um Elemente als nicht auswaehlbar zu definieren, kann dem `<option>` Element das
 
 ### Frage 3
 
-Welche Attribute für Elemente solcher
-Drop-Down/Auswahllisten erscheinen
-Ihnen außerdem noch nutzbringend?
+Welche Attribute für Elemente solcher Drop-Down/Auswahllisten erscheinen Ihnen
+außerdem noch nutzbringend?
 
 ### Antwort
 
@@ -76,3 +78,71 @@ Attribut|Wert|Anwendung
 `label`|text|Ein kurzes Label fuer eine Option
 `selected`|none|Option wird beim Laden der Seite ausgewaehlt
 `value`|text|Wert der uebermittelt werden soll
+
+## Meilenstein 2
+
+### Frage 4
+
+Welcher Datentyp eignet sich um festgelegte Werte in einem Feld anzugeben?
+
+### Antwort
+
+Man kann entweder ein `enum` verwenden oder einen neuen `table` anlegen und den festzulegenden
+Wert als `foreign key` verwenden
+
+### Frage 5
+
+Wie werden die binären Relationstypen abgebildet?
+
+### Antwort
+
+Relationstyp|Abbildung
+:---:|---
+1:1|`foreign key` mit `unique` constraint
+1:M|`foreign key` in `M` Menge
+N:M|`table` mit `foreign key` zu beiden Mengen
+
+### Frage 6
+
+Was ist der Unterschied zwischen einem `table constraint` und einem `column constraint` und wann
+sollte welcher benutzt werden?
+
+### Antwort
+
+Ein `table constraint` wird bei jedem Update im `table` geprüft, ein `column constraint` wird
+nur grprüft, wenn ein Wert in der Spalte geändert wird.  
+`table constraint`s machen Sinn falls ein `check` von mehr als einem Wert abhängen.
+
+### Frage 7
+
+Welche `constraint`s dienen welchem Zweck in MariaDB?
+
+### Antwort
+
+##### Foreign Key
+
+Stellt sicher, dass der Wert in dem angegebenen `table` existiert.
+
+##### Check
+
+Überprüft, ob das angegebene Statement `true` zurückgibt
+
+### Frage 8
+
+Wie kann der Aufzählungstyp `enum` in anderen SQL-Dialekten implementiert werden?
+
+### Antwort
+
+```sql
+create table enumeration(
+  enum varchar(4) not null check (enum in ('ET', 'INF', 'WI', 'MCD'))
+)
+```
+
+### Frage 9
+
+Was bewirkt das Semikolon am Ende einer Zeile?
+
+### Antwort
+
+Das Semikolon schließt eine Anweisung ab

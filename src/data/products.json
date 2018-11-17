@@ -29,7 +29,7 @@
     {
       "name": "Currywurst",
       "description": "Eine typische deutsche Currywurst. Dazu gibt es Pommes Frites.",
-      "image": "currywurst.jpg",
+      "image": "2018/11/5/acfb7657-3b19-469f-8002-66115c06be0d.image",
       "price": 5.95,
       "ingredients": {
         "Zucker": "100g",
@@ -41,7 +41,7 @@
     },
     {
       "name": "Falafel",
-      "description": "Eine Spezialität aus dem mittleren Osten. Wird aus Saubohnen und Kichererbsen gemacht",
+      "description": "Eine Spezialit\u00e4t aus dem mittleren Osten. Wird aus Saubohnen und Kichererbsen gemacht",
       "image": "falafel.jpg",
       "price": 5.95,
       "ingredients": {
@@ -53,8 +53,8 @@
       "vegan": true
     },
     {
-      "name": "Käsestulle",
-      "description": "Ein einfaches Brot mit Käse und Salat. Gut zum mitnehmen.",
+      "name": "K\u00e4sestulle",
+      "description": "Ein einfaches Brot mit K\u00e4se und Salat. Gut zum mitnehmen.",
       "image": "kaesestulle.jpg",
       "price": 5.95,
       "ingredients": {
@@ -67,8 +67,8 @@
     },
     {
       "name": "Krautsalat",
-      "description": "Eine leckere Beilage oder Zwischenmahlzeit, auch für Vegetarier.",
-      "image": "krautsalat.jpg",
+      "description": "Eine leckere Beilage oder Zwischenmahlzeit, auch f\u00fcr Vegetarier.",
+      "image": "2018/11/5\\8eaf83eb-dd8b-4a56-a44e-fbdb763a2b90.image",
       "price": 5.95,
       "ingredients": {
         "Zucker": "100g",
@@ -93,7 +93,7 @@
     },
     {
       "name": "Spiegel-Ei",
-      "description": "Das typische Frühstück, hier mit Bacon-Streifen.",
+      "description": "Das typische Fr\u00fchst\u00fcck, hier mit Bacon-Streifen.",
       "image": "spiegelei.jpg",
       "price": 5.95,
       "ingredients": {

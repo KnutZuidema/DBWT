@@ -28,6 +28,12 @@ class SQLSession:
     def get_user_by_id(self, id: int):
         return self.session.query(User).filter(User.id == id).first()
 
+    def execute(self, statement: str, insert: tuple = tuple()):
+        connection = self.engine.connect()
+        result = connection.execute(statement, insert).cursor.fetchall()
+        connection.close()
+        return result
+
 
 Model = declarative_base()
 
@@ -36,17 +42,17 @@ class User(Model):
     __tablename__ = 'users'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(String, unique=True, nullable=False)
-    password = Column(String, nullable=False)
+    name = Column(String(30), unique=True, nullable=False)
+    password = Column(String(76), nullable=False)
 
 
 class Product(Model):
     __tablename__ = 'products'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(String)
-    description = Column(String)
-    image_path = Column(String)
+    name = Column(String(32))
+    description = Column(String(1024))
+    image_path = Column(String(256))
     price = Column(Float)
     available = Column(Boolean)
 
@@ -55,6 +61,6 @@ class Ingredient(Model):
     __tablename__ = 'ingredients'
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    name = Column(String)
+    name = Column(String(32))
     amount = Column(Float)
     product_id = Column(Integer, ForeignKey('products.id'))
