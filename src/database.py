@@ -30,9 +30,14 @@ class SQLSession:
 
     def execute(self, statement: str, insert: tuple = tuple()):
         connection = self.engine.connect()
-        result = connection.execute(statement, insert).cursor.fetchall()
+        query = connection.execute(statement, insert)
+        keys = query.keys()
+        values = query.fetchall()
         connection.close()
-        return result
+        query = []
+        for value in values:
+            query.append(dict(zip(keys, value)))
+        return query
 
 
 Model = declarative_base()
