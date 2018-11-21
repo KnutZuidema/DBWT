@@ -1,6 +1,5 @@
 import json
 import uuid
-from collections import namedtuple
 from datetime import date
 from os.path import join
 from pathlib import Path
@@ -27,24 +26,18 @@ def init_app():
     @app.route('/products')
     def products():
         sql_session = SQLSession(sql_config)
-        Product = namedtuple('Product', ['name', 'image', 'index', 'available'])
         products = sql_session.execute('select m.description, i.file_path, m.id, m.available '
                                        'from image i join meal m '
                                        'on(m.id, i.id) in (select * from meal_image_relation)')
-        products = list(products)
-        for index, product in enumerate(products):
-            products[index] = Product(*product)
         return render_template('products.html', products=products)
 
     @app.route('/products/<int:id>')
     def details(id: int):
         sql_session = SQLSession(sql_config)
-        Product = namedtuple('Product', ['name', 'image'])
         product = sql_session.execute('select m.description, i.file_path '
                                       'from image i join meal m '
                                       'on(m.id, i.id) in (select * from meal_image_relation) '
                                       'where m.id = %s', (id,))[0]
-        product = Product(*product)
         return render_template('details.html', product=product)
 
     @app.route('/impressum')
@@ -132,13 +125,8 @@ def init_app():
     @app.route('/ingredients')
     def ingredients():
         sql_session = SQLSession(sql_config)
-        Ingredient = namedtuple('Ingriedient', ['name', 'organic', 'vegetarian', 'vegan',
-                                                'gluten_free'])
         ingredients = sql_session.execute('select name, organic, vegetarian, vegan, gluten_free '
                                           'from ingredient')
-        ingredients = list(ingredients)
-        for index, ingredient in enumerate(ingredients):
-            ingredients[index] = Ingredient(*ingredient)
         return render_template('ingredients.html', ingredients=ingredients)
 
     return app

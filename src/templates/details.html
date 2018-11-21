@@ -5,12 +5,12 @@
     <script src="../static/js/details.js"></script>
 {% endblock %}
 {% block title %}
-    {{ product.name }}
+    {{ product.description }}
 {% endblock %}
 {% block content %}
     <div class="row">
         <div class="col-md-7 offset-md-3 col-12" id="title">
-            <h1>Details für "{{ product.name }}"</h1>
+            <h1>Details für "{{ product.description }}"</h1>
         </div>
         <div class="col-2 price d-lg-flex d-none">
             {% if current_user.authenticated %}
@@ -44,7 +44,7 @@
             {% endif %}
         </div>
         <div class="col-lg-7 col-md-8 col-12" id="banner"
-             style="background-image: url(/static/assets/{{ product.image }});"></div>
+             style="background-image: url(/static/assets/{{ product.file_path }});"></div>
         <div class="col-lg-2 col-12 my-lg-0 my-4">
             <span class="price d-lg-flex d-inline-block">
             {% if current_user.authenticated %}
