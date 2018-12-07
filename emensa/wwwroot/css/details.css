@@ -1,0 +1,34 @@
+#banner {
+    background: teal center;
+    background-size: cover;
+    min-height: 10em;
+    border-radius: 0.3em;
+}
+
+@media (min-width: 992px) {
+    #order_button {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+    }
+}
+
+.price {
+    text-align: right;
+    align-items: end;
+    justify-content: flex-end;
+    font-size: 1.5em;
+}
+
+#bewertung {
+    background-color: lightgray;
+}
+
+#review button {
+    background-color: teal;
+    color: white;
+}
+
+#description, #review {
+    margin-top: 2%;
+}

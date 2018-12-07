@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title - E-Mensa</title>
+    @Html.Partial("_Stylesheets")
+    @RenderSection("Stylesheets", required: false)
+</head>
+<body>
+@Html.Partial("_Navbar")
+<div class="container">
+    @RenderBody()
+    @Html.Partial("_Footer")
+</div>
+@Html.Partial("_Scripts")
+@RenderSection("Scripts", required: false)
+</body>
+</html>

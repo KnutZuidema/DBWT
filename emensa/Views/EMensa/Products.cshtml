@@ -1,0 +1,104 @@
+@model ProductsModel
+@{
+    ViewBag.Title = "Products";
+    Layout = "_Layout";
+}
+
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/products.css">
+}
+
+@section Scripts{
+    <script src="~/js/products.js"></script>
+}
+
+<div class="row">
+    <div class="col">
+        <h1 class="text-center" id="title">Verfügbare Speisen (Bestseller)</h1>
+    </div>
+</div>
+<div class="row" id="content">
+    <div class="col-lg-3 col-12" id="filter">
+        <form class="form">
+            <p class="form-title">
+                <span>Speisenliste filtern</span>
+            </p>
+            <div class="form-group">
+                <select class="custom-select" title="Kategorie">
+                    <option value="0">Alle</option>
+                    @foreach (var category in Model.Categories)
+                    {
+                        if (category.Parent is null)
+                        {
+                            <optgroup label="@category.Name">
+                                @foreach (var subcategory in Model.Categories)
+                                {
+                                    if (subcategory.Parent != null && category.Id == subcategory.Parent.Id)
+                                    {
+                                        <option value="@subcategory.Id">@subcategory.Name</option>
+                                    }
+                                }
+                            </optgroup>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="available">
+                <label class="custom-control-label" for="available">verfügbar</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="vegetarian">
+                <label class="custom-control-label" for="vegetarian">vegetarisch</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="vegan">
+                <label class="custom-control-label" for="vegan">vegan</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="gluten_free">
+                <label class="custom-control-label" for="gluten_free">glutenfrei</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="organic">
+                <label class="custom-control-label" for="organic">Bio</label>
+            </div>
+            <button type="submit" class="form-control btn">Speisen filtern</button>
+        </form>
+    </div>
+    <div class="col-lg-9 col-12 text-center" id="items">
+        <div class="row">
+            @foreach (var (meal, image) in Model.Meals)
+            {
+                <div class="card col-md-3 col-12 py-2 
+                @if (meal.Available)
+                {
+                    @("available")
+                } 
+                @if (meal.Vegetarian)
+                {
+                    @("vegetarian")
+                } 
+                @if (meal.Vegan)
+                {
+                    @("vegan")
+                } 
+                @if (meal.Organic)
+                {
+                    @("organic")
+                } 
+                @if (meal.GlutenFree)
+                {
+                    @("gluten_free")
+                } category-@meal.Category.Id">
+                    <a class="card-link" href="/products/@meal.Id">
+                        <img class="card-img-top" src="~/images/@image.FilePath">
+                    </a>
+                    <div class="card-body">
+                        <p class="card-text">@meal.Name</p>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

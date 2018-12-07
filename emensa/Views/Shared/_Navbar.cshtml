@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-lg navbar-dark mb-5">
+    <a class="navbar-brand" href="/">
+        <h1>e-Mensa</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar_content">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbar_content">
+        <ul class="navbar-nav mx-auto" id="navbar-links">
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="EMensa" asp-action="Index">Start</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="EMensa" asp-action="Products">Mahlzeiten</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Bestellung</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://fh-aachen.de" target="_blank">FH Aachen</a>
+            </li>
+        </ul>
+        <div class="navbar-nav ml-auto">
+            <form class="form-inline" method="get" action="https://www.google.de/search" target="_blank">
+                <div class="input-group py-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input class="form-control" name="q" type="text" placeholder="Suchen...">
+                </div>
+                <input type="hidden" name="as_sitesearch" value="https://www.fh-aachen.de">
+            </form>
+        </div>
+    </div>
+</nav>

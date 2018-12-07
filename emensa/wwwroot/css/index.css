@@ -1,0 +1,31 @@
+#image_banner {
+    height: 13em;
+    width: 100%;
+    background: teal url(../images/top_banner.jpg) center;
+    background-size: cover;
+}
+
+#image_bottom {
+    height: 10em;
+    width: 100%;
+    background: teal url(../images/bottom_banner.jpg) center;
+    background-size: cover;
+}
+
+#login, #registration {
+    color: white;
+    transition: background-color 200ms;
+    width: 10em;
+}
+
+#login:hover, #registration:hover {
+    background-color: grey;
+}
+
+#registration {
+    background: teal;
+}
+
+#login {
+    background: black;
+}

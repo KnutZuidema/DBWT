@@ -1,0 +1,30 @@
+.card {
+    background: lightgray;
+    border: none;
+}
+
+.card:not(.available) {
+    filter: grayscale(100%);
+}
+
+.card-img-top {
+    background: teal;
+}
+
+.card-body {
+    background-color: darkslategrey;
+}
+
+.card-text {
+    color: white;
+    white-space: nowrap;
+}
+
+#filter button {
+    background-color: teal;
+    color: white;
+}
+
+#title {
+    white-space: pre-wrap;
+}

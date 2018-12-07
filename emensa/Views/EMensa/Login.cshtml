@@ -1,0 +1,34 @@
+@model LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = "_Layout";
+}
+
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/login.css">
+}
+
+<div class="col-md-4 offset-md-4 col-12">
+    <form asp-action="Login" asp-controller="EMensa" class="mx-auto form" id="login">
+        <p class="form-title">
+            <span>Login</span>
+        </p>
+        <div class="form-group">
+            <input class="form-control" id="username" type="text" name="username" placeholder="Benutzername">
+            @if (Model.UserError)
+            {
+                <span>Wrong Username</span>
+            }
+        </div>
+        <div class="form-group">
+            <input class="form-control" id="password" type="password" name="password" placeholder="Passwort">
+            @if (Model.PasswordError)
+            {
+                <span>Wrong Password</span>
+            }
+        </div>
+        <input type="hidden" name="route" value="/">
+        <button type="submit" class="btn form-control">Anmelden</button>
+    </form>
+</div>

@@ -1,0 +1,41 @@
+@{
+    ViewBag.Title = "Index";
+    Layout = "_Layout";
+}
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/index.css"/>
+}
+<div class="row">
+    <div class="col" id="image_banner"></div>
+</div>
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-12" id="disclaimer_beta">
+        Der Dienst e-Mensa ist noch in der beta.
+        Sie können bereits Mahlzeiten durchstöbern, aber noch nicht bestellen.
+    </div>
+    <div class="col-lg-7 col-md-6 col-12 m-auto" id="catchphrase">
+        <h2 class="text-center">Leckere Gerichte vorbestellen</h2>
+        <p class="text-center">... und gemeinsam mit Freunden und Kommilitonen essen</p>
+    </div>
+    <div class="col-md-3 col-12 my-auto" id="user_area">
+        <div class="row">
+            <a href="/register" class="btn ml-md-auto mx-md-0 mx-auto" id="registration">
+                <i class="far fa-hand-point-right"></i>
+                Registrieren
+            </a>
+        </div>
+        <div class="row">
+            <a href="/login" class="btn ml-md-auto mx-md-0 mx-auto" id="login">
+                <i class="fas fa-sign-in-alt"></i>
+                Anmelden
+            </a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-2 col-md-3 col-12" id="registration_disclaimer">
+        Registrieren sie sich hier,
+        um über die Veröffentlichung des Dienstes per Mail informiert zu werden.
+    </div>
+    <div class="col-lg-10 col-md-9 col-12" id="image_bottom"></div>
+</div>

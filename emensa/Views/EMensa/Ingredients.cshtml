@@ -1,0 +1,69 @@
+@model List<Ingredient>
+
+@{
+    ViewBag.Title = "Zutaten";
+    Layout = "_Layout";
+}
+
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/ingredients.css"/>
+}
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Zutat</th>
+        <th class="text-center">Vegetarisch</th>
+        <th class="text-center">Vegan</th>
+        <th class="text-center">Glutenfrei</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var ingredient in Model)
+    {
+        <tr>
+            <td>
+                <a href="https://www.google.de/search?q=@ingredient.Name" target="_blank"
+                   title="Nach @ingredient.Name bei Google suchen">
+                    @ingredient.Name
+                </a>
+                @if (ingredient.Organic)
+                {
+                    <img class="font-image" src="data:image/svg+xml;base64,
+PHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgdmlld0JveD0iMCAwIDg5Ljg1MyA4OS44NTMiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDg5Ljg1MyA4OS44NTM7IiB4bWw6c3BhY2U9InByZXNlcnZlIiBjbGFzcz0iIj48ZyB0cmFuc2Zvcm09Im1hdHJpeCgxLCAwLCAwLCAxLCAwLCAtNSkiPjxnPgoJPGc+CgkJPHBhdGggZD0iTTIwLjU1LDYwLjgxMXYtMC4yNzdjMi4yNzEtMC40LDQuMDA1LTEuMzgzLDUuMjEzLTIuOTMzYzEuMjEzLTEuNTU4LDEuODA5LTMuNTA1LDEuODA5LTUuODQyICAgIGMwLTMuNDc3LTEuMjI3LTYuMDE3LTMuNjg0LTcuNjI0Yy0yLjQ1Ni0xLjYxMi02LjQ1NC0yLjQxNy0xMS45NzgtMi40MTdIMHY0MC4xMTFoMTQuNDkxYzQuNDc1LDAsNy45NzktMS4wMiwxMC40OTEtMy4wNiAgICBjMi41MjEtMi4wMzksMy43NzEtNC44NjIsMy43NzEtOC40NjNjMC0yLjY3Mi0wLjY1OS00Ljc4Ny0xLjk4My02LjM1NEMyNS40NDIsNjIuMzgxLDIzLjM2Nyw2MS4zMzgsMjAuNTUsNjAuODExeiBNNi41NTcsNDcuMiAgICBoNS42ODFjMi45NTcsMCw1LjEyNiwwLjQxOCw2LjQ5LDEuMjZjMS4zNjksMC44NDIsMi4wNDYsMi4yMDQsMi4wNDYsNC4wOWMwLDIuMDg0LTAuNjM4LDMuNTYyLTEuODk2LDQuNDI4ICAgIGMtMS4yNTcsMC44NjktMy4yNjcsMS4zMDQtNi4wMTEsMS4zMDRoLTYuMzFWNDcuMnogTTE5Ljc0OCw3NC43MzFjLTEuNDAzLDEuMDUxLTMuNDc3LDEuNTc4LTYuMjIxLDEuNTc4SDYuNTU3VjYzLjYwNmg2LjY0MSAgICBjMi45MDksMCw1LjA3OSwwLjUwMyw2LjUsMS41MDljMS40MywxLjAwNywyLjE0MSwyLjU1MywyLjE0MSw0LjYzOEMyMS44NDIsNzIuMDE4LDIxLjE0Niw3My42NzgsMTkuNzQ4LDc0LjczMXoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzAwOTZBMyIgZGF0YS1vbGRfY29sb3I9IiMwMTk2QTMiPjwvcGF0aD4KCQk8cmVjdCB4PSIzNy4wODkiIHk9IjQxLjcxMSIgd2lkdGg9IjYuNTY0IiBoZWlnaHQ9IjQwLjExMSIgZGF0YS1vcmlnaW5hbD0iIzAwMDAwMCIgY2xhc3M9ImFjdGl2ZS1wYXRoIiBzdHlsZT0iZmlsbDojMDA5NkEzIiBkYXRhLW9sZF9jb2xvcj0iIzAxOTZBMyI+PC9yZWN0PgoJCTxwYXRoIGQ9Ik04NC45NjYsNDYuNDg4Yy0zLjI1OC0zLjYwNC03Ljg2NC01LjQwMy0xMy44MzMtNS40MDNjLTYuMDUsMC0xMC43MDQsMS43NzYtMTMuOTY5LDUuMzIxICAgIGMtMy4yNjUsMy41NDktNC44OTcsOC42MzEtNC44OTcsMTUuMjU2YzAsNi42MTksMS42MjksMTEuNzI5LDQuODc3LDE1LjMxOGMzLjI1MSwzLjU5Myw3Ljg5Miw1LjM5MywxMy45NDUsNS4zOTMgICAgYzUuOTgxLDAsMTAuNTk5LTEuODEsMTMuODczLTUuNDMxYzMuMjYyLTMuNjIsNC44OTEtOC42OTIsNC44OTEtMTUuMjI1Qzg5Ljg0Niw1NS4xNjQsODguMjE3LDUwLjA4OSw4NC45NjYsNDYuNDg4eiAgICAgTTc5LjkwNyw3Mi45OWMtMS45ODEsMi41MjEtNC45MjgsMy43ODUtOC44MjIsMy43ODVjLTMuOTE1LDAtNi44NzEtMS4yNzctOC44NjMtMy44MjZjLTEuOTkxLTIuNTUzLTIuOTkxLTYuMjk0LTIuOTkxLTExLjIzNSAgICBjMC00LjkyMSwxLjAwNy04LjY0NywzLjAxMi0xMS4xOTRjMS45OTUtMi41MzksNC45NjItMy44MTIsOC44OTEtMy44MTJjMy44OTgsMCw2LjgzNCwxLjI3Miw4LjgwMiwzLjgxMiAgICBjMS45NjUsMi41NDcsMi45NDMsNi4yNzMsMi45NDMsMTEuMTk0QzgyLjg3OCw2Ni43MDcsODEuODk2LDcwLjQ2NSw3OS45MDcsNzIuOTl6IiBkYXRhLW9yaWdpbmFsPSIjMDAwMDAwIiBjbGFzcz0iYWN0aXZlLXBhdGgiIHN0eWxlPSJmaWxsOiMwMDk2QTMiIGRhdGEtb2xkX2NvbG9yPSIjMDE5NkEzIj48L3BhdGg+CgkJPHBhdGggZD0iTTU1LjMxMiwzMC44YzAuNzkxLTAuODM4LDEuNTctMS42MzEsMi4yNjItMi41MzRjMS4zODctMS43NDIsMi41NjMtMy41ODQsMy41MDUtNS41MjMgICAgYzAuNDkyLTAuOTE0LDAuODktMS45NzMsMS4yNzYtMi45MjljMC4zOTYtMC45NSwwLjczMi0xLjk5NywxLjA1OC0yLjk2YzAuMzI4LTAuOTQ2LDAuNjMtMS45MDYsMC44OS0yLjgzNSAgICBjMC4yOTQtMC45NiwwLjU1NS0xLjgwMiwwLjc3LTIuNDg0YzAuMjM2LTAuNjgzLDAuMzg3LTEuMzk4LDAuNTIzLTEuODE5YzAuMTIzLTAuNDc2LDAuMTkyLTAuNzI2LDAuMTkyLTAuNzI2ICAgIHMtMC4yMzYtMC4xMy0wLjY1LTAuMjk4Yy0wLjQxMS0wLjE0Ny0xLjA2Ny0wLjQ1NS0xLjgzNS0wLjYyOGMtMC43NjYtMC4xODEtMS44MTMtMC41MDEtMi44NjQtMC41NDYgICAgYy0xLjA1NC0wLjA2My0yLjI2Mi0wLjA0OS0zLjU3NSwwLjA2N2MtMS4yNzEsMC4xNTctMi41NTQsMC40ODctMy45MzYsMC45Yy0xLjM2OSwwLjQyMS0yLjYyMiwxLjA2OS0zLjk0OCwxLjc3OCAgICBjLTEuMjkzLDAuNzI5LTIuNDY0LDEuNjIyLTMuNjQxLDIuNTkyYy0xLjEwMSwwLjk5Ni0yLjE0MSwyLjA4Ni0zLjA5NCwzLjI0NmMtMC44NzYsMS4xODEtMS43NDYsMi40MDItMi4zOTcsMy42ODkgICAgYy0wLjY4MywxLjI4LTEuMjY1LDIuNTk0LTEuNjY1LDMuOTI5Yy0wLjg2MiwyLjY0Ni0xLjE0MSw1LjM0NC0xLjA4Myw3LjczNGMwLjA1NywxLjIxMSwwLjE3MywyLjMzNCwwLjM2NSwzLjM2MSAgICBjMC4xOCwxLjAyLDAuNDY3LDEuOTU5LDAuNjk4LDIuNzEyYzAuMDk0LDAuMzYxLDAuMjI1LDAuNjk2LDAuMzUxLDAuOTk0YzAuMTc4LTAuNDEyLDAuMzY4LTAuODU0LDAuNTg4LTEuMzM4ICAgIGMxLjA4My0yLjM4MiwyLjY2OS01LjQ5MSw0LjU1OS04LjQyYzAuOTM5LTEuNDYxLDEuOTczLTIuODYzLDIuOTkyLTQuMTMyYzAuNTQxLTAuNjEyLDEuMDctMS4yMDEsMS41NjEtMS43NjIgICAgYzAuNTI1LTAuNTE5LDEuMDMyLTEuMDE3LDEuNDk4LTEuNDY1YzAuNTEtMC40MTcsMC45NjUtMC43OTIsMS4zNzItMS4xMjRjMC4zOTQtMC4zNTQsMC44MTEtMC41NjgsMS4xMTktMC43NzkgICAgYzAuNjMzLTAuNDE3LDAuOTkyLTAuNjQ4LDAuOTkyLTAuNjQ4cy0wLjM0MywwLjI2Ny0wLjk0NCwwLjcyMmMtMC4yODgsMC4yNDEtMC42NzEsMC40ODEtMS4wNDEsMC44NTkgICAgYy0wLjM2OSwwLjM2NC0wLjc5NCwwLjc3LTEuMjU5LDEuMjE1Yy0wLjQxOCwwLjQ4MS0wLjg3NiwxLjAxLTEuMzYyLDEuNTY0Yy0wLjQzOCwwLjU4NS0wLjkwNSwxLjIwMS0xLjM4OCwxLjgzNiAgICBjLTAuODk4LDEuMzI1LTEuODA5LDIuNzcyLTIuNjA3LDQuMjc0Yy0xLjYxNSwzLjAwNC0yLjkyMyw2LjE1OC0zLjc5Miw4LjU1OWMtMC4yNTEsMC43MTItMC4yNTEsMC43MTItMC4zNjgsMS4wNDRsMS45NjYtMC4wMDcgICAgYzAuNTYxLTAuMjA3LDEuMTctMC40MjgsMS43OC0wLjcxMmMwLjkwNS0wLjM4OCwxLjg2OC0wLjg0MywyLjg0Mi0xLjM1OGMwLjk3OS0wLjUwOCwxLjkzOC0xLjA5NywyLjkyMy0xLjcxNCAgICBjMC45NzItMC42MTYsMS45MDItMS4zMTQsMi44MTItMi4wM0M1My42MzIsMzIuMzY1LDU0LjUyMSwzMS42Miw1NS4zMTIsMzAuOHoiIGRhdGEtb3JpZ2luYWw9IiMwMDAwMDAiIGNsYXNzPSJhY3RpdmUtcGF0aCIgc3R5bGU9ImZpbGw6IzAwOTZBMyIgZGF0YS1vbGRfY29sb3I9IiMwMTk2QTMiPjwvcGF0aD4KCTwvZz4KPC9nPjwvZz4gPC9zdmc+"/>
+                }
+            </td>
+            <td class="text-center">
+                @if (ingredient.Vegetarian)
+                {
+                    <i class="far fa-check-circle"></i>
+                }
+                else
+                {
+                    <i class="far fa-circle"></i>
+                }
+            </td>
+            <td class="text-center">
+                @if (ingredient.Vegan)
+                {
+                    <i class="far fa-check-circle"></i>
+                }
+                else
+                {
+                    <i class="far fa-circle"></i>
+                }
+            </td>
+            <td class="text-center">
+                @if (ingredient.GlutenFree)
+                {
+                    <i class="far fa-check-circle"></i>
+                }
+                else
+                {
+                    <i class="far fa-circle"></i>
+                }
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
