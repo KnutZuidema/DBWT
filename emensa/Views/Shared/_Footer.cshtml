@@ -5,9 +5,12 @@
         2018 <a href="https://github.com/KnutZuidema">Knut Zuidema</a>
     </div>
     <ul class="col-md-10 col-12" id="links">
-        <li><a asp-controller="EMensa" asp-action="Login">Anmelden</a></li>
-        <li><a href="/register">Registrieren</a></li>
+        @if (ViewBag.User == null)
+        {
+            <li><a asp-controller="EMensa" asp-action="Login">Anmelden</a></li>
+            <li><a asp-controller="EMensa" asp-action="Register">Registrieren</a></li>
+        }
         <li><a asp-controller="EMensa" asp-action="Ingredients">Zutatenliste</a></li>
-        <li><a href="/impressum">Impressum</a></li>
+        <li><a asp-controller="EMensa" asp-action="Impressum">Impressum</a></li>
     </ul>
 </footer>

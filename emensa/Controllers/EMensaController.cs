@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Security.Cryptography;
 using emensa.Models;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MySql.Data.MySqlClient;
-using MySqlX.XDevAPI;
 
 namespace emensa.Controllers
 {
@@ -15,28 +8,56 @@ namespace emensa.Controllers
     {
         public IActionResult Index()
         {
+            ViewBag.User = HttpContext.Session.GetString("user");
             return View();
         }
 
         public IActionResult Products()
         {
-            return View(Service.GetProductsModel());
+            ViewBag.User = HttpContext.Session.GetString("user");
+            return View(new ProductsModel());
         }
 
         public IActionResult Ingredients()
         {
-            var ingredients = Service.GetIngredients();
-
-            return View(ingredients);
+            ViewBag.User = HttpContext.Session.GetString("user");
+            return View(Ingredient.GetAll());
         }
 
         public IActionResult Details(uint id)
         {
-            return View(Service.GetDetailsModel(id));
+            ViewBag.User = HttpContext.Session.GetString("user");
+            var username = HttpContext.Session.GetString("user");
+            User user = null;
+            if (username != null)
+            {
+                var role = Models.User.GetRole(username);
+                switch (role)
+                {
+                    case "no role":
+                        user = new User {Username = username};
+                        break;
+                    case "guest":
+                        user = new Guest {Username = username};
+                        break;
+                    case "employee":
+                        user = new Employee {Username = username};
+                        break;
+                    case "student":
+                        user = new Student {Username = username};
+                        break;
+                    case "member":
+                        user = new Member {Username = username};
+                        break;
+                }
+            }
+
+            return View(new DetailsModel(id, user));
         }
 
         public IActionResult Login()
         {
+            ViewBag.User = HttpContext.Session.GetString("user");
             if (HttpContext.Request.Method.ToLower() == "get")
             {
                 return View(new LoginModel());
@@ -44,7 +65,7 @@ namespace emensa.Controllers
 
             var username = HttpContext.Request.Form["username"];
             var password = HttpContext.Request.Form["password"];
-            var user = Service.GetUserLogin(username);
+            var user = new LoginModel(username);
             if (user.UserError)
             {
                 return View(user);
@@ -53,6 +74,7 @@ namespace emensa.Controllers
             if (Service.VerifyPassword(password, user.Salt, user.Hash))
             {
                 HttpContext.Session.SetString("user", user.Username);
+                HttpContext.Session.SetString("role", Models.User.GetRole(user.Username));
             }
             else
             {
@@ -61,6 +83,25 @@ namespace emensa.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Register()
+        {
+            ViewBag.User = HttpContext.Session.GetString("user");
+            return View();
+        }
+
+        public IActionResult Impressum()
+        {
+            ViewBag.User = HttpContext.Session.GetString("user");
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("user");
+            HttpContext.Session.Remove("role");
+            return View("Index");
         }
     }
 }

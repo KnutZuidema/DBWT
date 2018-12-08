@@ -7,5 +7,11 @@ namespace emensa.Models
     {
         public List<Tuple<Meal, Image>> Meals;
         public List<Category> Categories;
+
+        public ProductsModel()
+        {
+            Meals = Meal.GetAllWithImage();
+            Categories = Category.GetAll();
+        }
     }
 }

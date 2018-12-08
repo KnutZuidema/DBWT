@@ -91,7 +91,7 @@
                 {
                     @("gluten_free")
                 } category-@meal.Category.Id">
-                    <a class="card-link" href="/products/@meal.Id">
+                    <a class="card-link" asp-controller="EMensa" asp-action="Details" asp-route-id="@meal.Id">
                         <img class="card-img-top" src="~/images/@image.FilePath">
                     </a>
                     <div class="card-body">

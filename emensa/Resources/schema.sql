@@ -1,5 +1,4 @@
-create database if not exists emensa;
-use emensa;
+-- Tables
 
 drop table if exists order_meal_relation;
 drop table if exists member_faculty_relation;
@@ -26,8 +25,8 @@ create table user (
   id         int unsigned not null primary key auto_increment,
   username   varchar(32)  not null unique,
   email      varchar(128) not null unique,
-  salt       varchar(32)  not null             default 'salt',
-  hash       varchar(24)  not null             default 'hash',
+  salt       varchar(32)  not null,
+  hash       varchar(24)  not null,
   first_name varchar(32)  not null,
   last_name  varchar(64)  not null,
   created    date         not null             default current_date,
@@ -210,6 +209,146 @@ create table meal_image_relation (
     on delete cascade
 );
 
+-- Procedures
+
+drop procedure if exists add_guest;
+drop procedure if exists add_student;
+drop procedure if exists add_employee;
+drop procedure if exists add_user;
+drop procedure if exists get_user;
+drop procedure if exists get_meal;
+
+create procedure add_user(username_   varchar(32),
+                          email_      varchar(128),
+                          salt_       varchar(32),
+                          hash_       varchar(24),
+                          first_name_ varchar(32),
+                          last_name_  varchar(64),
+                          birthday_   date)
+modifies sql data
+  begin
+    insert into user (username, email, salt, hash, first_name, last_name, birthday)
+    values (username_, email_, salt_, hash_, first_name_, last_name_, birthday_);
+  end;
+
+create procedure add_guest(id           int unsigned,
+                           reason_      varchar(256),
+                           valid_until_ date)
+modifies sql data
+  begin
+    insert into guest values (id, reason_, valid_until_);
+  end;
+
+create procedure add_student(id                    int unsigned,
+                             matriculation_number_ int(9) unsigned,
+                             major_                enum ('ET', 'INF', 'ISE', 'MCS', 'WI'))
+modifies sql data
+  begin
+    replace into member values (id);
+    insert into student values (id, matriculation_number_, major_);
+  end;
+
+create procedure add_employee(id            int unsigned,
+                              office_       varchar(4),
+                              phone_number_ varchar(14))
+modifies sql data
+  begin
+    replace into member values (id);
+    insert into employee values (id, office_, phone_number_);
+  end;
+
+create procedure get_user_hash(username_ varchar(32))
+reads sql data
+  begin
+    select username, hash, salt from user where username = username_;
+  end;
+
+create procedure get_meal(meal_id_ int unsigned)
+reads sql data
+  begin
+    select m.name,
+           m.description,
+           i.file_path,
+           ig.name             ingredient_name,
+           ig.organic,
+           ig.gluten_free,
+           ig.vegan,
+           ig.vegetarian,
+           p.employee_price,
+           p.student_price,
+           p.guest_price
+    from meal m
+           left join meal_image_relation mir on m.id = mir.meal_id
+           left join image i on mir.image_id = i.id
+           left join ingredient_meal_relation imr on m.id = imr.meal_id
+           left join ingredient ig on imr.ingredient_id = ig.id
+           left join price p on m.id = p.meal_id
+    where m.id = meal_id_;
+  end;
+
+-- Functions
+
+drop function if exists get_role;
+
+create function get_role(username_ varchar(32))
+  returns varchar(32)
+  begin
+    declare guest bool;
+    declare student bool;
+    declare employee bool;
+    declare member bool;
+    select g.user_id is not null,
+           s.member_id is not null,
+           e.member_id is not null,
+           m.user_id is not null into guest, student, employee, member
+    from user u
+           left join member m on u.id = m.user_id
+           left join guest g on u.id = g.user_id
+           left join student s on m.user_id = s.member_id
+           left join employee e on m.user_id = e.member_id
+    where u.username = username_;
+    if guest
+    then return 'guest';
+    elseif student
+      then return 'student';
+    elseif employee
+      then return 'employee';
+    elseif member
+      then return 'member';
+    else return 'no role';
+    end if;
+  end;
+
+-- Views
+
+drop view if exists products;
+drop view if exists categories_with_parent;
+
+create view products as
+  select m.id                meal_id,
+         m.available,
+         m.name              meal_name,
+         i.file_path,
+         min(ig.organic)     organic,
+         min(ig.gluten_free) gluten_free,
+         min(ig.vegan)       vegan,
+         min(ig.vegetarian)  vegetarian,
+         c.id                category_id
+  from meal m
+         left join meal_image_relation mir on mir.meal_id = m.id
+         left join image i on i.id = mir.image_id
+         left join ingredient_meal_relation imr on m.id = imr.meal_id
+         left join ingredient ig on ig.id = imr.ingredient_id
+         left join category c on m.category_id = c.id
+  group by meal_id;
+
+create view categories_with_parent as
+  select c.id, c.name, c2.id parent_id, c2.name parent_name
+  from category c
+         left join category c2 on c2.id = c.parent_category_id;
+
+-- Data
+
 insert into image (alternative_text, file_path)
 values ('Bratrolle', 'bratrolle.jpg'),
        ('Curry Wok', 'curry_wok.jpg'),
@@ -238,14 +377,14 @@ values ('Hauptspeisen', NULL, NULL),
        ('Geburtstagsessen', 13, NULL);
 
 insert into meal (name, description, stock, category_id)
-values ('Bratrolle', '', 3, 7),
-       ('Curry Wok', '', 5, 6),
-       ('Currywurst', '', 0, 7),
-       ('Falafel', '', 7, 6),
-       ('Käsestulle', '', 2, 4),
-       ('Krautsalat', '', 8, 4),
-       ('Schnitzel', '', 1, 7),
-       ('Spiegelei', '', 0, 4);
+values ('Bratrolle', 'Eine tolle Bratrolle, nennt man auch Frikandel.', 3, 7),
+       ('Curry Wok', 'Eine asiatische Reispfanne, gebraten auf einem Wok.', 5, 6),
+       ('Currywurst', 'Eine typische deutsche Currywurst. Dazu gibt es Pommes Frites.', 0, 7),
+       ('Falafel', 'Eine Spezialität aus dem mittleren Osten. Wird aus Saubohnen und Kichererbsen gemacht', 7, 6),
+       ('Käsestulle', 'Ein einfaches Brot mit Käse und Salat. Gut zum mitnehmen.', 2, 4),
+       ('Krautsalat', 'Eine leckere Beilage oder Zwischenmahlzeit, auch für Vegetarier.', 8, 4),
+       ('Schnitzel', 'Ein Wiener Schnitzel kommt immer gut and und schmeckt.', 1, 7),
+       ('Spiegelei', 'Das typische Frühstück, hier mit Bacon-Streifen.', 0, 4);
 
 insert into meal_image_relation (meal_id, image_id)
 values (1, 1),
@@ -367,24 +506,6 @@ values (1, 'Architektur', 'https://www.fh-aachen.de/fachbereiche/architektur/', 
         'https://www.fh-aachen.de/fachbereiche/energietechnik/',
         'Heinrich-Mußmann-Straße 1, 52428 Jülich');
 
-insert into user (username, email, first_name, last_name)
-values ('user1', 'user1@mail.com', 'user', 'name'),
-       ('user2', 'user2@mail.com', 'user', 'name'),
-       ('user3', 'user3@mail.com', 'user', 'name'),
-       ('user4', 'user4@mail.com', 'user', 'name');
-
-insert into member (user_id)
-values (1),
-       (2),
-       (3);
-
-insert into student (member_id, matriculation_number, major)
-values (1, '11111111', 'INF'),
-       (2, '111111111', 'ET');
-
-insert into employee (member_id)
-values (3);
-
 INSERT INTO ingredient_meal_relation (meal_id, ingredient_id)
 VALUES (2, 9110),
        (2, 2105),
@@ -475,5 +596,3 @@ values (21, 22),
        (21, 24),
        (22, 23),
        (22, 24);
-
-create procedure get_user_role(in user_id int, out)

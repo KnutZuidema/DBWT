@@ -1,0 +1,66 @@
+@{
+    ViewBag.Title = "Register";
+    Layout = "_Layout";
+}
+
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/login.css">
+}
+
+@section Scripts{
+    <script src="~/js/user-entry.js"></script>
+}
+
+<div class="col-md-4 offset-md-4 col-12">
+    <form asp-controller="EMensa" asp-action="Register" class="mx-auto form" id="login">
+        <p class="form-title">
+            <span>Registrieren</span>
+        </p>
+        <div class="form-group">
+            <input class="form-control" type="text" name="username" id="username"
+                   placeholder="Benutzername">
+        </div>
+        <p class="text-danger error-message text-center" id="username-error">
+            Benutzername muss zwischen 4 und 30 Zeichen lang sein
+        </p>
+        <button >
+            <div class="form-group">
+                <input class="form-control" type="text" name="email"
+                       placeholder="Email">
+            </div></button>
+        <div class="form-row">
+            <div class="form-group col-6">
+                <input class="form-control" type="password" name="password" id="password"
+                       placeholder="Passwort">
+            </div>
+            <div class="form-group col-6">
+                <input class="form-control" type="password" name="password-repeat"
+                       placeholder="Passwort wiederholen">
+            </div>
+        </div>
+        <p class="text-danger text-center error-message" id="password-error">
+            Passwort muss wenigstens 8 Zeichen lang sein
+        </p>
+        <div class="form-row">
+            <div class="form-group col-6">
+                <input class="form-control" type="text" name="first_name"
+                       placeholder="Vorname">
+            </div>
+            <div class="form-group col-6">
+                <input class="form-control" type="text" name="last_name"
+                       placeholder="Nachname">
+            </div>
+        </div>
+        <div class="form-row">
+            <input class="form-control col-6" type="date" name="birthday" value="@DateTime.Today.ToString("yyyy-MM-dd")"
+                   max="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Geburtsdatum">
+            <select class="form-control col-6 custom-select">
+                <option selected>Gast</option>
+                <option>Student</option>
+                <option>Angestellter</option>
+            </select>
+        </div>
+        <input type="hidden" name="route" value="/">
+        <button type="submit" class="btn form-control" disabled>Registrieren</button>
+    </form>
+</div>

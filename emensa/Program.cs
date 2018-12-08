@@ -17,12 +17,7 @@ namespace emensa
     {
         public static void Main(string[] args)
         {
-            var date = new DateTime(1997, 12, 29);
-            var username = "KnutZuidema";
-            var password = "password";
-            
-
-            // CreateWebHostBuilder(args).Build().Run();
+            CreateWebHostBuilder(args).Build().Run();
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

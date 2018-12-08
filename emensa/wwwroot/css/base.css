@@ -70,3 +70,7 @@ nav .btn {
 .form :not(:last-child) {
     margin-bottom: 1em;
 }
+
+.font-image {
+    height: 1em;
+}

@@ -18,14 +18,14 @@
             <input class="form-control" id="username" type="text" name="username" placeholder="Benutzername">
             @if (Model.UserError)
             {
-                <span>Wrong Username</span>
+                <p class="text-danger error-message">Falscher Benutzername</p>
             }
         </div>
         <div class="form-group">
             <input class="form-control" id="password" type="password" name="password" placeholder="Passwort">
             @if (Model.PasswordError)
             {
-                <span>Wrong Password</span>
+                <p class="text-danger error-message">Falsches Passwort</p>
             }
         </div>
         <input type="hidden" name="route" value="/">

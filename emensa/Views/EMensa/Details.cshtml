@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Http
 @model DetailsModel
 
 @{
@@ -5,4 +6,185 @@
     Layout = "_Layout";
 }
 
-<h2></h2>
+@section Stylesheets{
+    <link rel="stylesheet" href="~/css/details.css">
+}
+
+@section Scripts{
+    <script src="~/js/details.js"></script>
+}
+
+<div class="row">
+    <div class="col-md-7 offset-md-3 col-12" id="title">
+        <h1>Details für "@Model.Meal.Name"</h1>
+    </div>
+    <div class="col-2 price d-lg-flex d-none">
+        @if (new List<string>{"member", "student", "employee"}.Contains(Context.Session.GetString("role")))
+        {
+            @("Mitglied-Preis")
+        }
+        else
+        {
+            @("Gast-Preis")
+        }
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-12 order-md-first order-last">
+        @if (Context.Session.GetString("user") is null)
+        {
+            <div class="col" id="login">
+                <form asp-controller="EMensa" asp-action="Login" class="form">
+                    <p class="form-title">
+                        <span>Login</span>
+                    </p>
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control"
+                               placeholder="Benutzername">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control"
+                               placeholder="Passwort">
+                    </div>
+                    <button type="submit" class="btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Anmelden
+                    </button>
+                </form>
+            </div>
+        }
+    </div>
+    <div class="col-lg-7 col-md-8 col-12" id="banner"
+         style="background-image: url(/images/@Model.Image.FilePath);">
+    </div>
+    <div class="col-lg-2 col-12 my-lg-0 my-4">
+        <span class="price d-lg-flex d-inline-block">
+            @($"{Model.Price:F}")€
+        </span>
+        <button class="btn" id="order_button">
+            <i class="fas fa-utensils"></i>
+            Vorbestellen
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 col-12">
+        @if (Context.Session.GetString("user") is null)
+        {
+            <p>
+                Melden Sie sich jetzt an,
+                um die wirklich viel günstigeren Preise für Mitarbeiter oder Studenten zu sehen.
+            </p>
+        }
+    </div>
+    <div class="col-md-7 col-12">
+        <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#description"
+                   role="tab">
+                    Beschreibung
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#ingredients"
+                   role="tab">
+                    Zutaten
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#review"
+                   role="tab">
+                    Bewertung
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane show active" id="description" role="tabpanel">
+                <p>@Model.Meal.Description</p>
+            </div>
+            <div class="tab-pane" id="ingredients" role="tabpanel">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Zutat</th>
+                        <th class="text-center">Vegetarisch</th>
+                        <th class="text-center">Vegan</th>
+                        <th class="text-center">Glutenfrei</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var ingredient in Model.Ingredients)
+                    {
+                        <tr>
+                            <td>
+                                <a href="https://www.google.de/search?q=@ingredient.Name" target="_blank"
+                                   title="Nach @ingredient.Name bei Google suchen">
+                                    @ingredient.Name
+                                </a>
+                                @if (ingredient.Organic)
+                                {
+                                    <img class="font-image" src="~/images/bio-energy-symbol.png">
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (ingredient.Vegetarian)
+                                {
+                                    <i class="far fa-check-circle"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-circle"></i>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (ingredient.Vegan)
+                                {
+                                    <i class="far fa-check-circle"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-circle"></i>
+                                }
+                            </td>
+                            <td class="text-center">
+                                @if (ingredient.GlutenFree)
+                                {
+                                    <i class="far fa-check-circle"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-circle"></i>
+                                }
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="review" role="tabpanel">
+                <form method="post" action="http://bc5.m2c-lab.fh-aachen.de/form.php">
+                    <div class="form-group">
+                        <label for="benutzer">Benutzer</label>
+                        <input type="text" name="benutzer" class="form-control" id="benutzer">
+                    </div>
+                    <div class="form-group">
+                        <label for="bemerkung">Bemerkung</label>
+                        <textarea class="form-control" name="bemerkung" id="bemerkung">
+                            </textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bewertung">Bewertung</label>
+                        <input type="range" name="bewertung" min="1" max="5" id="bewertung"
+                               class="form-control">
+                        <small class="text-muted">
+                            Deine Daten werden nicht an Dritte weitergegeben
+                        </small>
+                    </div>
+                    <input type="hidden" name="matrikel" value="3152047">
+                    <input type="hidden" name="kontrolle" value="zui">
+                    <button type="submit" class="btn">Absenden</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
