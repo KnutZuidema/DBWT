@@ -120,7 +120,7 @@ create table employee (
 
 create table student (
   member_id            int unsigned     not null unique,
-  matriculation_number int(9)  unsigned not null check (matriculation_number > 9999999),
+  matriculation_number int(9)  unsigned not null check (matriculation_number > 999999),
   major                enum ('ET', 'INF', 'ISE', 'MCD', 'WI'),
   foreign key (member_id) references member (user_id)
     on delete cascade
@@ -141,9 +141,9 @@ create table comment (
 create table price (
   valid_year     year          not null,
   meal_id        int unsigned  not null unique,
-  guest_price    decimal(2, 2) not null check (guest_price >= employee_price),
-  employee_price decimal(2, 2) default null check (employee_price between guest_price and student_price),
-  student_price  decimal(2, 2) default null check (student_price <= employee_price),
+  guest_price    decimal(4, 2) not null check (guest_price >= employee_price),
+  employee_price decimal(4, 2) default null check (employee_price <= guest_price and employee_price >= student_price),
+  student_price  decimal(4, 2) default null check (student_price <= employee_price),
   foreign key (meal_id) references meal (id)
     on delete cascade
 );
@@ -214,22 +214,8 @@ create table meal_image_relation (
 drop procedure if exists add_guest;
 drop procedure if exists add_student;
 drop procedure if exists add_employee;
-drop procedure if exists add_user;
-drop procedure if exists get_user;
+drop procedure if exists get_user_hash;
 drop procedure if exists get_meal;
-
-create procedure add_user(username_   varchar(32),
-                          email_      varchar(128),
-                          salt_       varchar(32),
-                          hash_       varchar(24),
-                          first_name_ varchar(32),
-                          last_name_  varchar(64),
-                          birthday_   date)
-modifies sql data
-  begin
-    insert into user (username, email, salt, hash, first_name, last_name, birthday)
-    values (username_, email_, salt_, hash_, first_name_, last_name_, birthday_);
-  end;
 
 create procedure add_guest(id           int unsigned,
                            reason_      varchar(256),
@@ -269,7 +255,7 @@ reads sql data
     select m.name,
            m.description,
            i.file_path,
-           ig.name             ingredient_name,
+           ig.name ingredient_name,
            ig.organic,
            ig.gluten_free,
            ig.vegan,
@@ -289,6 +275,25 @@ reads sql data
 -- Functions
 
 drop function if exists get_role;
+drop function if exists add_user;
+
+create function add_user(username_   varchar(32),
+                         email_      varchar(128),
+                         salt_       varchar(32),
+                         hash_       varchar(24),
+                         first_name_ varchar(32),
+                         last_name_  varchar(64),
+                         birthday_   date)
+  returns int unsigned
+modifies sql data
+reads sql data
+  begin
+    declare user_id int unsigned;
+    insert into user (username, email, salt, hash, first_name, last_name, birthday)
+    values (username_, email_, salt_, hash_, first_name_, last_name_, birthday_);
+    select id into user_id from user where username = username_;
+    return user_id;
+  end;
 
 create function get_role(username_ varchar(32))
   returns varchar(32)
@@ -596,3 +601,13 @@ values (21, 22),
        (21, 24),
        (22, 23),
        (22, 24);
+
+insert into price
+values (2018, 1, 3.5, 3.0, 2.5),
+       (2018, 2, 3.5, 3.0, 2.5),
+       (2018, 3, 3.5, 3.0, 2.5),
+       (2018, 4, 3.5, 3.0, 2.5),
+       (2018, 5, 3.5, 3.0, 2.5),
+       (2018, 6, 3.5, 3.0, 2.5),
+       (2018, 7, 3.5, 3.0, 2.5),
+       (2018, 8, 3.5, 3.0, 2.5)

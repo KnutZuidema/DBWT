@@ -1,66 +1,136 @@
+@model RegisterModel
 @{
     ViewBag.Title = "Register";
     Layout = "_Layout";
 }
 
 @section Stylesheets{
-    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="~/css/register.css">
 }
 
 @section Scripts{
     <script src="~/js/user-entry.js"></script>
+    <script src="~/js/register.js"></script>
 }
 
-<div class="col-md-4 offset-md-4 col-12">
+<div class="col-md-8 offset-md-2 col-12">
     <form asp-controller="EMensa" asp-action="Register" class="mx-auto form" id="login">
         <p class="form-title">
             <span>Registrieren</span>
         </p>
-        <div class="form-group">
-            <input class="form-control" type="text" name="username" id="username"
-                   placeholder="Benutzername">
-        </div>
-        <p class="text-danger error-message text-center" id="username-error">
-            Benutzername muss zwischen 4 und 30 Zeichen lang sein
+        <p>
+            @if (Model.EmailError)
+            {
+                @("EmailError")
+            }
+            else if (Model.UsernameError)
+            {
+                @("UserError")
+            }
+            else if (Model.PasswordError)
+            {
+                @("PasswordError")
+            }
+            else if (Model.MatriculationNumberError)
+            {
+                @("MatriculationNumberError")
+            }
         </p>
-        <button >
-            <div class="form-group">
-                <input class="form-control" type="text" name="email"
-                       placeholder="Email">
-            </div></button>
         <div class="form-row">
             <div class="form-group col-6">
+                <label for="username">Benutzername</label>
+                <input class="form-control" type="text" name="username" id="username"
+                       placeholder="Benutzername">
+            </div>
+            <div class="form-group col-6">
+                <label for="email">Email</label>
+                <input class="form-control" type="email" name="email" id="email"
+                       placeholder="Email">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-6">
+                <label for="password">Passwort</label>
                 <input class="form-control" type="password" name="password" id="password"
                        placeholder="Passwort">
             </div>
             <div class="form-group col-6">
-                <input class="form-control" type="password" name="password-repeat"
+                <label for="password-repeat">Passwort wiederholen</label>
+                <input class="form-control" type="password" name="password-repeat" id="password-repeat"
                        placeholder="Passwort wiederholen">
             </div>
         </div>
-        <p class="text-danger text-center error-message" id="password-error">
-            Passwort muss wenigstens 8 Zeichen lang sein
-        </p>
         <div class="form-row">
             <div class="form-group col-6">
-                <input class="form-control" type="text" name="first_name"
+                <label for="first_name">Vorname</label>
+                <input class="form-control" type="text" name="first_name" id="first_name"
                        placeholder="Vorname">
             </div>
             <div class="form-group col-6">
-                <input class="form-control" type="text" name="last_name"
+                <label for="last_name">Nachname</label>
+                <input class="form-control" type="text" name="last_name" id="last_name"
                        placeholder="Nachname">
             </div>
         </div>
         <div class="form-row">
-            <input class="form-control col-6" type="date" name="birthday" value="@DateTime.Today.ToString("yyyy-MM-dd")"
-                   max="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Geburtsdatum">
-            <select class="form-control col-6 custom-select">
-                <option selected>Gast</option>
-                <option>Student</option>
-                <option>Angestellter</option>
-            </select>
+            <div class="form-group col-6">
+                <label for="birthday">Geburtstag</label>
+                <input class="form-control" type="date" name="birthday" value="@DateTime.Today.ToString("yyyy-MM-dd")"
+                       min="1900-01-01"max="@DateTime.Today.ToString("yyyy-MM-dd")" placeholder="Geburtsdatum"
+                       id="birthday">
+            </div>
+            <div class="form-group col-6">
+                <label for="role">Mitgliedstatus</label>
+                <select class="form-control custom-select" name="role" id="role">
+                    <option value="guest">Gast</option>
+                    <option value="student">Student</option>
+                    <option value="employee">Angestellter</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row" id="employee-data">
+            <div class="form-group col-6">
+                <label for="phone_number">Telefonnummer</label>
+                <input class="form-control" type="tel" name="phone_number" id="phone_number"
+                       placeholder="Telefonnummer"/>
+            </div>
+            <div class="form-group col-6">
+                <label for="office">Raumnummer</label>
+                <input class="form-control" type="text" name="office" id="office"
+                       placeholder="Raumnummer"/>
+            </div>
+        </div>
+        <div class="form-row" id="student-data">
+            <div class="form-group col-6">
+                <label for="matriculation_number">Matrikelnummer</label>
+                <input class="form-control" type="text" name="matriculation_number" id="matriculation_number"
+                       placeholder="Matrikelnummer"/>
+            </div>
+            <div class="form-group col-6">
+                <label for="major">Studiengang</label>
+                <select class="form-control custom-select" name="major" id="major">
+                    <option value="INF">Informatik</option>
+                    <option value="ET">Elektrotechnik</option>
+                    <option value="ISE">IT Systems Engineering</option>
+                    <option value="MCD">Media & Communication for Digital Business</option>
+                    <option value="WI">Wirtschaftsinformatik</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-row" id="guest-data">
+            <div class="form-group col-6">
+                <label for="reason">Grund</label>
+                <input class="form-control" type="text" name="reason" id="reason"
+                       placeholder="Grund"/>
+            </div>
+            <div class="form-group col-6">
+                <label for="valid_until">Gueltigkeitsfrist</label>
+                <input class="form-control" type="date" name="valid_until" id="valid_until"
+                       value="@((DateTime.Now + TimeSpan.FromDays(1)).ToString("yyyy-MM-dd"))"
+                       min="@((DateTime.Now + TimeSpan.FromDays(1)).ToString("yyyy-MM-dd"))"/>
+            </div>
         </div>
         <input type="hidden" name="route" value="/">
-        <button type="submit" class="btn form-control" disabled>Registrieren</button>
+        <button type="submit" class="btn form-control offset-md-8 col-md-4" disabled>Registrieren</button>
     </form>
 </div>

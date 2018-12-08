@@ -1,3 +1,5 @@
+using System;
+using System.Text.RegularExpressions;
 using emensa.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -8,25 +10,21 @@ namespace emensa.Controllers
     {
         public IActionResult Index()
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
             return View();
         }
 
         public IActionResult Products()
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
             return View(new ProductsModel());
         }
 
         public IActionResult Ingredients()
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
             return View(Ingredient.GetAll());
         }
 
         public IActionResult Details(uint id)
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
             var username = HttpContext.Session.GetString("user");
             User user = null;
             if (username != null)
@@ -57,7 +55,6 @@ namespace emensa.Controllers
 
         public IActionResult Login()
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
             if (HttpContext.Request.Method.ToLower() == "get")
             {
                 return View(new LoginModel());
@@ -87,13 +84,84 @@ namespace emensa.Controllers
 
         public IActionResult Register()
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
-            return View();
+            if (HttpContext.Request.Method.ToLower() == "get")
+            {
+                return View(new RegisterModel());
+            }
+            var username = HttpContext.Request.Form["username"];
+            var email = HttpContext.Request.Form["email"];
+            var password = HttpContext.Request.Form["password"];
+            var passwordRepeat = HttpContext.Request.Form["password-repeat"];
+            var lastName = HttpContext.Request.Form["last_name"];
+            var firstName = HttpContext.Request.Form["first_name"];
+            var birthday = HttpContext.Request.Form["birthday"];
+            var role = HttpContext.Request.Form["role"];
+            if (password != passwordRepeat)
+            {
+                return View(new RegisterModel
+                {
+                    PasswordError = true
+                });
+            }
+            if (!Regex.IsMatch(email, @"[\w\d\.]*@[\d\w\.]*\.\w*"))
+            {
+                Console.Out.WriteLine("email = {0}", email);
+                return View(new RegisterModel
+                {
+                    EmailError = true
+                });
+            }
+            User user = new User
+            {
+                Username = username,
+                Email = email,
+                FirstName = firstName,
+                LastName = lastName,
+                Birthday = DateTime.Parse(birthday)
+            };
+            bool userError;
+            switch (role)
+            {
+                    case "guest":
+                        Guest guest = new Guest(user);
+                        guest.Reason = HttpContext.Request.Form["reason"];
+                        guest.ValidUntil = DateTime.Parse(HttpContext.Request.Form["valid_until"]);
+                        userError = Models.User.RegisterUser(guest, password);
+                        break;
+                    case "student":
+                        Student student = new Student(user);
+                        student.MatriculationNumber =
+                            Convert.ToUInt32(HttpContext.Request.Form["matriculation_number"]);
+                        Enum.TryParse(HttpContext.Request.Form["major"], out student.Major);
+                        userError = Models.User.RegisterUser(student, password);
+                        break;
+                    case "employee":
+                        Employee employee = new Employee(user);
+                        employee.Office = HttpContext.Request.Form["office"];
+                        employee.PhoneNumber = HttpContext.Request.Form["phone_number"];
+                        userError = Models.User.RegisterUser(employee, password);
+                        break;
+                    default:
+                        return View(new RegisterModel
+                        {
+                            RoleError = true
+                        });
+            }
+
+            if (!userError)
+            {
+                return View(new RegisterModel
+                {
+                    UsernameError = true
+                });
+            }
+            HttpContext.Session.SetString("user", username);
+            HttpContext.Session.SetString("role", role);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Impressum()
         {
-            ViewBag.User = HttpContext.Session.GetString("user");
             return View();
         }
 

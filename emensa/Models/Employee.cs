@@ -4,5 +4,18 @@ namespace emensa.Models
     {
         public string Office;
         public string PhoneNumber;
+
+        public Employee()
+        {
+        }
+
+        public Employee(User user)
+        {
+            Username = user.Username;
+            Email = user.Email;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
+            Birthday = user.Birthday;
+        }
     }
 }

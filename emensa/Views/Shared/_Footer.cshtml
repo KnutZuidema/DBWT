@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Http
 <hr>
 <footer class="row">
     <div class="col-md-2 col-12" id="copyright">
@@ -5,7 +6,7 @@
         2018 <a href="https://github.com/KnutZuidema">Knut Zuidema</a>
     </div>
     <ul class="col-md-10 col-12" id="links">
-        @if (ViewBag.User == null)
+        @if (Context.Session.GetString("user") == null)
         {
             <li><a asp-controller="EMensa" asp-action="Login">Anmelden</a></li>
             <li><a asp-controller="EMensa" asp-action="Register">Registrieren</a></li>

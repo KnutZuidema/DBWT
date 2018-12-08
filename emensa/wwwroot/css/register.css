@@ -1,0 +1,9 @@
+#login {
+    margin: 15% 0 15%;
+    width: 100%;
+}
+
+.error-message {
+    display: none;
+    font-size: 0.6em;
+}

@@ -10,7 +10,7 @@ namespace emensa.Models
         public Meal Meal;
         public List<Ingredient> Ingredients;
         public Image Image;
-        public float Price;
+        public decimal Price;
         public User User;
 
         public DetailsModel(uint id, User user)
@@ -35,21 +35,18 @@ namespace emensa.Models
                 object price;
                 if (User is Employee)
                 {
-                    //price = reader["employee_price"];
-                    price = 3f;
+                    price = reader["employee_price"];
                 }
-                else if (User is Member)
+                else if (User is Student)
                 {
-                    //price = reader["student_price"];
-                    price = 2.5f;
+                    price = reader["student_price"];
                 }
                 else
                 {
-                    //price = reader["guest_price"];
-                    price = 3.5f;
+                    price = reader["guest_price"];
                 }
 
-                Price = price is DBNull ? 3.5f : (float) price;
+                Price = price is DBNull ? (decimal) 3.5 : (decimal) price;
                 do
                 {
                     Ingredients.Add(new Ingredient

@@ -1,3 +1,4 @@
+@using Microsoft.AspNetCore.Http
 <nav class="navbar navbar-expand-lg navbar-dark mb-5">
     <a class="navbar-brand" href="/">
         <h1>e-Mensa</h1>
@@ -34,7 +35,7 @@
             </form>
         </div>
     </div>
-    @if (ViewBag.User != null)
+    @if (Context.Session.GetString("user") != null)
     {
         <a href="#" class="btn" data-toggle="popover" data-trigger="hover"
            data-placement="bottom" data-content="@ViewBag.User">
