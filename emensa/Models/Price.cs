@@ -2,10 +2,10 @@ namespace emensa.Models
 {
     public class Price
     {
-        public uint ValidYear;
-        public Meal Meal;
-        public float GuestPrice;
-        public float EmployeePrice;
-        public float StudentPrice;
+        public uint ValidYear { get; set; }
+        public Meal Meal { get; set; }
+        public float GuestPrice { get; set; }
+        public float EmployeePrice { get; set; }
+        public float StudentPrice { get; set; }
     }
 }

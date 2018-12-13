@@ -21,7 +21,7 @@
         <p class="text-center">... und gemeinsam mit Freunden und Kommilitonen essen</p>
     </div>
     <div class="col-md-3 col-12 my-auto" id="user_area">
-        @if (Context.Session.GetString("user") == null)
+        @if (!Context.Session.Keys.Contains("user"))
         {
             <div class="row">
                 <a asp-controller="EMensa" asp-action="Register" class="btn ml-md-auto mx-md-0 mx-auto" id="registration">
@@ -45,7 +45,7 @@
 </div>
 <div class="row">
     <div class="col-lg-2 col-md-3 col-12" id="registration_disclaimer">
-        @if (Context.Session.GetString("user") == null)
+        @if (!Context.Session.Keys.Contains("user"))
         {
             <p>
                 Registrieren sie sich hier,

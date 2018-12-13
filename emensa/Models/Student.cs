@@ -2,8 +2,8 @@ namespace emensa.Models
 {
     public class Student : Member
     {
-        public uint MatriculationNumber;
-        public Major Major;
+        public uint MatriculationNumber { get; set; }
+        public Major Major { get; set; }
 
         public Student()
         {

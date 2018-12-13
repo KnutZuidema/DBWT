@@ -6,12 +6,12 @@ namespace emensa.Models
 {
     public class Ingredient
     {
-        public uint Id;
-        public string Name;
-        public bool Organic;
-        public bool Vegetarian;
-        public bool Vegan;
-        public bool GlutenFree;
+        public uint Id { get; set; }
+        public string Name { get; set; }
+        public bool Organic { get; set; }
+        public bool Vegetarian { get; set; }
+        public bool Vegan { get; set; }
+        public bool GlutenFree { get; set; }
 
 
         public static List<Ingredient> GetAll()

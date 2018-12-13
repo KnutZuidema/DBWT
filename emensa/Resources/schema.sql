@@ -1,4 +1,22 @@
--- Tables
+-- Run as root
+create database if not exists dbwt character set = utf8mb4 collate = utf8mb4_bin;
+
+create role if not exists `dbwt_admin`;
+create role if not exists `dbwt_user`;
+
+grant all on dbwt.* to `dbwt_admin` with grant option;
+grant select, insert, update, delete, execute on dbwt.* to `dbwt_user`;
+
+create user if not exists 'dbwtAdmin'@'localhost' identified by 'securePwHere';
+create user if not exists 'dbwtWebapp'@'localhost' identified by 'securePwHere';
+
+grant `dbwt_admin` to 'dbwtAdmin'@'localhost';
+grant `dbwt_user` to 'dbwtWebapp'@'localhost';
+
+set default role `dbwt_admin` for 'dbwtAdmin'@'localhost';
+set default role `dbwt_user` for 'dbwtWebapp'@'localhost';
+
+use dbwt;
 
 drop table if exists order_meal_relation;
 drop table if exists member_faculty_relation;
@@ -217,13 +235,14 @@ drop procedure if exists add_employee;
 drop procedure if exists get_user_hash;
 drop procedure if exists get_meal;
 
+delimiter //
 create procedure add_guest(id           int unsigned,
                            reason_      varchar(256),
                            valid_until_ date)
 modifies sql data
   begin
     insert into guest values (id, reason_, valid_until_);
-  end;
+end//
 
 create procedure add_student(id                    int unsigned,
                              matriculation_number_ int(9) unsigned,
@@ -232,7 +251,7 @@ modifies sql data
   begin
     replace into member values (id);
     insert into student values (id, matriculation_number_, major_);
-  end;
+end//
 
 create procedure add_employee(id            int unsigned,
                               office_       varchar(4),
@@ -241,13 +260,13 @@ modifies sql data
   begin
     replace into member values (id);
     insert into employee values (id, office_, phone_number_);
-  end;
+end//
 
 create procedure get_user_hash(username_ varchar(32))
 reads sql data
   begin
     select username, hash, salt, active from user where username = username_;
-  end;
+end//
 
 create procedure get_meal(meal_id_ int unsigned)
 reads sql data
@@ -270,13 +289,14 @@ reads sql data
            left join ingredient ig on imr.ingredient_id = ig.id
            left join price p on m.id = p.meal_id
     where m.id = meal_id_;
-  end;
-
+end//
+delimiter ;
 -- Functions
 
 drop function if exists get_role;
 drop function if exists add_user;
 
+delimiter //
 create function add_user(username_   varchar(32),
                          email_      varchar(128),
                          salt_       varchar(32),
@@ -293,7 +313,7 @@ reads sql data
     values (username_, email_, salt_, hash_, first_name_, last_name_, birthday_);
     select id into user_id from user where username = username_;
     return user_id;
-  end;
+end//
 
 create function get_role(username_ varchar(32))
   returns varchar(32)
@@ -322,7 +342,8 @@ create function get_role(username_ varchar(32))
       then return 'member';
     else return 'no role';
     end if;
-  end;
+end//
+delimiter ;
 
 -- Views
 

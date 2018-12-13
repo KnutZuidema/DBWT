@@ -5,8 +5,8 @@ namespace emensa.Models
 {
     public class ProductsModel
     {
-        public List<Tuple<Meal, Image>> Meals;
-        public List<Category> Categories;
+        public List<Tuple<Meal, Image>> Meals { get; set; }
+        public List<Category> Categories { get; set; }
 
         public ProductsModel()
         {

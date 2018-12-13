@@ -7,11 +7,11 @@ namespace emensa.Models
 {
     public class DetailsModel
     {
-        public Meal Meal;
-        public List<Ingredient> Ingredients;
-        public Image Image;
-        public decimal Price;
-        public User User;
+        public Meal Meal { get; set; }
+        public List<Ingredient> Ingredients { get; set; }
+        public Image Image { get; set; }
+        public decimal Price { get; set; }
+        public User User { get; set; }
 
         public DetailsModel(uint id, User user)
         {

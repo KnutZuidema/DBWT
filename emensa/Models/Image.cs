@@ -4,10 +4,10 @@ namespace emensa.Models
 {
     public class Image
     {
-        public int Id;
-        public string AlternativeText;
-        public string FilePath;
-        public string Title;
-        public List<Meal> Meals;
+        public int Id { get; set; }
+        public string AlternativeText { get; set; }
+        public string FilePath { get; set; }
+        public string Title { get; set; }
+        public List<Meal> Meals { get; set; }
     }
 }

@@ -7,16 +7,16 @@ namespace emensa.Models
 {
     public class Meal
     {
-        public uint Id;
-        public string Description;
-        public string Name;
-        public uint Stock;
-        public Category Category;
-        public bool Available;
-        public bool Vegetarian;
-        public bool Vegan;
-        public bool Organic;
-        public bool GlutenFree;
+        public uint Id { get; set; }
+        public string Description { get; set; }
+        public string Name { get; set; }
+        public uint Stock { get; set; }
+        public Category Category { get; set; }
+        public bool Available { get; set; }
+        public bool Vegetarian { get; set; }
+        public bool Vegan { get; set; }
+        public bool Organic { get; set; }
+        public bool GlutenFree { get; set; }
 
         public static List<Tuple<Meal, Image>> GetAllWithImage()
         {

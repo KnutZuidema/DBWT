@@ -6,7 +6,7 @@
         2018 <a href="https://github.com/KnutZuidema">Knut Zuidema</a>
     </div>
     <ul class="col-md-10 col-12" id="links">
-        @if (Context.Session.GetString("user") == null)
+        @if (!Context.Session.Keys.Contains("user"))
         {
             <li><a asp-controller="EMensa" asp-action="Login">Anmelden</a></li>
             <li><a asp-controller="EMensa" asp-action="Register">Registrieren</a></li>
