@@ -246,7 +246,7 @@ modifies sql data
 create procedure get_user_hash(username_ varchar(32))
 reads sql data
   begin
-    select username, hash, salt from user where username = username_;
+    select username, hash, salt, active from user where username = username_;
   end;
 
 create procedure get_meal(meal_id_ int unsigned)
