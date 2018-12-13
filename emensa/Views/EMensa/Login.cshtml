@@ -14,19 +14,23 @@
         <p class="form-title">
             <span>Login</span>
         </p>
+        @if (Model.ActiveError)
+        {
+            <p class="text-danger error-message">Nicht aktiviert</p>
+        }
+        else if (Model.UserError)
+        {
+            <p class="text-danger error-message">Falscher Benutzername</p>
+        }
+        else if (Model.PasswordError)
+        {
+            <p class="text-danger error-message">Falsches Passwort</p>
+        }
         <div class="form-group">
             <input class="form-control" id="username" type="text" name="username" placeholder="Benutzername">
-            @if (Model.UserError)
-            {
-                <p class="text-danger error-message">Falscher Benutzername</p>
-            }
         </div>
         <div class="form-group">
             <input class="form-control" id="password" type="password" name="password" placeholder="Passwort">
-            @if (Model.PasswordError)
-            {
-                <p class="text-danger error-message">Falsches Passwort</p>
-            }
         </div>
         <input type="hidden" name="route" value="/">
         <button type="submit" class="btn form-control">Anmelden</button>
