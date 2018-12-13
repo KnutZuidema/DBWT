@@ -103,7 +103,7 @@ namespace emensa.Controllers
                     PasswordError = true
                 });
             }
-            if (!Regex.IsMatch(email, @"[\w\d\.]*@[\d\w\.]*\.\w*"))
+            if (!Regex.IsMatch(email, @"[\w\d\.]+@[-\d\w\.]+\.\w+"))
             {
                 Console.Out.WriteLine("email = {0}", email);
                 return View(new RegisterModel
