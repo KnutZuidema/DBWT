@@ -63,7 +63,7 @@ namespace emensa.Controllers
             var username = HttpContext.Request.Form["username"];
             var password = HttpContext.Request.Form["password"];
             var user = new LoginModel(username);
-            if (user.UserError)
+            if (user.UserError || user.ActiveError)
             {
                 return View(user);
             }
@@ -155,8 +155,6 @@ namespace emensa.Controllers
                     UsernameError = true
                 });
             }
-            HttpContext.Session.SetString("user", username);
-            HttpContext.Session.SetString("role", role);
             return RedirectToAction("Index");
         }
 
