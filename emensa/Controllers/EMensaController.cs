@@ -111,7 +111,7 @@ namespace emensa.Controllers
                     EmailError = true
                 });
             }
-            User user = new User
+            var user = new User
             {
                 Username = username,
                 Email = email,
@@ -123,20 +123,20 @@ namespace emensa.Controllers
             switch (role)
             {
                     case "guest":
-                        Guest guest = new Guest(user);
+                        var guest = new Guest(user);
                         guest.Reason = HttpContext.Request.Form["reason"];
                         guest.ValidUntil = DateTime.Parse(HttpContext.Request.Form["valid_until"]);
                         userError = Models.User.RegisterUser(guest, password);
                         break;
                     case "student":
-                        Student student = new Student(user);
+                        var student = new Student(user);
                         student.MatriculationNumber =
                             Convert.ToUInt32(HttpContext.Request.Form["matriculation_number"]);
                         Enum.TryParse(HttpContext.Request.Form["major"], out student.Major);
                         userError = Models.User.RegisterUser(student, password);
                         break;
                     case "employee":
-                        Employee employee = new Employee(user);
+                        var employee = new Employee(user);
                         employee.Office = HttpContext.Request.Form["office"];
                         employee.PhoneNumber = HttpContext.Request.Form["phone_number"];
                         userError = Models.User.RegisterUser(employee, password);
