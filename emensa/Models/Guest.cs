@@ -4,8 +4,8 @@ namespace emensa.Models
 {
     public class Guest : User
     {
-        public string Reason;
-        public DateTime ValidUntil;
+        public string Reason { get; set; }
+        public DateTime ValidUntil { get; set; }
 
         public Guest()
         {

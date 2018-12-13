@@ -4,9 +4,9 @@ namespace emensa.Models
 {
     public class Order
     {
-        public uint Id;
-        public DateTime OrderedAt;
-        public DateTime CollectedAt;
-        public User User;
+        public uint Id { get; set; }
+        public DateTime OrderedAt { get; set; }
+        public DateTime CollectedAt { get; set; }
+        public User User { get; set; }
     }
 }

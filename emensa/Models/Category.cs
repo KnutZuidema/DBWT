@@ -7,10 +7,10 @@ namespace emensa.Models
 {
     public class Category
     {
-        public uint Id;
-        public string Name;
-        public Image Image;
-        public Category Parent;
+        public uint Id { get; set; }
+        public string Name { get; set; }
+        public Image Image { get; set; }
+        public Category Parent { get; set; }
 
         public static List<Category> GetAll()
         {

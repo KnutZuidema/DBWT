@@ -6,18 +6,18 @@ namespace emensa.Models
 {
     public class User
     {
-        public uint Id;
-        public string Username;
-        public string Email;
-        public string salt;
-        public string hash;
-        public string FirstName;
-        public string LastName;
-        public DateTime Created;
-        public bool Active;
-        public DateTime Birthday;
-        public DateTime LastLogin;
-        public uint Age;
+        public uint Id { get; set; }
+        public string Username { get; set; }
+        public string Email { get; set; }
+        public string salt { get; set; }
+        public string hash { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public DateTime Created { get; set; }
+        public bool Active { get; set; }
+        public DateTime Birthday { get; set; }
+        public DateTime LastLogin { get; set; }
+        public uint Age { get; set; }
 
 
         public static string GetRole(string username)

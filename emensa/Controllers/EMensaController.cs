@@ -132,7 +132,8 @@ namespace emensa.Controllers
                         Student student = new Student(user);
                         student.MatriculationNumber =
                             Convert.ToUInt32(HttpContext.Request.Form["matriculation_number"]);
-                        Enum.TryParse(HttpContext.Request.Form["major"], out student.Major);
+                        Enum.TryParse(HttpContext.Request.Form["major"], out Major major);
+                        student.Major = major;
                         userError = Models.User.RegisterUser(student, password);
                         break;
                     case "employee":

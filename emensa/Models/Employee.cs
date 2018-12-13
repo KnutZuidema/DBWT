@@ -2,8 +2,8 @@ namespace emensa.Models
 {
     public class Employee : Member
     {
-        public string Office;
-        public string PhoneNumber;
+        public string Office { get; set; }
+        public string PhoneNumber { get; set; }
 
         public Employee()
         {

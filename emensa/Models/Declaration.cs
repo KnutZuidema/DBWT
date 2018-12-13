@@ -2,7 +2,7 @@ namespace emensa.Models
 {
     public class Declaration
     {
-        public string Label;
-        public string Symbol;
+        public string Label { get; set; }
+        public string Symbol { get; set; }
     }
 }

@@ -5,11 +5,11 @@ namespace emensa.Models
 {
     public class LoginModel
     {
-        public string Username;
-        public string Hash;
-        public string Salt;
-        public bool UserError;
-        public bool PasswordError;
+        public string Username { get; set; }
+        public string Hash { get; set; }
+        public string Salt { get; set; }
+        public bool UserError { get; set; }
+        public bool PasswordError { get; set; }
 
         public LoginModel()
         {
