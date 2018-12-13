@@ -35,7 +35,7 @@
             </form>
         </div>
     </div>
-    @if (Context.Session.GetString("user") != null)
+    @if (Context.Session.Keys.Contains("user"))
     {
         <a href="#" class="btn" data-toggle="popover" data-trigger="hover"
            data-placement="bottom" data-content="@ViewBag.User">
