@@ -20,19 +20,19 @@
         <p>
             @if (Model.EmailError)
             {
-                @("EmailError")
+                @("Email hat falsches Format")
             }
             else if (Model.UsernameError)
             {
-                @("UserError")
+                @("Benutzer bereits vorhanden")
             }
             else if (Model.PasswordError)
             {
-                @("PasswordError")
+                @("Passwoerter stimmen nicht ueberein")
             }
             else if (Model.MatriculationNumberError)
             {
-                @("MatriculationNumberError")
+                @("Matrikelnummer muss zwischen 8 und 9 Z")
             }
         </p>
         <div class="form-row">
@@ -130,6 +130,6 @@
             </div>
         </div>
         <input type="hidden" name="route" value="/">
-        <button type="submit" class="btn form-control offset-md-8 col-md-4" disabled>Registrieren</button>
+        <button type="submit" class="btn form-control offset-md-8 col-md-4">Registrieren</button>
     </form>
 </div>
