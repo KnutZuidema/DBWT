@@ -43,7 +43,7 @@ namespace emensa.Models
                 command.Parameters.AddWithValue("email", user.Email);
                 command.Parameters.AddWithValue("hash", hash);
                 command.Parameters.AddWithValue("salt", salt);
-                command.Parameters.AddWithValue("birthday", user.Birthday.ToString("yyyy-MM-dd"));
+                command.Parameters.AddWithValue("birthday", user.Birthday.Date);
                 command.ExecuteNonQuery();
 
                 command.Parameters.Clear();
@@ -55,7 +55,7 @@ namespace emensa.Models
                 {
                     command.CommandText = "call add_guest(@id, @reason, @validUntil)";
                     command.Parameters.AddWithValue("reason", guest.Reason);
-                    command.Parameters.AddWithValue("validUntil", guest.ValidUntil.ToString("yyyy-MM-dd"));
+                    command.Parameters.AddWithValue("validUntil", guest.ValidUntil.Date);
                 }
                 else if (user is Student student)
                 {
