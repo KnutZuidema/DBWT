@@ -63,7 +63,7 @@ namespace emensa.Controllers
             var username = HttpContext.Request.Form["username"];
             var password = HttpContext.Request.Form["password"];
             var user = new LoginModel(username);
-            if (user.UserError)
+            if (user.UserError || user.ActiveError)
             {
                 return View(user);
             }
@@ -103,7 +103,7 @@ namespace emensa.Controllers
                     PasswordError = true
                 });
             }
-            if (!Regex.IsMatch(email, @"[\w\d\.]*@[\d\w\.]*\.\w*"))
+            if (!Regex.IsMatch(email, @"[\w\d\.]+@[-\d\w\.]+\.\w+"))
             {
                 Console.Out.WriteLine("email = {0}", email);
                 return View(new RegisterModel
@@ -111,7 +111,7 @@ namespace emensa.Controllers
                     EmailError = true
                 });
             }
-            User user = new User
+            var user = new User
             {
                 Username = username,
                 Email = email,
@@ -123,13 +123,13 @@ namespace emensa.Controllers
             switch (role)
             {
                     case "guest":
-                        Guest guest = new Guest(user);
+                        var guest = new Guest(user);
                         guest.Reason = HttpContext.Request.Form["reason"];
                         guest.ValidUntil = DateTime.Parse(HttpContext.Request.Form["valid_until"]);
                         userError = Models.User.RegisterUser(guest, password);
                         break;
                     case "student":
-                        Student student = new Student(user);
+                        var student = new Student(user);
                         student.MatriculationNumber =
                             Convert.ToUInt32(HttpContext.Request.Form["matriculation_number"]);
                         Enum.TryParse(HttpContext.Request.Form["major"], out Major major);
@@ -137,7 +137,7 @@ namespace emensa.Controllers
                         userError = Models.User.RegisterUser(student, password);
                         break;
                     case "employee":
-                        Employee employee = new Employee(user);
+                        var employee = new Employee(user);
                         employee.Office = HttpContext.Request.Form["office"];
                         employee.PhoneNumber = HttpContext.Request.Form["phone_number"];
                         userError = Models.User.RegisterUser(employee, password);
@@ -156,8 +156,6 @@ namespace emensa.Controllers
                     UsernameError = true
                 });
             }
-            HttpContext.Session.SetString("user", username);
-            HttpContext.Session.SetString("role", role);
             return RedirectToAction("Index");
         }
 

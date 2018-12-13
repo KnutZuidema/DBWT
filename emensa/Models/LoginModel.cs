@@ -9,6 +9,7 @@ namespace emensa.Models
         public string Hash { get; set; }
         public string Salt { get; set; }
         public bool UserError { get; set; }
+        public bool ActiveError { get; set; }
         public bool PasswordError { get; set; }
 
         public LoginModel()
@@ -24,9 +25,16 @@ namespace emensa.Models
             {
                 if (reader.Read())
                 {
-                    Username = reader["username"] as string;
-                    Hash = reader["hash"] as string;
-                    Salt = reader["salt"] as string;
+                    if (!(bool) reader["active"])
+                    {
+                        ActiveError = true;
+                    }
+                    else
+                    {
+                        Username = reader["username"] as string;
+                        Hash = reader["hash"] as string;
+                        Salt = reader["salt"] as string;
+                    }
                 }
                 else
                 {

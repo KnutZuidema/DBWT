@@ -7,8 +7,17 @@
     filter: grayscale(100%);
 }
 
+.card-link {
+    overflow: hidden;
+}
+
 .card-img-top {
     background: teal;
+    transition: all .3s ease-in-out;
+}
+
+.card-img-top:hover {
+    transform: scale(1.2);
 }
 
 .card-body {
