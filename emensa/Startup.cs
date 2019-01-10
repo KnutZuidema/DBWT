@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using emensa.Utility;
+using LinqToDB.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -42,6 +44,7 @@ namespace emensa
                 app.UseHsts();
             }
             
+            DataConnection.DefaultSettings = new LinqToDbSettings();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseSession();
