@@ -97,7 +97,7 @@ create table meal (
 );
 
 create table guest (
-  user_id     int unsigned not null unique,
+  user_id     int unsigned not null primary key unique,
   reason      varchar(256) not null,
   valid_until date         not null default date_add(current_date, interval 7 day),
   foreign key (user_id) references user (id)
@@ -105,13 +105,13 @@ create table guest (
 );
 
 create table member (
-  user_id int unsigned not null unique,
+  user_id int unsigned not null primary key unique,
   foreign key (user_id) references user (id)
     on delete cascade
 );
 
 create table employee (
-  member_id    int unsigned not null unique,
+  member_id    int unsigned not null primary key unique,
   office       varchar(4)  default null,
   phone_number varchar(14) default null check (phone_number is null or
                                                length(phone_number) between 13 and 14),
@@ -120,7 +120,7 @@ create table employee (
 );
 
 create table student (
-  member_id            int unsigned     not null unique,
+  member_id            int unsigned     not null primary key unique,
   matriculation_number int(9)  unsigned not null check (matriculation_number > 999999),
   major                enum ('ET', 'INF', 'ISE', 'MCD', 'WI'),
   foreign key (member_id) references member (user_id)
@@ -145,6 +145,7 @@ create table price (
   guest_price    decimal(4, 2) not null check (guest_price >= employee_price),
   employee_price decimal(4, 2) default null check (employee_price <= guest_price and employee_price >= student_price),
   student_price  decimal(4, 2) default null check (student_price <= employee_price),
+  primary key (meal_id, valid_year),
   foreign key (meal_id) references meal (id)
     on delete cascade
 );
@@ -152,7 +153,7 @@ create table price (
 create table friend_relation (
   initiator int unsigned not null,
   receiver  int unsigned not null,
-  unique (initiator, receiver),
+  primary key (initiator, receiver),
   foreign key (initiator) references user (id)
     on delete cascade,
   foreign key (receiver) references user (id)
@@ -163,7 +164,7 @@ create table order_meal_relation (
   amount   int unsigned not null,
   order_id int unsigned not null,
   meal_id  int unsigned not null,
-  unique (order_id, meal_id),
+  primary key (order_id, meal_id),
   foreign key (order_id) references `order` (id)
     on delete cascade,
   foreign key (meal_id) references meal (id)
@@ -173,7 +174,7 @@ create table order_meal_relation (
 create table member_faculty_relation (
   member_id  int unsigned not null,
   faculty_id int unsigned not null,
-  unique (member_id, faculty_id),
+  primary key (member_id, faculty_id),
   foreign key (member_id) references member (user_id)
     on delete cascade,
   foreign key (faculty_id) references faculty (id)
@@ -183,7 +184,7 @@ create table member_faculty_relation (
 create table declaration_meal_relation (
   declaration_symbol varchar(2)   not null,
   meal_id            int unsigned not null,
-  unique (declaration_symbol, meal_id),
+  primary key (declaration_symbol, meal_id),
   foreign key (declaration_symbol) references declaration (symbol)
     on delete cascade,
   foreign key (meal_id) references meal (id)
@@ -193,7 +194,7 @@ create table declaration_meal_relation (
 create table ingredient_meal_relation (
   ingredient_id int(5) unsigned not null,
   meal_id       int unsigned    not null,
-  unique (ingredient_id, meal_id),
+  primary key (ingredient_id, meal_id),
   foreign key (ingredient_id) references ingredient (id)
     on delete cascade,
   foreign key (meal_id) references meal (id)
@@ -203,7 +204,7 @@ create table ingredient_meal_relation (
 create table meal_image_relation (
   meal_id  int unsigned not null,
   image_id int unsigned not null,
-  unique (meal_id, image_id),
+  primary key (meal_id, image_id),
   foreign key (meal_id) references meal (id)
     on delete cascade,
   foreign key (image_id) references image (id)
@@ -225,7 +226,7 @@ create procedure add_guest(id           int unsigned,
 modifies sql data
   begin
     insert into guest values (id, reason_, valid_until_);
-end//
+  end//
 
 create procedure add_student(id                    int unsigned,
                              matriculation_number_ int(9) unsigned,
@@ -234,7 +235,7 @@ modifies sql data
   begin
     replace into member values (id);
     insert into student values (id, matriculation_number_, major_);
-end//
+  end//
 
 create procedure add_employee(id            int unsigned,
                               office_       varchar(4),
@@ -243,13 +244,13 @@ modifies sql data
   begin
     replace into member values (id);
     insert into employee values (id, office_, phone_number_);
-end//
+  end//
 
 create procedure get_user_hash(username_ varchar(32))
 reads sql data
   begin
     select username, hash, salt, active from user where username = username_;
-end//
+  end//
 
 create procedure get_meal(meal_id_ int unsigned)
 reads sql data
@@ -272,7 +273,7 @@ reads sql data
            left join ingredient ig on imr.ingredient_id = ig.id
            left join price p on m.id = p.meal_id
     where m.id = meal_id_;
-end//
+  end//
 delimiter ;
 -- Functions
 
@@ -296,7 +297,7 @@ reads sql data
     values (username_, email_, salt_, hash_, first_name_, last_name_, birthday_);
     select id into user_id from user where username = username_;
     return user_id;
-end//
+  end//
 
 create function get_role(username_ varchar(32))
   returns varchar(32)
@@ -325,7 +326,7 @@ create function get_role(username_ varchar(32))
       then return 'member';
     else return 'no role';
     end if;
-end//
+  end//
 delimiter ;
 
 -- Views
