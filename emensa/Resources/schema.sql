@@ -1,22 +1,5 @@
 -- Run as root
-create database if not exists dbwt character set = utf8mb4 collate = utf8mb4_bin;
-
-create role if not exists `dbwt_admin`;
-create role if not exists `dbwt_user`;
-
-grant all on dbwt.* to `dbwt_admin` with grant option;
-grant select, insert, update, delete, execute on dbwt.* to `dbwt_user`;
-
-create user if not exists 'dbwtAdmin'@'localhost' identified by 'securePwHere';
-create user if not exists 'dbwtWebapp'@'localhost' identified by 'securePwHere';
-
-grant `dbwt_admin` to 'dbwtAdmin'@'localhost';
-grant `dbwt_user` to 'dbwtWebapp'@'localhost';
-
-set default role `dbwt_admin` for 'dbwtAdmin'@'localhost';
-set default role `dbwt_user` for 'dbwtWebapp'@'localhost';
-
-use dbwt;
+use emensa;
 
 drop table if exists order_meal_relation;
 drop table if exists member_faculty_relation;
