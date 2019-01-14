@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace emensa.DataModels
 {
@@ -19,7 +18,7 @@ namespace emensa.DataModels
         public string Description { get; set; }
         public int Stock { get; set; }
         public int CategoryId { get; set; }
-        public byte? Available { get; set; }
+        public byte Available { get; set; }
 
         public Category Category { get; set; }
         public Price Price { get; set; }

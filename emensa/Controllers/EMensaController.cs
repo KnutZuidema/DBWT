@@ -1,8 +1,16 @@
 using System;
+using System.Data;
+using System.Diagnostics;
+using System.Linq;
 using System.Text.RegularExpressions;
-using emensa.Models;
+using emensa.DataModels;
+using emensa.Utility;
+using emensa.ViewModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Primitives;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace emensa.Controllers
 {
@@ -15,70 +23,46 @@ namespace emensa.Controllers
 
         public IActionResult Products()
         {
-            return View(new ProductsModel());
+            return View(new Products());
         }
 
         public IActionResult Ingredients()
         {
-            return View(Ingredient.GetAll());
+            return View(new Ingredients());
         }
 
-        public IActionResult Details(uint id)
+        public IActionResult Details(int id)
         {
             var username = HttpContext.Session.GetString("user");
-            User user = null;
-            if (username != null)
-            {
-                var role = Models.User.GetRole(username);
-                switch (role)
-                {
-                    case "no role":
-                        user = new User {Username = username};
-                        break;
-                    case "guest":
-                        user = new Guest {Username = username};
-                        break;
-                    case "employee":
-                        user = new Employee {Username = username};
-                        break;
-                    case "student":
-                        user = new Student {Username = username};
-                        break;
-                    case "member":
-                        user = new Member {Username = username};
-                        break;
-                }
-            }
 
-            return View(new DetailsModel(id, user));
+            return View(new Details(id, EmensaContext.GetRole(username)));
         }
 
         public IActionResult Login()
         {
-            if (HttpContext.Request.Method.ToLower() == "get")
+            if (Request.Method.ToLower() == "get")
             {
-                return View(new LoginModel());
+                return View(new Login());
             }
 
             var username = HttpContext.Request.Form["username"];
             var password = HttpContext.Request.Form["password"];
-            var user = new LoginModel(username);
-            if (user.UserError || user.ActiveError)
+
+            var userExists = EmensaContext.DoesUserExist(username);
+            var isActivated = EmensaContext.IsUserActivated(username);
+            var isPasswordCorrect = EmensaContext.IsPasswordCorrect(username, password);
+            if (!userExists || !isActivated || !isPasswordCorrect)
             {
-                return View(user);
+                return View(new Login
+                {
+                    UserExists = userExists,
+                    IsActivated = isActivated,
+                    IsPasswordValid = isPasswordCorrect
+                });
             }
 
-            if (Service.VerifyPassword(password, user.Salt, user.Hash))
-            {
-                HttpContext.Session.SetString("user", user.Username);
-                HttpContext.Session.SetString("role", Models.User.GetRole(user.Username));
-            }
-            else
-            {
-                user.PasswordError = true;
-                return View(user);
-            }
-
+            HttpContext.Session.SetString("user", username);
+            HttpContext.Session.SetString("role", EmensaContext.GetRole(username).ToString());
             return RedirectToAction("Index");
         }
 
@@ -86,76 +70,83 @@ namespace emensa.Controllers
         {
             if (HttpContext.Request.Method.ToLower() == "get")
             {
-                return View(new RegisterModel());
-            }
-            var username = HttpContext.Request.Form["username"];
-            var email = HttpContext.Request.Form["email"];
-            var password = HttpContext.Request.Form["password"];
-            var passwordRepeat = HttpContext.Request.Form["password-repeat"];
-            var lastName = HttpContext.Request.Form["last_name"];
-            var firstName = HttpContext.Request.Form["first_name"];
-            var birthday = HttpContext.Request.Form["birthday"];
-            var role = HttpContext.Request.Form["role"];
-            if (password != passwordRepeat)
-            {
-                return View(new RegisterModel
-                {
-                    PasswordError = true
-                });
-            }
-            if (!Regex.IsMatch(email, @"[\w\d\.]+@[-\d\w\.]+\.\w+"))
-            {
-                Console.Out.WriteLine("email = {0}", email);
-                return View(new RegisterModel
-                {
-                    EmailError = true
-                });
-            }
-            var user = new User
-            {
-                Username = username,
-                Email = email,
-                FirstName = firstName,
-                LastName = lastName,
-                Birthday = DateTime.Parse(birthday)
-            };
-            bool userError;
-            switch (role)
-            {
-                    case "guest":
-                        var guest = new Guest(user);
-                        guest.Reason = HttpContext.Request.Form["reason"];
-                        guest.ValidUntil = DateTime.Parse(HttpContext.Request.Form["valid_until"]);
-                        userError = Models.User.RegisterUser(guest, password);
-                        break;
-                    case "student":
-                        var student = new Student(user);
-                        student.MatriculationNumber =
-                            Convert.ToUInt32(HttpContext.Request.Form["matriculation_number"]);
-                        Enum.TryParse(HttpContext.Request.Form["major"], out Major major);
-                        student.Major = major;
-                        userError = Models.User.RegisterUser(student, password);
-                        break;
-                    case "employee":
-                        var employee = new Employee(user);
-                        employee.Office = HttpContext.Request.Form["office"];
-                        employee.PhoneNumber = HttpContext.Request.Form["phone_number"];
-                        userError = Models.User.RegisterUser(employee, password);
-                        break;
-                    default:
-                        return View(new RegisterModel
-                        {
-                            RoleError = true
-                        });
+                return View(new Register());
             }
 
-            if (!userError)
+            var username = Request.Form["username"];
+            var email = Request.Form["email"];
+            var password = Request.Form["password"];
+            var passwordRepeat = Request.Form["password-repeat"];
+            var lastName = Request.Form["last_name"];
+            var firstName = Request.Form["first_name"];
+            var birthday = DateTime.Parse(Request.Form["birthday"]);
+            Enum.TryParse(Request.Form["role"], true, out Role role);
+            var doPasswordsMatch = password == passwordRepeat;
+            var isValidEmail = Regex.IsMatch(email, @"[\w\d\.]+@[-\d\w\.]+\.\w+");
+            var doesUserExist = EmensaContext.DoesUserExist(username);
+            if (!doPasswordsMatch || !isValidEmail || doesUserExist)
             {
-                return View(new RegisterModel
+                return View(new Register
                 {
-                    UsernameError = true
+                    DoPasswordsMatch = doPasswordsMatch,
+                    IsEmailValid = isValidEmail,
+                    DoesUserExist = doesUserExist
                 });
             }
+
+            var (hash, salt) = PasswordStorage.CreateHash(password);
+            var user = new User
+            {
+                LastName = lastName,
+                FirstName = firstName,
+                Username = username,
+                Salt = salt,
+                Hash = hash,
+                Birthday = birthday,
+                Email = email
+            };
+            switch (role)
+            {
+                case Role.Employee:
+                    var phoneNumber = Request.Form["phone_number"];
+                    var office = Request.Form["office"];
+                    ViewModels.Register.RegisterEmployee(new Employee
+                    {
+                        Member = new Member
+                        {
+                            User = user
+                        },
+                        PhoneNumber = phoneNumber,
+                        Office = office
+                    });
+                    break;
+                case Role.Student:
+                    var matriculationNumber = Convert.ToInt32(Request.Form["matriculation_number"]);
+                    var major = Request.Form["major"];
+                    ViewModels.Register.RegisterStudent(new Student
+                    {
+                        Member = new Member
+                        {
+                            User = user
+                        },
+                        MatriculationNumber = matriculationNumber,
+                        Major = major
+                    });
+                    break;
+                case Role.Guest:
+                    var reason = Request.Form["reason"];
+                    var validUntil = DateTime.Parse(Request.Form["valid_until"]);
+                    ViewModels.Register.RegisterGuest(new Guest
+                    {
+                        User = user,
+                        Reason = reason,
+                        ValidUntil = validUntil
+                    });
+                    break;
+            }
+
+            HttpContext.Session.SetString("user", username);
+            HttpContext.Session.SetString("role", EmensaContext.GetRole(username).ToString());
             return RedirectToAction("Index");
         }
 
@@ -169,6 +160,71 @@ namespace emensa.Controllers
             HttpContext.Session.Remove("user");
             HttpContext.Session.Remove("role");
             return View("Index");
+        }
+
+        public IActionResult Order()
+        {
+            var cookie = Request.Cookies["orders"];
+            var orders = JsonConvert.DeserializeObject<ViewModels.Order>(cookie ?? "");
+            if (orders is null)
+            {
+                orders = new ViewModels.Order();
+            }
+
+            if (Request.Method.ToLower() == "get")
+            {
+                return View(orders);
+            }
+
+            var username = HttpContext.Session.GetString("user");
+            if (username is null)
+            {
+                return RedirectToAction("Login");
+            }
+
+            Response.Cookies.Delete("orders");
+            ViewModels.Order.PlaceOrder(orders, username);
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Orders()
+        {
+            Request.Headers.TryGetValue("X-Authorize", out var code);
+            if (code != "secretcode")
+            {
+                return Unauthorized();
+            }
+
+            using (var db = new EmensaContext())
+            {
+                var orders = (from order in db.Order
+                    where order.CollectedAt < DateTime.Now.AddHours(1)
+                    join user in db.User on order.UserId equals user.Id
+                    select new
+                    {
+                        User = new
+                        {
+                            user.FirstName,
+                            user.LastName,
+                            user.Username,
+                            user.Email
+                        },
+                        order.CollectedAt,
+                        OrderId = order.Id,
+                        Meals = (from relation in db.OrderMealRelation
+                            where relation.OrderId == order.Id
+                            join meal in db.Meal on relation.MealId equals meal.Id
+                            join category in db.Category on meal.CategoryId equals category.Id
+                            select new
+                            {
+                                relation.Amount,
+                                Category = category.Name,
+                                meal.Name,
+                                meal.Stock
+                            }).ToList()
+                    }).ToList();
+                return Json(orders);
+            }
         }
     }
 }

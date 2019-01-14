@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace emensa.DataModels
+﻿namespace emensa.DataModels
 {
     public partial class MemberFacultyRelation
     {

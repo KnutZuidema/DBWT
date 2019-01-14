@@ -1,4 +1,4 @@
-@model List<Ingredient>
+@model Ingredients
 
 @{
     ViewBag.Title = "Zutaten";
@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    @foreach (var ingredient in Model)
+    @foreach (var ingredient in Model.AllIngredients)
     {
         <tr>
             <td>
@@ -23,13 +23,13 @@
                    title="Nach @ingredient.Name bei Google suchen">
                     @ingredient.Name
                 </a>
-                @if (ingredient.Organic)
+                @if (ingredient.Organic != 0)
                 {
                     <img class="font-image" src="~/images/bio-energy-symbol.png">
                 }
             </td>
             <td class="text-center">
-                @if (ingredient.Vegetarian)
+                @if (ingredient.Vegetarian != 0)
                 {
                     <i class="far fa-check-circle"></i>
                 }
@@ -39,7 +39,7 @@
                 }
             </td>
             <td class="text-center">
-                @if (ingredient.Vegan)
+                @if (ingredient.Vegan != 0)
                 {
                     <i class="far fa-check-circle"></i>
                 }
@@ -49,7 +49,7 @@
                 }
             </td>
             <td class="text-center">
-                @if (ingredient.GlutenFree)
+                @if (ingredient.GlutenFree != 0)
                 {
                     <i class="far fa-check-circle"></i>
                 }

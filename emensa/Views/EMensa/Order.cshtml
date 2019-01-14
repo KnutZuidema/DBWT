@@ -1,0 +1,66 @@
+@using Microsoft.AspNetCore.Http
+@model Order
+
+@section Scripts{
+    <script src="~/js/order.js"></script>
+}
+
+@{
+    decimal totalPrice = 0;
+}
+<form asp-action="Order" asp-controller="EMensa">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Mahlzeit</th>
+            <th>Einzelpreis</th>
+            <th>Anzahl</th>
+            <th>Gesamtpreis</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var (meal, amount) in Model.GetMeals())
+        {
+            var price = Model.GetPrice(meal, Context.Session.GetString("user"));
+            totalPrice += price;
+            <tr class="meal">
+                <td class="id">@meal.Id</td>
+                <td>@meal.Name</td>
+                <td><span class="single-price">@($"{price:F2}")</span>€</td>
+                <td>
+                    <input type="number" min="0" max="@meal.Stock" value="@amount" class="amount"
+                           name="amount-@meal.Id"/>
+                </td>
+                <td><span class="total-price">@($"{price * amount:F2}")</span>€</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    <div class="row">
+        <div class="col-6">
+            <button class="btn" id="delete-all">Alle loeschen</button>
+        </div>
+        <div class="col-6 text-right">
+            Die Bestellung kostet <span id="total-price">@($"{totalPrice:F2}")</span>€
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            @{
+                var earliest = DateTime.Now.Add(TimeSpan.FromMinutes(30));
+                var latest = earliest.Add(TimeSpan.FromHours(3));
+            }
+            <span>
+                Wann wollen sie die Bestellung abholen?
+                <small class="text-muted">@($"({earliest:HH:mm} - {latest:HH:mm})")</small>
+            </span>
+            <input type="time" min="@($"{earliest:HH:mm}")"
+                   max="@($"{latest:HH:mm}")" value="@Model.PickupTime"
+                   name="pickup_time" id="pickup-time"/>
+        </div>
+        <div class="col-6 text-right">
+            <button class="btn btn-success" type="submit">Zahlungspflichtig bestellen</button>
+        </div>
+    </div>
+</form>

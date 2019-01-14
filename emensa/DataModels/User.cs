@@ -7,9 +7,9 @@ namespace emensa.DataModels
     {
         public User()
         {
-            FriendRelationInitiatorNavigation = new HashSet<FriendRelation>();
-            FriendRelationReceiverNavigation = new HashSet<FriendRelation>();
-            Order = new HashSet<Order>();
+            Following = new HashSet<FriendRelation>();
+            Followers = new HashSet<FriendRelation>();
+            Orders = new HashSet<Order>();
         }
 
         public int Id { get; set; }
@@ -27,8 +27,8 @@ namespace emensa.DataModels
 
         public Guest Guest { get; set; }
         public Member Member { get; set; }
-        public ICollection<FriendRelation> FriendRelationInitiatorNavigation { get; set; }
-        public ICollection<FriendRelation> FriendRelationReceiverNavigation { get; set; }
-        public ICollection<Order> Order { get; set; }
+        public ICollection<FriendRelation> Following { get; set; }
+        public ICollection<FriendRelation> Followers { get; set; }
+        public ICollection<Order> Orders { get; set; }
     }
 }

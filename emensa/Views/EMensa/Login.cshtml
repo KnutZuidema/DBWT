@@ -1,4 +1,4 @@
-@model LoginModel
+@model Login
 
 @{
     ViewBag.Title = "Login";
@@ -14,15 +14,15 @@
         <p class="form-title">
             <span>Login</span>
         </p>
-        @if (Model.ActiveError)
+        @if (!Model.IsActivated)
         {
             <p class="text-danger error-message">Nicht aktiviert</p>
         }
-        else if (Model.UserError)
+        else if (!Model.UserExists)
         {
             <p class="text-danger error-message">Falscher Benutzername</p>
         }
-        else if (Model.PasswordError)
+        else if (!Model.IsPasswordValid)
         {
             <p class="text-danger error-message">Falsches Passwort</p>
         }

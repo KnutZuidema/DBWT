@@ -11,7 +11,7 @@ namespace emensa.DataModels
         }
 
         public int Id { get; set; }
-        public DateTime OrderdAt { get; set; }
+        public DateTime OrderedAt { get; set; }
         public DateTime? CollectedAt { get; set; }
         public int? UserId { get; set; }
 

@@ -36,7 +36,13 @@ namespace emensa.Utility
         public const int SALT_INDEX = 3;
         public const int PBKDF2_INDEX = 4;
 
-        public static string CreateHash(string password)
+        public static (string, string) CreateHash(string password)
+        {
+            var tuple = PasswordStorage._CreateHash(password).Split(':');
+            return (tuple[tuple.Length - 1], tuple[tuple.Length - 2]);
+        }
+
+        public static string _CreateHash(string password)
         {
             // Generate a random salt
             byte[] salt = new byte[SALT_BYTES];
@@ -68,6 +74,11 @@ namespace emensa.Utility
                 ":" +
                 Convert.ToBase64String(hash);
             return parts;
+        }
+        
+        public static bool VerifyPassword(string password, string salt, string hash)
+        {
+            return PasswordStorage.VerifyPassword(password, $"sha1:64000:18:{salt}:{hash}");
         }
 
         public static bool VerifyPassword(string password, string goodHash)

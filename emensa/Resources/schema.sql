@@ -52,8 +52,8 @@ create table faculty (
 );
 
 create table declaration (
-  symbol varchar(2)  not null primary key,
-  label  varchar(32) not null
+  id    varchar(2)  not null primary key,
+  label varchar(32) not null
 );
 
 create table ingredient (
@@ -67,8 +67,8 @@ create table ingredient (
 
 create table `order` (
   id           int unsigned not null primary key auto_increment,
-  orderd_at    datetime     not null             default current_time,
-  collected_at datetime                          default null check (collected_at > orderd_at),
+  ordered_at   datetime     not null             default current_time,
+  collected_at datetime                          default null check (collected_at > ordered_at),
   user_id      int unsigned,
   foreign key (user_id) references user (id)
     on delete set null
@@ -151,12 +151,12 @@ create table price (
 );
 
 create table friend_relation (
-  initiator int unsigned not null,
-  receiver  int unsigned not null,
-  primary key (initiator, receiver),
-  foreign key (initiator) references user (id)
+  follower_id int unsigned not null,
+  followed_id int unsigned not null,
+  primary key (follower_id, followed_id),
+  foreign key (follower_id) references user (id)
     on delete cascade,
-  foreign key (receiver) references user (id)
+  foreign key (followed_id) references user (id)
     on delete cascade
 );
 
@@ -182,10 +182,10 @@ create table member_faculty_relation (
 );
 
 create table declaration_meal_relation (
-  declaration_symbol varchar(2)   not null,
-  meal_id            int unsigned not null,
-  primary key (declaration_symbol, meal_id),
-  foreign key (declaration_symbol) references declaration (symbol)
+  declaration_id varchar(2)   not null,
+  meal_id        int unsigned not null,
+  primary key (declaration_id, meal_id),
+  foreign key (declaration_id) references declaration (id)
     on delete cascade,
   foreign key (meal_id) references meal (id)
     on delete cascade
@@ -357,6 +357,22 @@ create view categories_with_parent as
   from category c
          left join category c2 on c2.id = c.parent_category_id;
 
+-- Triggers
+
+drop trigger if exists new_order;
+
+delimiter //
+
+create trigger new_order
+  after insert
+  on order_meal_relation
+  for each row
+  begin
+    update meal set meal.stock = meal.stock - NEW.amount where meal.id = NEW.meal_id;
+  end //
+
+delimiter
+
 -- Data
 
 insert into image (alternative_text, file_path)
@@ -406,7 +422,7 @@ values (1, 1),
        (7, 7),
        (8, 8);
 
-insert into declaration (symbol, label)
+insert into declaration (id, label)
 values ('2', 'Konservierungsstoff'),
        ('3', 'Antioxidationsmittel'),
        ('4', 'Geschmacksverstärker'),

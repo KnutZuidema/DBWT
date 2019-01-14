@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace emensa.DataModels
 {
@@ -7,7 +6,7 @@ namespace emensa.DataModels
     {
         public Category()
         {
-            InverseParentCategory = new HashSet<Category>();
+            ChildCategories = new HashSet<Category>();
             Meal = new HashSet<Meal>();
         }
 
@@ -18,7 +17,7 @@ namespace emensa.DataModels
 
         public Image Image { get; set; }
         public Category ParentCategory { get; set; }
-        public ICollection<Category> InverseParentCategory { get; set; }
+        public ICollection<Category> ChildCategories { get; set; }
         public ICollection<Meal> Meal { get; set; }
     }
 }

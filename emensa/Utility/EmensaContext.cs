@@ -1,8 +1,10 @@
-﻿using System;
+﻿using System.Linq;
+using emensa.DataModels;
+using emensa.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace emensa.DataModels
+namespace emensa.Utility
 {
     public partial class EmensaContext : DbContext
     {
@@ -30,11 +32,65 @@ namespace emensa.DataModels
         public virtual DbSet<MealImageRelation> MealImageRelation { get; set; }
         public virtual DbSet<Member> Member { get; set; }
         public virtual DbSet<MemberFacultyRelation> MemberFacultyRelation { get; set; }
-        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<DataModels.Order> Order { get; set; }
         public virtual DbSet<OrderMealRelation> OrderMealRelation { get; set; }
         public virtual DbSet<Price> Price { get; set; }
         public virtual DbSet<Student> Student { get; set; }
         public virtual DbSet<User> User { get; set; }
+
+        public static User GetUser(string username)
+        {
+            using (var db = new EmensaContext())
+            {
+                return db.User.First(user => user.Username == username);
+            }
+        }
+        
+        public static Role GetRole(string username)
+        {
+            using (var db = new EmensaContext())
+            {
+                if ((from student in db.Student where student.Member.User.Username == username select student).ToList()
+                    .Any())
+                {
+                    return Role.Student;
+                }
+
+                if ((from employee in db.Employee where employee.Member.User.Username == username select employee)
+                    .ToList().Any())
+                {
+                    return Role.Employee;
+                }
+
+                return Role.Guest;
+            }
+        }
+
+        public static bool DoesUserExist(string username)
+        {
+            using (var db = new EmensaContext())
+            {
+                return (from user in db.User where user.Username == username select user).ToList().Any();
+            }
+        }
+
+        public static bool IsUserActivated(string username)
+        {
+            using (var db = new EmensaContext())
+            {
+                return DoesUserExist(username) &&
+                       (from user in db.User where user.Username == username select user).ToList().First().Active != 0;
+            }
+        }
+
+        public static bool IsPasswordCorrect(string username, string password)
+        {
+            using (var db = new EmensaContext())
+            {
+                var user = (from u in db.User where u.Username == username select u).ToList().First();
+                return PasswordStorage.VerifyPassword(password, user.Salt, user.Hash);
+            }
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -82,7 +138,7 @@ namespace emensa.DataModels
                     .HasConstraintName("category_ibfk_1");
 
                 entity.HasOne(d => d.ParentCategory)
-                    .WithMany(p => p.InverseParentCategory)
+                    .WithMany(p => p.ChildCategories)
                     .HasForeignKey(d => d.ParentCategoryId)
                     .HasConstraintName("category_ibfk_2");
             });
@@ -134,12 +190,12 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<Declaration>(entity =>
             {
-                entity.HasKey(e => e.Symbol);
+                entity.HasKey(e => e.Id);
 
                 entity.ToTable("declaration", "emensa");
 
-                entity.Property(e => e.Symbol)
-                    .HasColumnName("symbol")
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
                     .HasMaxLength(2)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
@@ -153,15 +209,15 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<DeclarationMealRelation>(entity =>
             {
-                entity.HasKey(e => new { e.DeclarationSymbol, e.MealId });
+                entity.HasKey(e => new {DeclarationSymbol = e.DeclarationId, e.MealId});
 
                 entity.ToTable("declaration_meal_relation", "emensa");
 
                 entity.HasIndex(e => e.MealId)
                     .HasName("meal_id");
 
-                entity.Property(e => e.DeclarationSymbol)
-                    .HasColumnName("declaration_symbol")
+                entity.Property(e => e.DeclarationId)
+                    .HasColumnName("declaration_id")
                     .HasMaxLength(2)
                     .IsUnicode(false);
 
@@ -169,9 +225,9 @@ namespace emensa.DataModels
                     .HasColumnName("meal_id")
                     .HasColumnType("int(10) unsigned");
 
-                entity.HasOne(d => d.DeclarationSymbolNavigation)
+                entity.HasOne(d => d.Declaration)
                     .WithMany(p => p.DeclarationMealRelation)
-                    .HasForeignKey(d => d.DeclarationSymbol)
+                    .HasForeignKey(d => d.DeclarationId)
                     .HasConstraintName("declaration_meal_relation_ibfk_1");
 
                 entity.HasOne(d => d.Meal)
@@ -238,29 +294,29 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<FriendRelation>(entity =>
             {
-                entity.HasKey(e => new { e.Initiator, e.Receiver });
+                entity.HasKey(e => new {e.FollowerId, e.FollowedId});
 
                 entity.ToTable("friend_relation", "emensa");
 
-                entity.HasIndex(e => e.Receiver)
-                    .HasName("receiver");
+                entity.HasIndex(e => e.FollowedId)
+                    .HasName("followed_id");
 
-                entity.Property(e => e.Initiator)
-                    .HasColumnName("initiator")
+                entity.Property(e => e.FollowerId)
+                    .HasColumnName("follower_id")
                     .HasColumnType("int(10) unsigned");
 
-                entity.Property(e => e.Receiver)
-                    .HasColumnName("receiver")
+                entity.Property(e => e.FollowedId)
+                    .HasColumnName("followed_id")
                     .HasColumnType("int(10) unsigned");
 
-                entity.HasOne(d => d.InitiatorNavigation)
-                    .WithMany(p => p.FriendRelationInitiatorNavigation)
-                    .HasForeignKey(d => d.Initiator)
+                entity.HasOne(d => d.Follower)
+                    .WithMany(p => p.Following)
+                    .HasForeignKey(d => d.FollowerId)
                     .HasConstraintName("friend_relation_ibfk_1");
 
-                entity.HasOne(d => d.ReceiverNavigation)
-                    .WithMany(p => p.FriendRelationReceiverNavigation)
-                    .HasForeignKey(d => d.Receiver)
+                entity.HasOne(d => d.Followed)
+                    .WithMany(p => p.Followers)
+                    .HasForeignKey(d => d.FollowedId)
                     .HasConstraintName("friend_relation_ibfk_2");
             });
 
@@ -357,7 +413,7 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<IngredientMealRelation>(entity =>
             {
-                entity.HasKey(e => new { e.IngredientId, e.MealId });
+                entity.HasKey(e => new {e.IngredientId, e.MealId});
 
                 entity.ToTable("ingredient_meal_relation", "emensa");
 
@@ -428,7 +484,7 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<MealImageRelation>(entity =>
             {
-                entity.HasKey(e => new { e.MealId, e.ImageId });
+                entity.HasKey(e => new {e.MealId, e.ImageId});
 
                 entity.ToTable("meal_image_relation", "emensa");
 
@@ -473,7 +529,7 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<MemberFacultyRelation>(entity =>
             {
-                entity.HasKey(e => new { e.MemberId, e.FacultyId });
+                entity.HasKey(e => new {e.MemberId, e.FacultyId});
 
                 entity.ToTable("member_faculty_relation", "emensa");
 
@@ -499,7 +555,7 @@ namespace emensa.DataModels
                     .HasConstraintName("member_faculty_relation_ibfk_1");
             });
 
-            modelBuilder.Entity<Order>(entity =>
+            modelBuilder.Entity<DataModels.Order>(entity =>
             {
                 entity.ToTable("order", "emensa");
 
@@ -514,8 +570,8 @@ namespace emensa.DataModels
                     .HasColumnName("collected_at")
                     .HasDefaultValueSql("NULL");
 
-                entity.Property(e => e.OrderdAt)
-                    .HasColumnName("orderd_at")
+                entity.Property(e => e.OrderedAt)
+                    .HasColumnName("ordered_at")
                     .HasDefaultValueSql("curtime()");
 
                 entity.Property(e => e.UserId)
@@ -524,14 +580,14 @@ namespace emensa.DataModels
                     .HasDefaultValueSql("NULL");
 
                 entity.HasOne(d => d.User)
-                    .WithMany(p => p.Order)
+                    .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("order_ibfk_1");
             });
 
             modelBuilder.Entity<OrderMealRelation>(entity =>
             {
-                entity.HasKey(e => new { e.OrderId, e.MealId });
+                entity.HasKey(e => new {e.OrderId, e.MealId});
 
                 entity.ToTable("order_meal_relation", "emensa");
 
@@ -563,7 +619,7 @@ namespace emensa.DataModels
 
             modelBuilder.Entity<Price>(entity =>
             {
-                entity.HasKey(e => new { e.ValidYear, e.MealId });
+                entity.HasKey(e => new {e.ValidYear, e.MealId});
 
                 entity.ToTable("price", "emensa");
 

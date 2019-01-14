@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace emensa.DataModels
 {
@@ -10,7 +9,7 @@ namespace emensa.DataModels
             DeclarationMealRelation = new HashSet<DeclarationMealRelation>();
         }
 
-        public string Symbol { get; set; }
+        public string Id { get; set; }
         public string Label { get; set; }
 
         public ICollection<DeclarationMealRelation> DeclarationMealRelation { get; set; }

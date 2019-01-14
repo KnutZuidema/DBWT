@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace emensa.DataModels
+﻿namespace emensa.DataModels
 {
     public partial class FriendRelation
     {
-        public int Initiator { get; set; }
-        public int Receiver { get; set; }
+        public int FollowerId { get; set; }
+        public int FollowedId { get; set; }
 
-        public User InitiatorNavigation { get; set; }
-        public User ReceiverNavigation { get; set; }
+        public User Follower { get; set; }
+        public User Followed { get; set; }
     }
 }

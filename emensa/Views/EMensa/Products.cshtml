@@ -1,4 +1,4 @@
-@model ProductsModel
+@model Products
 @{
     ViewBag.Title = "Products";
     Layout = "_Layout";
@@ -28,12 +28,12 @@
                     <option value="0">Alle</option>
                     @foreach (var category in Model.Categories)
                     {
-                        if (category.Parent is null)
+                        if (category.ParentCategory is null)
                         {
                             <optgroup label="@category.Name">
                                 @foreach (var subcategory in Model.Categories)
                                 {
-                                    if (subcategory.Parent != null && category.Id == subcategory.Parent.Id)
+                                    if (subcategory.ParentCategory != null && category.Id == subcategory.ParentCategoryId)
                                     {
                                         <option value="@subcategory.Id">@subcategory.Name</option>
                                     }
@@ -68,29 +68,29 @@
     </div>
     <div class="col-lg-9 col-12 text-center" id="items">
         <div class="row">
-            @foreach (var (meal, image) in Model.Meals)
+            @foreach (var (meal, image) in Model.MealsAndImages)
             {
                 <div class="card col-md-3 col-12 py-2 
-                @if (meal.Available)
+                @if (meal.Available != 0)
                 {
                     @("available")
                 } 
-                @if (meal.Vegetarian)
+                @if (Model.IsVegetarian(meal))
                 {
                     @("vegetarian")
                 } 
-                @if (meal.Vegan)
+                @if (Model.IsVegan(meal))
                 {
                     @("vegan")
                 } 
-                @if (meal.Organic)
+                @if (Model.IsOrganic(meal))
                 {
                     @("organic")
                 } 
-                @if (meal.GlutenFree)
+                @if (Model.IsGlutenFree(meal))
                 {
                     @("gluten_free")
-                } category-@meal.Category.Id">
+                } category-@meal.CategoryId">
                     <a class="card-link" asp-controller="EMensa" asp-action="Details" asp-route-id="@meal.Id">
                         <img class="card-img-top" src="~/images/@image.FilePath">
                     </a>

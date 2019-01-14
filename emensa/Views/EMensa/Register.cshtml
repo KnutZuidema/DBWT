@@ -1,4 +1,4 @@
-@model RegisterModel
+@model Register
 @{
     ViewBag.Title = "Register";
     Layout = "_Layout";
@@ -18,21 +18,17 @@
             <span>Registrieren</span>
         </p>
         <p>
-            @if (Model.EmailError)
+            @if (!Model.IsEmailValid)
             {
                 @("Email hat falsches Format")
             }
-            else if (Model.UsernameError)
+            else if (Model.DoesUserExist)
             {
                 @("Benutzer bereits vorhanden")
             }
-            else if (Model.PasswordError)
+            else if (!Model.DoPasswordsMatch)
             {
                 @("Passwoerter stimmen nicht ueberein")
-            }
-            else if (Model.MatriculationNumberError)
-            {
-                @("Matrikelnummer muss zwischen 8 und 9 Z")
             }
         </p>
         <div class="form-row">
@@ -103,7 +99,7 @@
             <div class="form-group col-6">
                 <label for="matriculation_number">Matrikelnummer</label>
                 <input class="form-control" type="text" name="matriculation_number" id="matriculation_number"
-                       placeholder="Matrikelnummer"/>
+                       placeholder="Matrikelnummer" pattern="\d{7,9}"/>
             </div>
             <div class="form-group col-6">
                 <label for="major">Studiengang</label>

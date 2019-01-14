@@ -8,6 +8,16 @@
 * [Meilenstein 2](#meilenstein-2)
   * [Frage 4](#frage-4)
   * [Frage 5](#frage-5)
+  * [Frage 6](#frage-6)
+  * [Frage 7](#frage-7)
+  * [Frage 8](#frage-8)
+  * [Frage 9](#frage-9)
+* [Meilenstein 3](#meilenstein-3)
+  * [Frage 10](#frage-10)
+  * [Frage 11](#frage-11)
+  * [Frage 12](#frage-12)
+  * [Frage 13](#frage-13)
+  * [Frage 14](#frage-14)
 
 ## Meilenstein 1
 
@@ -188,3 +198,38 @@ Was bedeutet der erste Abschnit des Hash-Codes?
 ### Antwort
 
 Dieser gibt den verwendeted Algorithmus, die Iterationen sowie die Hash-Bytes an.
+
+## Meilenstein 4
+
+### Frage 15
+
+Welche Situationen koennen auftreten welche eine trigger in den Datenbank benoetigen koennten?
+
+### Antwort
+
+* Vorrat veraendert sich
+* Produkt ist nicht mehr verfuegbar, da Vorrat 0
+
+### Frage 16
+
+Welcher HTTP Code wird bei falschem Header zurueckgeliefert?
+
+### Antwort
+
+401 Unauthorized, da der Benutzer nicht autorisiert ist, auf diesen Pfad zuzugreifen.
+
+### Frage 17
+
+Gibt es bereits andere HTTP Header welche fuer Authorisierung vorgesehen sind?
+
+### Antwort
+
+Ja, es gibt den `Authorization` Header
+
+### Frage 18
+
+Gibt es andere/bessere Methoden um Anfragen zu authentifizieren?
+
+### Antwort
+
+Ja, beispielsweise OAuth oder Basic Authentication, da so Zugriff an verschiedene Nutzer vergeben werden kann

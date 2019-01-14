@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace emensa.DataModels
+﻿namespace emensa.DataModels
 {
     public partial class DeclarationMealRelation
     {
-        public string DeclarationSymbol { get; set; }
+        public string DeclarationId { get; set; }
         public int MealId { get; set; }
 
-        public Declaration DeclarationSymbolNavigation { get; set; }
+        public Declaration Declaration { get; set; }
         public Meal Meal { get; set; }
     }
 }
