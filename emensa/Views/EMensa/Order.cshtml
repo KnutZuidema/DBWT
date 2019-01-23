@@ -22,7 +22,7 @@
         <tbody>
         @foreach (var (meal, amount) in Model.GetMeals())
         {
-            var price = Model.GetPrice(meal, Context.Session.GetString("user"));
+            var price = Order.GetPrice(meal, Context.Session.GetString("user"));
             totalPrice += price;
             <tr class="meal">
                 <td class="id">@meal.Id</td>
