@@ -74,3 +74,8 @@ nav .btn {
 .font-image {
     height: 1em;
 }
+
+.btn {
+    background: teal;
+    color: white;
+}
