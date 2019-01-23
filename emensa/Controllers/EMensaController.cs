@@ -192,7 +192,7 @@ namespace emensa.Controllers
             using (var db = new EmensaContext())
             {
                 var orders = (from order in db.Order
-                    where order.CollectedAt < DateTime.Now.AddHours(1)
+                    where order.CollectedAt < DateTime.Now.AddHours(1) && order.CollectedAt > DateTime.Now.AddHours(-1)
                     join user in db.User on order.UserId equals user.Id
                     select new
                     {
