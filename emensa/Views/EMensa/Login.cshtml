@@ -14,7 +14,7 @@
         <p class="form-title">
             <span>Login</span>
         </p>
-        @if (!(Model.IsActivated && !Model.UserExists && Model.IsPasswordValid))
+        @if (!(Model.IsActivated && Model.UserExists && Model.IsPasswordValid))
         {
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 @if (!Model.IsActivated)
