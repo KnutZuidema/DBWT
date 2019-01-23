@@ -144,9 +144,7 @@ namespace emensa.Controllers
                     });
                     break;
             }
-
-            HttpContext.Session.SetString("user", username);
-            HttpContext.Session.SetString("role", EmensaContext.GetRole(username).ToString());
+            Response.Cookies.Append("new_register", "");
             return RedirectToAction("Index");
         }
 
