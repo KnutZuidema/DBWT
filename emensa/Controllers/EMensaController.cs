@@ -163,12 +163,9 @@ namespace emensa.Controllers
         public IActionResult Order()
         {
             var cookie = Request.Cookies["orders"];
-            var orders = JsonConvert.DeserializeObject<ViewModels.Order>(cookie ?? "");
-            if (orders is null)
-            {
-                orders = new ViewModels.Order();
-            }
-
+            var orders = JsonConvert.DeserializeObject<ViewModels.Order>(cookie ?? "") 
+                         ?? new ViewModels.Order();
+            
             if (Request.Method.ToLower() == "get")
             {
                 return View(orders);
