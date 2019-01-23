@@ -181,8 +181,7 @@ namespace emensa.Controllers
             }
 
             Response.Cookies.Delete("orders");
-            ViewModels.Order.PlaceOrder(orders, username);
-            return RedirectToAction("Index");
+            return RedirectToAction(ViewModels.Order.PlaceOrder(orders, username) ? "Index" : "Order");
         }
 
         public IActionResult Orders()

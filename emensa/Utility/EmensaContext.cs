@@ -87,8 +87,8 @@ namespace emensa.Utility
         {
             using (var db = new EmensaContext())
             {
-                var user = (from u in db.User where u.Username == username select u).ToList().First();
-                return PasswordStorage.VerifyPassword(password, user.Salt, user.Hash);
+                var user = (from u in db.User where u.Username == username select u).ToList().FirstOrDefault();
+                return user != null && PasswordStorage.VerifyPassword(password, user.Salt, user.Hash);
             }
         }
 
