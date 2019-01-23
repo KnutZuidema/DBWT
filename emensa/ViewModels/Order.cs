@@ -11,13 +11,14 @@ namespace emensa.ViewModels
     {
         public string PickupTime { get; set; }
         public Dictionary<string, int> Meals { get; set; }
-        
+
         public Dictionary<Meal, int> GetMeals()
         {
             if (Meals is null)
             {
                 return new Dictionary<Meal, int>();
             }
+
             using (var db = new EmensaContext())
             {
                 return Meals.ToDictionary(meal1 => db.Meal.First(m => m.Id == Convert.ToInt32(meal1.Key)),
@@ -25,7 +26,7 @@ namespace emensa.ViewModels
             }
         }
 
-        public decimal GetPrice(Meal meal, string username)
+        public static decimal GetPrice(Meal meal, string username)
         {
             using (var db = new EmensaContext())
             {
@@ -46,10 +47,13 @@ namespace emensa.ViewModels
             }
         }
 
-        public static void PlaceOrder(Order orders, string username)
+        public static bool PlaceOrder(Order orders, string username)
         {
-            
-            Debug.Assert(orders.PickupTime != null, "orders.PickupTime != null");
+            if (orders.PickupTime is null)
+            {
+                return false;
+            }
+
             var order = new DataModels.Order
             {
                 CollectedAt = DateTime.Parse(orders.PickupTime),
@@ -69,6 +73,8 @@ namespace emensa.ViewModels
                 db.OrderMealRelation.AddRange(relations);
                 db.SaveChanges();
             }
+
+            return true;
         }
     }
 }
