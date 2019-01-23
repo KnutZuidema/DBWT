@@ -1,6 +1,6 @@
 $(function () {
     $(".amount").change(function () {
-        let cookie = JSON.parse(Cookies.get('orders'));
+        let cookie = Cookies.getJSON('orders');
         let amount = $(this).val();
         let parent = $(this).parent().parent();
         let id = parent.find('.id').text();
@@ -15,7 +15,7 @@ $(function () {
     });
 
     $("#pickup-time").change(function () {
-        let cookie = JSON.parse(Cookies.get('orders'));
+        let cookie = Cookies.getJSON('orders');
         cookie.PickupTime = $(this).val();
         Cookies.set("orders", JSON.stringify(cookie), { expires: 1 });
     });
