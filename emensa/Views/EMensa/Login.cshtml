@@ -14,17 +14,26 @@
         <p class="form-title">
             <span>Login</span>
         </p>
-        @if (!Model.IsActivated)
+        @if (!(Model.IsActivated && !Model.UserExists && Model.IsPasswordValid))
         {
-            <p class="text-danger error-message">Nicht aktiviert</p>
-        }
-        else if (!Model.UserExists)
-        {
-            <p class="text-danger error-message">Falscher Benutzername</p>
-        }
-        else if (!Model.IsPasswordValid)
-        {
-            <p class="text-danger error-message">Falsches Passwort</p>
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @if (!Model.IsActivated)
+                {
+                    @("Nicht aktiviert")
+                }
+                else if (!Model.UserExists)
+                {
+                    @("Falscher Benutzername")
+                }
+                else if (!Model.IsPasswordValid)
+                {
+                    @("Falsches Passwort")
+                }
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            
         }
         <div class="form-group">
             <input class="form-control" id="username" type="text" name="username" placeholder="Benutzername">
