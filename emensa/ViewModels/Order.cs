@@ -21,8 +21,19 @@ namespace emensa.ViewModels
 
             using (var db = new EmensaContext())
             {
-                return Meals.ToDictionary(meal1 => db.Meal.First(m => m.Id == Convert.ToInt32(meal1.Key)),
-                    meal2 => meal2.Value);
+                var meals = new Dictionary<Meal, int>();
+                foreach (var (mealId, amount) in Meals)
+                {
+                    var meal = db.Meal.FirstOrDefault(m => m.Id == Convert.ToInt32(mealId));
+                    if (meal is null)
+                    {
+                        continue;
+                    }
+
+                    meals[meal] = Math.Min(meal.Stock, amount);
+                }
+
+                return meals;
             }
         }
 
