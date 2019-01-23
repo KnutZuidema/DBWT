@@ -34,23 +34,23 @@
                 <input type="hidden" name="as_sitesearch" value="https://www.fh-aachen.de">
             </form>
         </div>
+        @if (Context.Session.Keys.Contains("user"))
+        {
+            <a href="#" class="btn" data-toggle="popover" data-trigger="hover"
+               data-placement="bottom" data-content="@ViewBag.User">
+                <i class="fas fa-user-circle"></i>
+            </a>
+            <a class="btn" asp-controller="EMensa" asp-action="Logout" data-toggle="popover"
+               data-trigger="hover" data-placement="bottom" data-content="Abmelden">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        }
+        else
+        {
+            <a class="btn" asp-controller="EMensa" asp-action="Login" data-toggle="popover"
+               data-trigger="hover" data-placement="bottom" data-content="Anmelden">
+                <i class="fas fa-sign-in-alt"></i>
+            </a>
+        }
     </div>
-    @if (Context.Session.Keys.Contains("user"))
-    {
-        <a href="#" class="btn" data-toggle="popover" data-trigger="hover"
-           data-placement="bottom" data-content="@ViewBag.User">
-            <i class="fas fa-user-circle"></i>
-        </a>
-        <a class="btn" asp-controller="EMensa" asp-action="Logout" data-toggle="popover"
-           data-trigger="hover" data-placement="bottom" data-content="Abmelden">
-            <i class="fas fa-sign-out-alt"></i>
-        </a>
-    }
-    else
-    {
-        <a class="btn" asp-controller="EMensa" asp-action="Login" data-toggle="popover"
-           data-trigger="hover" data-placement="bottom" data-content="Anmelden">
-            <i class="fas fa-sign-in-alt"></i>
-        </a>
-    }
 </nav>
