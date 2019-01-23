@@ -133,7 +133,7 @@ namespace emensa.Controllers
                         Major = major
                     });
                     break;
-                case Role.Guest:
+                default:
                     var reason = Request.Form["reason"];
                     var validUntil = DateTime.Parse(Request.Form["valid_until"]);
                     ViewModels.Register.RegisterGuest(new Guest
