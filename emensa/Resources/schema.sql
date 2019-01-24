@@ -1,4 +1,5 @@
 -- Run as root
+create database if not exists emensa;
 use emensa;
 
 drop table if exists order_meal_relation;
