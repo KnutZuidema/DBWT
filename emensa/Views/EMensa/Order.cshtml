@@ -50,16 +50,27 @@
     <div class="row">
         <div class="col-6">
             @{
-                var earliest = DateTime.Now.Add(TimeSpan.FromMinutes(30));
-                var latest = earliest.Add(TimeSpan.FromHours(3));
+                var earliest = DateTime.Now.AddMinutes(30);
+                earliest = new DateTime(earliest.Year, earliest.Month, earliest.Day, earliest.Hour,
+                    (earliest.Minute / 15 * 15 + 15) % 60, earliest.Second);
             }
             <span>
                 Wann wollen sie die Bestellung abholen?
-                <small class="text-muted">@($"({earliest:HH:mm} - {latest:HH:mm})")</small>
+                <small class="text-muted">@($"({earliest:HH:mm} - {earliest.AddHours(3):HH:mm})")</small>
             </span>
-            <input type="time" min="@($"{earliest:HH:mm}")"
-                   max="@($"{latest:HH:mm}")" value="@Model.PickupTime"
-                   name="pickup_time" id="pickup-time"/>
+            <select id="collected-at">
+                @for (var i = 0; i < 12; i++)
+                {
+                    var time = $"{earliest.AddMinutes(i * 15):HH:mm}";
+                    var selected = time == Model.PickupTime ? "selected" : "";
+                    <option value="@time" @selected>
+                            @time
+                    </option>
+                    
+                    
+                    
+                }
+            </select>
         </div>
         <div class="col-6 text-right">
             <button class="btn btn-success" type="submit">Zahlungspflichtig bestellen</button>

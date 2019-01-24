@@ -14,7 +14,7 @@ $(function () {
         totalSum.text((parseFloat(totalSum.text()) + difference).toFixed(2));
     });
 
-    $("#pickup-time").change(function () {
+    $("#collected-at").change(function () {
         let cookie = Cookies.getJSON('orders');
         cookie.PickupTime = $(this).val();
         Cookies.set("orders", JSON.stringify(cookie), { expires: 1 });
@@ -23,5 +23,5 @@ $(function () {
     $('#delete-all').click(function () {
         Cookies.remove('orders');
         $('.meal').remove();
-    })
+    });
 });
