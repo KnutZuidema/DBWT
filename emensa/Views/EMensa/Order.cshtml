@@ -1,6 +1,8 @@
 @using Microsoft.AspNetCore.Http
 @model Order
-
+@{
+    ViewBag.Title = $"Bestellungen({Model.Meals?.Count ?? 0})";
+}
 @section Scripts{
     <script src="~/js/order.js"></script>
 }
