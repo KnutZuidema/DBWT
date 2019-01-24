@@ -11,7 +11,7 @@ namespace emensa.ViewModels
         {
             using (var db = new EmensaContext())
             {
-                AllIngredients = (from ingredient in db.Ingredient select ingredient).ToList();
+                AllIngredients = (from ingredient in db.Ingredient orderby ingredient.Name select ingredient).ToList();
             }
         }
         
